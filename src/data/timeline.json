@@ -10,7 +10,7 @@
       "period": "2022.09 - 2026.06",
       "title": "上海对外经贸大学",
       "subtitle": "国际经济与贸易（全英语授课）",
-      "description": "GPA 3.63/4.0（前10%）"
+      "description": "GPA 3.63/4.0（专业前5%）"
     }
   ],
   "experience": [
@@ -18,7 +18,10 @@
       "period": "2026.01 - 2026.04",
       "title": "字节跳动 TikTok",
       "subtitle": "印尼电商策略",
+      "company": "字节跳动",
       "color": "accent",
+      "icon": "🌐",
+      "brief": "主导斋月大促，Fashion GMV +52%",
       "projects": [
         {
           "name": "斋月大促策略",
@@ -47,7 +50,10 @@
       "period": "2025.09 - 2025.12",
       "title": "小红书",
       "subtitle": "商业产品实习生",
-      "color": "sky",
+      "company": "小红书",
+      "color": "highlight",
+      "icon": "📕",
+      "brief": "AIGC笔记内测，ROI +176%",
       "projects": [
         {
           "name": "AIGC 笔记内测",
@@ -76,7 +82,10 @@
       "period": "2025.05 - 2025.09",
       "title": "美团",
       "subtitle": "运动健身品类产品运营",
+      "company": "美团",
       "color": "secondary",
+      "icon": "🚴",
+      "brief": "活动GTV +85%，达人曝光1.76亿",
       "projects": [
         {
           "name": "新商冷启落地",
@@ -98,7 +107,10 @@
       "period": "2025.02 - 2025.05",
       "title": "哈啰",
       "subtitle": "产品经理实习生",
-      "color": "highlight",
+      "company": "哈啰",
+      "color": "sky",
+      "icon": "🚲",
+      "brief": "游历中国DAU 35万，ARPPU 25→38元",
       "projects": [
         {
           "name": "游历中国",
@@ -108,6 +120,132 @@
           "result": "上线首月 DAU 35 万，ARPPU 25元→38元"
         }
       ]
+    },
+    {
+      "period": "2024.09 - 2024.11",
+      "title": "美敦力 Medtronic",
+      "subtitle": "战略实习生",
+      "company": "美敦力",
+      "color": "accent",
+      "icon": "🏥",
+      "brief": "医疗器械行业研究，产出10+篇报告",
+      "projects": [
+        {
+          "name": "行业研究",
+          "background": "深度分析医疗器械行业国内与海外顶级公司的业务板块与主要产品线",
+          "challenge": "需要全面了解高/低值耗材、IVD 等多产品线",
+          "solution": "进行宏观（VBP带量采购）与微观分析、竞品分析、进博会产品亮点整理",
+          "result": "产出10+篇年报、月报，为战略决策提供支持"
+        },
+        {
+          "name": "财报数据分析",
+          "background": "需要对比分析医疗器械行业代表性企业的财务表现",
+          "challenge": "数据量大，指标多，如何高效呈现",
+          "solution": "运用 thinkcell、PowerBI 产出20+slides图表，进行差异拆解",
+          "result": "完成迈瑞、鱼跃、强生、爱德华等公司财务对比分析"
+        }
+      ]
+    },
+    {
+      "period": "2024.05 - 2024.09",
+      "title": "默克集团 Merck",
+      "subtitle": "风险合规实习生",
+      "company": "默克",
+      "color": "secondary",
+      "icon": "💊",
+      "brief": "合规风险评估，节省$25,000成本",
+      "projects": [
+        {
+          "name": "合规风险评估工具",
+          "background": "需要识别和优先处理医药化工产品的合规问题",
+          "challenge": "国际出口法规复杂，人工审单效率低",
+          "solution": "开发风险评估工具辅助审单，自动化识别合规问题",
+          "result": "为公司节省约$25,000的不必要的合规成本"
+        },
+        {
+          "name": "关税豁免数据处理",
+          "background": "中美贸易战下，需要为产品申请关税豁免",
+          "challenge": "数据处理量大，需要自动化",
+          "solution": "运行 BOT 编程程序自动化处理化学与生物产品数据",
+          "result": "成功为产品申请关税豁免，成本降低 20%"
+        }
+      ]
+    },
+    {
+      "period": "2023.12 - 2024.03",
+      "title": "安永华明 TCE 高科技组",
+      "subtitle": "审计实习生",
+      "company": "安永",
+      "color": "sky",
+      "icon": "📊",
+      "brief": "紫光股份年审项目，参与16家子公司审计",
+      "projects": [
+        {
+          "name": "审计底稿编制",
+          "background": "参与紫光股份集团年审项目，涵盖16家子公司",
+          "challenge": "工作量大，需要高效处理",
+          "solution": "运用数据透视表、X-lookup等函数，进行JE Testing、收入确认测试",
+          "result": "完成16家子公司审计底稿编制"
+        },
+        {
+          "name": "数据抽样分析",
+          "background": "需要随机抽样代表性样本进行审计测试",
+          "challenge": "抽样代表性不足，可能遗漏关键问题",
+          "solution": "编写和优化 Python 代码随机抽样，与客户IT部门合作识别代码错误",
+          "result": "成功识别并修正2处代码不合理错误"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "\"荐丰丰\"私域电商平台",
+      "subtitle": "基于人工智能的推荐型私域电商平台",
+      "period": "2023.04 - 2024.05",
+      "role": "营销运营部部长",
+      "color": "highlight",
+      "icon": "🛍️",
+      "description": "通过 S2b2c 与一站式 KOC 服务，构建一站式私域流量运营平台。链接京东自营千亿级供应链，引进百个世界500强品牌，已注册有限公司，累计订单超13000单。",
+      "highlights": ["累计订单13000+单", "月销售额超千元", "管理10+社群"]
+    },
+    {
+      "title": "小红书个人账号",
+      "subtitle": "个人账号深度运营",
+      "period": "2023 - 持续",
+      "role": "博主",
+      "color": "accent",
+      "icon": "📕",
+      "description": "单篇最高阅读量超13w，累计粉丝520+，获赞收藏6400+",
+      "highlights": ["单篇最高13w+阅读", "粉丝520+", "获赞收藏6400+"]
+    }
+  ],
+  "competitions": [
+    {
+      "title": "奥纬咨询案例分析大赛",
+      "subtitle": "美妆品牌出海东南亚市场——以珀莱雅集团为例",
+      "period": "2024.04",
+      "role": "队长",
+      "color": "accent",
+      "icon": "🏆",
+      "description": "分析品牌出海的可能选址路径、营销、定价策略与财务指标预测"
+    },
+    {
+      "title": "经贸论文年会",
+      "subtitle": "医药双通道政策下DTC/DTP模式引进可能性分析",
+      "period": "2024.03",
+      "role": "论文一等奖",
+      "color": "secondary",
+      "icon": "📝",
+      "description": "针对药企在医药双通道政策影响下，引进国外DTC/DTP模式的可能性进行讨论，完成3000字论文并答辩"
+    },
+    {
+      "title": "上海证券杯金融案例分析大赛",
+      "subtitle": "Luckin Coffee 财务造假事件分析",
+      "period": "2023.10",
+      "role": "决赛二等奖",
+      "color": "highlight",
+      "icon": "💰",
+      "description": "全面分析 Luckin Coffee 财务造假事件的始末、手段和退市后果，完成全英文案例分析论文并英文答辩"
     }
   ]
 }

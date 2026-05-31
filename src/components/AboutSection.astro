@@ -1,6 +1,27 @@
 ---
 import timelineData from '../data/timeline.json';
 import ExperienceCard from './ExperienceCard.astro';
+
+const expColorMap: Record<string, { bg: string, border: string, text: string }> = {
+  accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
+  sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky' },
+  secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary' },
+  highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark' },
+};
+
+const projectColorMap: Record<string, { bg: string, border: string, text: string, icon: string }> = {
+  accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent', icon: '📕' },
+  highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark', icon: '🛍️' },
+  sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky', icon: '📕' },
+  secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary', icon: '📕' },
+};
+
+const compColorMap: Record<string, { bg: string, border: string, text: string }> = {
+  accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
+  highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark' },
+  sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky' },
+  secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary' },
+};
 ---
 
 <section id="about" class="py-20 bg-white">
@@ -43,20 +64,83 @@ import ExperienceCard from './ExperienceCard.astro';
     </div>
 
     <!-- 实习经历 -->
-    <div class="mt-16">
-      <h3 class="font-heading text-2xl font-semibold text-dark mb-6 flex items-center gap-2">
+    <div class="mt-20">
+      <h3 class="font-heading text-2xl font-semibold text-dark mb-8 flex items-center gap-2">
         <span>💼</span> 实习经历
       </h3>
+
+      <!-- Connected Timeline with Icons -->
+      <div class="relative">
+        <!-- Connection line -->
+        <div class="absolute top-8 left-0 right-0 h-1 bg-gradient-to-r from-accent/30 via-secondary/30 to-sky/30 hidden md:block" style="left: 5%; right: 5%;" />
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          {timelineData.experience.map((item) => (
+            <ExperienceCard
+              company={item.company}
+              period={item.period}
+              role={item.subtitle}
+              color={item.color}
+              icon={item.icon}
+              brief={item.brief}
+              projects={item.projects}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目经历 -->
+    <div class="mt-20">
+      <h3 class="font-heading text-2xl font-semibold text-dark mb-8 flex items-center gap-2">
+        <span>🚀</span> 项目经历
+      </h3>
       <div class="grid md:grid-cols-2 gap-6">
-        {timelineData.experience.map((item) => (
-          <ExperienceCard
-            company={item.title}
-            period={item.period}
-            role={item.subtitle}
-            color={item.color}
-            projects={item.projects}
-          />
-        ))}
+        {timelineData.projects.map((item) => {
+          const colors = projectColorMap[item.color] || projectColorMap.accent;
+          return (
+            <div class={`${colors.bg} border-2 ${colors.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1`}>
+              <div class="flex items-start gap-3">
+                <span class="text-3xl">{item.icon}</span>
+                <div>
+                  <h4 class="font-heading text-lg font-bold text-dark">{item.title}</h4>
+                  <p class="text-dark/60 text-sm">{item.subtitle}</p>
+                  <p class="text-dark/50 text-xs mt-1">{item.period} · {item.role}</p>
+                </div>
+              </div>
+              <p class="text-dark/70 text-sm mt-4">{item.description}</p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                {item.highlights.map((h: string) => (
+                  <span class={`px-2 py-1 rounded-full text-xs ${colors.bg} ${colors.text}`}>{h}</span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- 竞赛经历 -->
+    <div class="mt-20">
+      <h3 class="font-heading text-2xl font-semibold text-dark mb-8 flex items-center gap-2">
+        <span>🏆</span> 竞赛经历
+      </h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        {timelineData.competitions.map((item) => {
+          const colors = compColorMap[item.color] || compColorMap.accent;
+          return (
+            <div class={`${colors.bg} border-2 ${colors.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 cursor-default group`}>
+              <div class="text-center">
+                <span class="text-4xl">{item.icon}</span>
+                <h4 class="font-heading text-lg font-bold text-dark mt-3">{item.title}</h4>
+                <p class="text-dark/60 text-sm mt-1">{item.subtitle}</p>
+                <p class={`${colors.text} text-sm font-medium mt-2`}>{item.role}</p>
+                <p class="text-dark/50 text-xs mt-1">{item.period}</p>
+              </div>
+              <p class="text-dark/70 text-sm mt-4 text-center">{item.description}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   </div>

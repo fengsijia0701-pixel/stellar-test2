@@ -12,10 +12,12 @@ interface Props {
   period: string;
   role: string;
   color: string;
+  icon: string;
+  brief: string;
   projects: Project[];
 }
 
-const { company, period, role, color, projects } = Astro.props;
+const { company, period, role, color, icon, brief, projects } = Astro.props;
 
 const colorClasses = {
   accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
@@ -28,34 +30,28 @@ const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.
 ---
 
 <button
-  class={`experience-card w-full text-left ${colors.bg} border-2 ${colors.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 group`}
+  class={`experience-card w-full text-left ${colors.bg} border-2 ${colors.border} rounded-stardew p-4 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 group relative`}
   data-projects={JSON.stringify(projects)}
   data-company={company}
   data-period={period}
   data-role={role}
   data-color={color}
+  data-brief={brief}
 >
-  <div class="flex justify-between items-start mb-3">
-    <div>
-      <h4 class="font-heading text-lg font-bold text-dark">{company}</h4>
-      <p class="text-dark/70 text-sm">{role}</p>
-    </div>
-    <span class={`text-xs font-medium px-3 py-1 rounded-full ${colors.bg} ${colors.text} border border-current/20`}>
-      {period}
-    </span>
+  <!-- Icon -->
+  <div class={`absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 ${colors.bg} border-2 ${colors.border} rounded-full flex items-center justify-center text-xl shadow-md`}>
+    {icon}
   </div>
-  <div class="flex flex-wrap gap-2">
-    {projects.map((p) => (
-      <span class="px-3 py-1 bg-white/60 rounded-full text-xs text-dark/70 group-hover:bg-white transition-colors">
-        {p.name}
-      </span>
-    ))}
+
+  <div class="pt-4 text-center">
+    <h4 class="font-heading text-base font-bold text-dark">{company}</h4>
+    <p class="text-dark/60 text-xs mt-1">{role}</p>
+    <p class="text-dark/50 text-xs mt-1">{period}</p>
   </div>
-  <div class="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity ${colors.text}">
-    <span>点击查看详情</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-    </svg>
+
+  <!-- Hover preview tooltip -->
+  <div class={`mt-3 p-2 bg-white/60 rounded-lg text-xs text-dark/70 opacity-0 group-hover:opacity-100 transition-opacity ${colors.text}`}>
+    {brief}
   </div>
 </button>
 
@@ -91,8 +87,6 @@ const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.
   const modalProjects = document.getElementById('modal-projects');
   const modalClose = document.getElementById('modal-close');
 
-  let currentProjectIndex = 0;
-
   cards.forEach((card) => {
     card.addEventListener('click', () => {
       const data = card.getAttribute('data-projects');
@@ -104,7 +98,6 @@ const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.
       if (!data || !company || !role) return;
 
       const projects = JSON.parse(data);
-      currentProjectIndex = 0;
 
       if (modalCompany) modalCompany.textContent = company;
       if (modalRole) modalRole.textContent = `${role} · ${period}`;
@@ -121,7 +114,7 @@ const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.
     });
   });
 
-  function renderProjects(projects, color) {
+  function renderProjects(projects: any[], color: string) {
     if (!modalProjects) return;
 
     const colorMap: Record<string, { bg: string, border: string, text: string }> = {
@@ -132,7 +125,7 @@ const colors = colorClasses[color as keyof typeof colorClasses] || colorClasses.
     };
     const colors = colorMap[color] || colorMap.accent;
 
-    modalProjects.innerHTML = projects.map((p, idx) => `
+    modalProjects.innerHTML = projects.map((p) => `
       <div class="project-item border-l-4 ${colors.border} pl-6 py-4 bg-white/50 rounded-r-stardew">
         <div class="flex items-center gap-3 mb-4">
           <span class="text-2xl">📦</span>

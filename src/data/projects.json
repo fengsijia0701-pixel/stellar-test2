@@ -1,10 +1,11 @@
 [
   {
     "id": "1",
-    "title": "AI 项目名称",
-    "description": "项目简述，用 nocode 平台搭建的 AI 产品",
-    "url": "https://example.com",
-    "tags": ["AI", "nocode"],
-    "color": "primary"
+    "title": "Pathway to Career",
+    "description": "基于 AI 的求职管理平台，帮助用户管理求职进度、追踪申请状态、分析简历匹配度。",
+    "url": "https://pathway-to-career.nocode.host",
+    "tags": ["AI", "nocode", "求职工具"],
+    "color": "secondary",
+    "icon": "🎯"
   }
 ]

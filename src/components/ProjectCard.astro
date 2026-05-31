@@ -5,24 +5,32 @@ interface Props {
   url: string;
   tags: string[];
   color: string;
+  icon?: string;
 }
 
-const { title, description, url, tags, color } = Astro.props;
+const { title, description, url, tags, color, icon = "🚀" } = Astro.props;
 
 const colorClasses = {
-  primary: 'bg-primary/10 text-primary',
-  secondary: 'bg-secondary/10 text-secondary',
-  accent: 'bg-accent/10 text-accent',
-}[color] || 'bg-primary/10 text-primary';
+  primary: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' },
+  secondary: { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40' },
+  accent: { bg: 'bg-accent/20', text: 'text-accent', border: 'border-accent/40' },
+  highlight: { bg: 'bg-highlight/30', text: 'text-dark', border: 'border-highlight/50' },
+  sky: { bg: 'bg-sky/20', text: 'text-sky', border: 'border-sky/40' },
+}[color] || { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40' };
 ---
 
-<div class={`project-card group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-dark/5`}>
-  <h3 class="font-heading text-xl font-semibold text-dark">{title}</h3>
-  <p class="text-dark/60 mt-2 text-sm leading-relaxed">{description}</p>
+<div class={`project-card group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-2 border-2 ${colorClasses.border}`}>
+  <div class="flex items-start gap-3 mb-3">
+    <span class="text-3xl">{icon}</span>
+    <div>
+      <h3 class="font-heading text-xl font-semibold text-dark">{title}</h3>
+    </div>
+  </div>
+  <p class="text-dark/70 mt-2 text-sm leading-relaxed">{description}</p>
 
   <div class="flex flex-wrap gap-2 mt-4">
     {tags.map((tag) => (
-      <span class={`px-3 py-1 rounded-full text-xs font-medium ${colorClasses}`}>
+      <span class={`px-3 py-1 rounded-full text-xs font-medium ${colorClasses.bg} ${colorClasses.text}`}>
         {tag}
       </span>
     ))}

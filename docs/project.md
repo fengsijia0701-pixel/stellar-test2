@@ -60,14 +60,14 @@
 | 联系方式 | ✅ | 邮箱 |
 | 部署 | ✅ | Vercel: https://stellar-test2.vercel.app |
 | GitHub 仓库 | ✅ | fengsijia0701-pixel/stellar-test2 |
-| 文档 | ✅ | docs/todo.md, docs/done.md |
+| 文档 | ✅ | docs/todo.md, docs/done.md, docs/valueerror.md |
 
 ### 📋 待完成（按优先级）
 
 **高优先级：**
 1. **实习经历按行业分类 + 成长路径展示**
    - 按行业分组：互联网/电商、科技/硬件、医疗健康、金融/咨询
-   - 体现从初阶到高阶的打怪升级路线
+   - 体现从初阶到高级的打怪升级路线
 
 **中优先级：**
 2. **一句话 Tagline** - Hero 区加醒目定位语
@@ -96,15 +96,27 @@
 
 ---
 
-## 🔄 下次继续的启动方式
+## 🔄 启动要求（每次开始优化前必须执行）
 
-用户只需说：**"继续优化网站"**
+**用户只需说："继续优化网站"**
 
-我会自动：
-1. 读取 `docs/todo.md` 了解待办
-2. 读取 `docs/done.md` 了解已完成
-3. 读取 `docs/project.md` 了解项目背景
-4. 询问用户本次想处理哪个优先级
+**但在此之前，我必须：**
+
+1. **详细读取所有四个文档**
+   - `docs/project.md` - 项目背景、需求、进度
+   - `docs/todo.md` - 待优化清单（按优先级）
+   - `docs/done.md` - 已完成记录
+   - `docs/valueerror.md` - 困难点与解决方法
+
+2. **实时更新文档**
+   - 如果有新的完成项 → 更新 `docs/done.md`
+   - 如果有新的待办项 → 更新 `docs/todo.md`
+   - 如果遇到新问题且有解决方案 → 更新 `docs/valueerror.md`
+   - 如果项目背景或进度有变化 → 更新 `docs/project.md`
+
+3. **基于文档状态回复用户**
+   - 告知当前项目优先级和进度
+   - 询问用户本次想处理哪个优先级
 
 ---
 
@@ -113,9 +125,10 @@
 ```
 personal-website/
 ├── docs/
-│   ├── todo.md      # 待办事项
-│   ├── done.md      # 已完成记录
-│   └── project.md   # 本文档，项目概述
+│   ├── todo.md       # 待办事项
+│   ├── done.md       # 已完成记录
+│   ├── valueerror.md # 困难点与解决方法
+│   └── project.md    # 项目概述（本文档）
 ├── src/
 │   ├── components/  # Astro 组件
 │   ├── data/        # JSON 数据文件

@@ -1,5 +1,6 @@
 ---
 import timelineData from '../data/timeline.json';
+import ExperienceCard from './ExperienceCard.astro';
 ---
 
 <section id="about" class="py-20 bg-white">
@@ -10,8 +11,10 @@ import timelineData from '../data/timeline.json';
 
     <div class="grid md:grid-cols-2 gap-12 items-start">
       <!-- 个人介绍 -->
-      <div class="bg-bgLight rounded-2xl p-8">
-        <h3 class="font-heading text-2xl font-semibold text-dark mb-4">我是谁</h3>
+      <div class="bg-cardBg rounded-stardew p-8 border-2 border-highlight/30">
+        <h3 class="font-heading text-2xl font-semibold text-dark mb-4 flex items-center gap-2">
+          <span>🌻</span> 我是谁
+        </h3>
         <p class="text-dark/70 leading-relaxed">
           港大市场营销硕士，专注量化营销与 AI 产品运营。曾主导 TikTok 斋月大促实现 Fashion GMV 52% 增长，小红书 AIGC 笔记内测带动客户消耗提升，美团活动 GTV 同比增长 85%。擅长数据驱动决策与大促策略制定。
         </p>
@@ -22,12 +25,14 @@ import timelineData from '../data/timeline.json';
 
       <!-- 教育背景 -->
       <div>
-        <h3 class="font-heading text-2xl font-semibold text-dark mb-6">教育背景</h3>
+        <h3 class="font-heading text-2xl font-semibold text-dark mb-6 flex items-center gap-2">
+          <span>🎓</span> 教育背景
+        </h3>
         <div class="space-y-6">
           {timelineData.education.map((item) => (
-            <div class="relative pl-6 border-l-2 border-primary/30">
-              <div class="absolute -left-2 top-0 w-3 h-3 bg-primary rounded-full" />
-              <span class="text-sm text-primary font-medium">{item.period}</span>
+            <div class="relative pl-6 border-l-2 border-secondary/40">
+              <div class="absolute -left-2 top-0 w-3 h-3 bg-secondary rounded-full" />
+              <span class="text-sm text-secondary font-medium">{item.period}</span>
               <h4 class="font-heading text-lg font-semibold text-dark mt-1">{item.title}</h4>
               <p class="text-dark/60 text-sm">{item.subtitle}</p>
               <p class="text-dark/50 text-xs mt-1">{item.description}</p>
@@ -39,28 +44,18 @@ import timelineData from '../data/timeline.json';
 
     <!-- 实习经历 -->
     <div class="mt-16">
-      <h3 class="font-heading text-2xl font-semibold text-dark mb-6">实习经历</h3>
+      <h3 class="font-heading text-2xl font-semibold text-dark mb-6 flex items-center gap-2">
+        <span>💼</span> 实习经历
+      </h3>
       <div class="grid md:grid-cols-2 gap-6">
         {timelineData.experience.map((item) => (
-          <div class="bg-bgLight rounded-2xl p-6 hover:shadow-lg transition-shadow">
-            <div class="flex justify-between items-start mb-3">
-              <div>
-                <h4 class="font-heading text-lg font-semibold text-dark">{item.title}</h4>
-                <p class="text-dark/60 text-sm">{item.subtitle}</p>
-              </div>
-              <span class="text-xs text-primary font-medium bg-primary/10 px-2 py-1 rounded-full">
-                {item.period}
-              </span>
-            </div>
-            <ul class="space-y-2">
-              {item.highlights.map((h) => (
-                <li class="text-dark/70 text-sm flex items-start gap-2">
-                  <span class="text-primary mt-1">•</span>
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ExperienceCard
+            company={item.title}
+            period={item.period}
+            role={item.subtitle}
+            color={item.color}
+            projects={item.projects}
+          />
         ))}
       </div>
     </div>

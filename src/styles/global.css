@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Gaegu:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
 html {
   scroll-behavior: smooth;
@@ -14,4 +14,56 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   @apply font-heading;
+}
+
+/* Scroll-driven fade-in animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Stardew-style card hover */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px) rotate(0.5deg);
+  box-shadow: 0 8px 24px rgba(58, 46, 42, 0.2);
+}
+
+/* Number counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-count {
+  animation: countUp 0.8s ease-out forwards;
+}
+
+/* Floating animation for decorations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Tooltip/popup style */
+.tooltip {
+  @apply absolute z-10 px-3 py-2 text-sm text-white bg-dark rounded-lg shadow-lg;
+  @apply opacity-0 pointer-events-none transition-opacity duration-200;
+}
+.tooltip.show {
+  @apply opacity-100 pointer-events-auto;
 }

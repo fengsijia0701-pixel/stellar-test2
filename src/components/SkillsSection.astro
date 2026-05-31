@@ -1,35 +1,52 @@
 ---
 import skillsData from '../data/skills.json';
 
-const categoryColors = {
-  '运营工具': 'bg-secondary/10 text-secondary border-secondary/20',
-  'AI & 工具': 'bg-accent/10 text-accent border-accent/20',
-  '协作 & 其他': 'bg-primary/10 text-primary border-primary/20',
+const levelColors = {
+  '熟练': { bg: 'bg-highlight/30', text: 'text-dark', border: 'border-highlight/50' },
+  '掌握': { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40' },
+  '了解': { bg: 'bg-sky/20', text: 'text-sky', border: 'border-sky/40' },
 };
+
+const categories = [
+  { key: 'product', color: 'bg-accent/20', border: 'border-accent/40', icon: '📋' },
+  { key: 'ecommerce', color: 'bg-highlight/20', border: 'border-highlight/40', icon: '🛒' },
+  { key: 'commercial', color: 'bg-sky/20', border: 'border-sky/40', icon: '💰' },
+  { key: 'marketing', color: 'bg-secondary/20', border: 'border-secondary/40', icon: '📢' },
+];
 ---
 
-<section id="skills" class="py-20 bg-white">
+<section id="skills" class="py-20 bg-bgLight">
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="font-heading text-4xl font-bold text-dark text-center mb-4">
       技能标签
     </h2>
     <p class="text-dark/60 text-center max-w-2xl mx-auto mb-12">
-      日常工作中的常用工具和方法论
+      按岗位分类 · 熟练程度代表实际业务中的应用深度
     </p>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      {Object.entries(skillsData.categories).map(([categoryName, skills]) => (
-        <div class="bg-bgLight rounded-2xl p-6">
-          <h3 class="font-heading text-lg font-semibold text-dark mb-4">{categoryName}</h3>
-          <div class="flex flex-wrap gap-2">
-            {skills.skills.map((skill: string) => (
-              <span class={`px-4 py-2 rounded-full text-sm font-medium border ${categoryColors[categoryName as keyof typeof categoryColors] || 'bg-dark/10 text-dark border-dark/10'}`}>
-                {skill}
-              </span>
-            ))}
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {categories.map((cat, idx) => {
+        const category = skillsData[cat.key];
+        return (
+          <div class={`${cat.color} border-2 ${cat.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1`}>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-2xl">{cat.icon}</span>
+              <h3 class="font-heading text-lg font-bold text-dark">{category.label}</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {category.skills.map((skill) => {
+                const colors = levelColors[skill.level as keyof typeof levelColors] || levelColors['了解'];
+                return (
+                  <span class={`px-3 py-1.5 rounded-full text-sm font-medium border ${colors.bg} ${colors.text} ${colors.border} hover:scale-105 transition-transform cursor-default`}>
+                    {skill.name}
+                    <span class="ml-1 text-xs opacity-70">({skill.level})</span>
+                  </span>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

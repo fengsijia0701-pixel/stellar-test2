@@ -2,14 +2,15 @@
 ---
 
 <section id="hero" class="min-h-screen flex items-center relative overflow-hidden pt-20">
-  <!-- Geometric decorations -->
-  <div class="absolute top-20 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-  <div class="absolute bottom-20 left-0 w-72 h-72 bg-secondary/20 rounded-full blur-3xl" />
-  <div class="absolute top-1/3 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-2xl" />
+  <!-- Geometric decorations - Stardew style floating elements -->
+  <div class="absolute top-20 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
+  <div class="absolute bottom-20 left-0 w-72 h-72 bg-secondary/20 rounded-full blur-3xl animate-float" style="animation-delay: 1s;" />
+  <div class="absolute top-1/3 left-1/4 w-32 h-32 bg-highlight/30 rounded-full blur-2xl animate-float" style="animation-delay: 2s;" />
+  <div class="absolute bottom-1/3 right-1/4 w-20 h-20 bg-sky/30 rounded-full blur-xl animate-float" style="animation-delay: 0.5s;" />
 
   <div class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center relative z-10">
     <!-- Text Content -->
-    <div class="text-center md:text-left">
+    <div class="text-center md:text-left animate-fade-in-up">
       <h1 class="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-dark leading-tight">
         你好，我是<br />
         <span class="text-primary">冯思佳</span>
@@ -21,21 +22,21 @@
         港大硕士，擅长大促策略与 AI 产品运营，相信数据驱动增长
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-        <a href="#projects" class="px-8 py-4 bg-primary text-white rounded-full font-medium hover:scale-105 hover:shadow-lg transition-all duration-300">
+        <a href="#projects" class="px-8 py-4 bg-primary text-light rounded-stardew font-medium hover:scale-105 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-0.5">
           查看项目
         </a>
-        <a href="#contact" class="px-8 py-4 border-2 border-dark text-dark rounded-full font-medium hover:bg-dark hover:text-white transition-all duration-300">
+        <a href="#contact" class="px-8 py-4 border-2 border-dark text-dark rounded-stardew font-medium hover:bg-dark hover:text-light transition-all duration-300">
           联系我
         </a>
       </div>
     </div>
 
     <!-- Avatar -->
-    <div class="flex justify-center md:justify-end">
-      <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1">
-        <div class="w-full h-full rounded-full bg-bgLight flex items-center justify-center overflow-hidden">
+    <div class="flex justify-center md:justify-end animate-fade-in-up" style="animation-delay: 0.2s;">
+      <div class="w-64 h-64 md:w-80 md:h-80 rounded-stardew bg-gradient-to-br from-primary via-accent to-secondary p-1 card-hover">
+        <div class="w-full h-full rounded-stardew bg-cardBg flex items-center justify-center overflow-hidden">
           <!-- Placeholder: 用文字代替头像 -->
-          <span class="text-6xl">👤</span>
+          <span class="text-7xl">👩‍🌾</span>
         </div>
       </div>
     </div>

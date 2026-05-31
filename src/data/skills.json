@@ -1,16 +1,50 @@
 {
-  "categories": [
-    {
-      "name": "运营工具",
-      "skills": ["SQL", "A/B测试", "数据看板", "GrowingIO", "ERP系统"]
-    },
-    {
-      "name": "AI & 工具",
-      "skills": ["ChatGPT", "Midjourney", "AIGC笔记", "数据分析", "GitHub"]
-    },
-    {
-      "name": "协作 & 其他",
-      "skills": ["项目管理", "用户研究", "内容创作", "XMind", "PPT"]
-    }
-  ]
+  "product": {
+    "label": "产品经理",
+    "icon": "📋",
+    "skills": [
+      { "name": "PRD 撰写", "level": "熟练" },
+      { "name": "需求优先级排序", "level": "熟练" },
+      { "name": "用户研究", "level": "掌握" },
+      { "name": "数据分析", "level": "掌握" },
+      { "name": "A/B 测试设计", "level": "掌握" },
+      { "name": "PRD 文档", "level": "熟练" },
+      { "name": "项目管理", "level": "掌握" }
+    ]
+  },
+  "ecommerce": {
+    "label": "电商运营",
+    "icon": "🛒",
+    "skills": [
+      { "name": "选品策略", "level": "熟练" },
+      { "name": "商家运营", "level": "熟练" },
+      { "name": "流量分配", "level": "熟练" },
+      { "name": "大促策划", "level": "熟练" },
+      { "name": "达人撮合", "level": "掌握" },
+      { "name": "数据分析", "level": "熟练" }
+    ]
+  },
+  "commercial": {
+    "label": "商业化运营",
+    "icon": "💰",
+    "skills": [
+      { "name": "广告投放", "level": "熟练" },
+      { "name": "ROI 优化", "level": "熟练" },
+      { "name": "AIGC 内容运营", "level": "掌握" },
+      { "name": "新商冷启动", "level": "熟练" },
+      { "name": "产品内测", "level": "掌握" },
+      { "name": "GTM 策划", "level": "掌握" }
+    ]
+  },
+  "marketing": {
+    "label": "市场营销",
+    "icon": "📢",
+    "skills": [
+      { "name": "内容营销", "level": "掌握" },
+      { "name": "KOL/KOC 合作", "level": "熟练" },
+      { "name": "活动策划", "level": "熟练" },
+      { "name": "品牌联名", "level": "了解" },
+      { "name": "投放策略", "level": "掌握" }
+    ]
+  }
 }

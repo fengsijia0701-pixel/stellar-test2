@@ -1,0 +1,28 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import projectsData from '../data/projects.json';
+
+---
+
+<section id="projects" class="py-20 bg-bgLight">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="font-heading text-4xl font-bold text-dark text-center mb-4">
+      项目空间
+    </h2>
+    <p class="text-dark/60 text-center max-w-2xl mx-auto mb-12">
+      这里展示我用 AI 工具和 nocode 平台探索的小项目，以及未来将在 GitHub 上线的实验性作品
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projectsData.map((project) => (
+        <ProjectCard
+          title={project.title}
+          description={project.description}
+          url={project.url}
+          tags={project.tags}
+          color={project.color}
+        />
+      ))}
+    </div>
+  </div>
+</section>

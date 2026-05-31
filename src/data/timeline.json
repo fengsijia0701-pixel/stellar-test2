@@ -1,0 +1,42 @@
+{
+  "education": [
+    {
+      "period": "2026.09 - 2027.07",
+      "title": "香港大学",
+      "subtitle": "市场营销硕士（量化MKT方向）",
+      "description": "硕士在读"
+    },
+    {
+      "period": "2022.09 - 2026.06",
+      "title": "上海对外经贸大学",
+      "subtitle": "国际经济与贸易（全英语授课）",
+      "description": "GPA 3.63/4.0（前10%）"
+    }
+  ],
+  "experience": [
+    {
+      "period": "2026.01 - 2026.04",
+      "title": "字节跳动 TikTok",
+      "subtitle": "印尼电商策略",
+      "highlights": ["斋月大促Fashion GMV增长52%", "达人ROI提升至1:3.3", "商家GMV提升2.8倍"]
+    },
+    {
+      "period": "2025.09 - 2025.12",
+      "title": "小红书",
+      "subtitle": "商业产品实习生",
+      "highlights": ["AIGC笔记内测800+客户", "单品ROI提升176%", "新商30天ROI达标率74%"]
+    },
+    {
+      "period": "2025.05 - 2025.09",
+      "title": "美团",
+      "subtitle": "运动健身品类产品运营",
+      "highlights": ["活动GTV增长85%", "新商覆盖率从10%升至60%", "达人曝光1.76亿"]
+    },
+    {
+      "period": "2025.02 - 2025.05",
+      "title": "哈啰",
+      "subtitle": "产品经理实习生",
+      "highlights": ["游历中国DAU 35万", "ARPPU 25元→38元", "省份解锁玩法创新"]
+    }
+  ]
+}

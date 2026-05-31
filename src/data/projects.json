@@ -1,0 +1,10 @@
+[
+  {
+    "id": "1",
+    "title": "AI 项目名称",
+    "description": "项目简述，用 nocode 平台搭建的 AI 产品",
+    "url": "https://example.com",
+    "tags": ["AI", "nocode"],
+    "color": "primary"
+  }
+]

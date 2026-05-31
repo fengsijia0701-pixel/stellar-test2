@@ -1,0 +1,35 @@
+---
+import skillsData from '../data/skills.json';
+
+const categoryColors = {
+  '运营工具': 'bg-secondary/10 text-secondary border-secondary/20',
+  'AI & 工具': 'bg-accent/10 text-accent border-accent/20',
+  '协作 & 其他': 'bg-primary/10 text-primary border-primary/20',
+};
+---
+
+<section id="skills" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="font-heading text-4xl font-bold text-dark text-center mb-4">
+      技能标签
+    </h2>
+    <p class="text-dark/60 text-center max-w-2xl mx-auto mb-12">
+      日常工作中的常用工具和方法论
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {Object.entries(skillsData.categories).map(([categoryName, skills]) => (
+        <div class="bg-bgLight rounded-2xl p-6">
+          <h3 class="font-heading text-lg font-semibold text-dark mb-4">{categoryName}</h3>
+          <div class="flex flex-wrap gap-2">
+            {skills.skills.map((skill: string) => (
+              <span class={`px-4 py-2 rounded-full text-sm font-medium border ${categoryColors[categoryName as keyof typeof categoryColors] || 'bg-dark/10 text-dark border-dark/10'}`}>
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

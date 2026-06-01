@@ -1,0 +1,483 @@
+---
+---
+
+<section class="detail-page">
+  <div class="bg-sky"></div>
+  <div class="bg-grass"></div>
+
+  <div class="wood-frame">
+    <div class="parchment">
+      <button class="back-btn" data-action="goto" data-goto="page-growth">◀ 返回成长轨迹</button>
+
+      <div id="detail-content">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .detail-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .bg-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
+  }
+
+  .bg-grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
+  }
+
+  .wood-frame {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+    border-radius: 4px;
+    padding: 24px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E6;
+    border: none;
+    border-radius: 6px;
+    font-family: 'VT323', monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #5D3A1A;
+    margin-bottom: 16px;
+    transition: all 0.15s ease;
+  }
+
+  .back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 #5D3A1A;
+  }
+
+  /* Company Header */
+  .company-header {
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 3px dashed #A67C52;
+    margin-bottom: 20px;
+  }
+
+  .company-icon {
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+
+  .company-title {
+    font-family: 'VT323', monospace;
+    font-size: 1.8rem;
+    color: #5D3A1A;
+    margin-bottom: 4px;
+  }
+
+  .company-subtitle {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: #8B4513;
+    margin-bottom: 8px;
+  }
+
+  .company-period {
+    font-size: 0.9rem;
+    color: #A67C52;
+  }
+
+  .company-brief {
+    background: #8B4513;
+    color: #FDF5E6;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  /* Projects */
+  .projects-section {
+    margin-top: 20px;
+  }
+
+  .projects-title {
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: #5D3A1A;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .project-card {
+    background: rgba(255, 255, 255, 0.85);
+    border: 3px solid #8B4513;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 0 #5D3A1A;
+  }
+
+  .project-name {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: #5D3A1A;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .project-name::before {
+    content: '📋';
+    font-size: 1.2rem;
+  }
+
+  .project-block {
+    margin-bottom: 12px;
+  }
+
+  .project-label {
+    font-family: 'VT323', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 4px;
+  }
+
+  .project-text {
+    font-size: 0.9rem;
+    color: #6B5344;
+    line-height: 1.5;
+  }
+
+  .result-block {
+    background: #7CB342;
+    color: #FDF5E6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .result-block .project-label {
+    color: #FDF5E6;
+  }
+
+  .result-block .project-text {
+    color: #FDF5E6;
+    font-weight: 700;
+  }
+
+  /* Scrollbar */
+  .parchment::-webkit-scrollbar,
+  .wood-frame::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .parchment::-webkit-scrollbar-track,
+  .wood-frame::-webkit-scrollbar-track {
+    background: #F5E6C8;
+    border-radius: 4px;
+  }
+
+  .parchment::-webkit-scrollbar-thumb,
+  .wood-frame::-webkit-scrollbar-thumb {
+    background: #8B4513;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .wood-frame {
+      width: 95%;
+      padding: 8px;
+    }
+
+    .parchment {
+      padding: 16px;
+    }
+
+    .company-icon {
+      font-size: 2.5rem;
+    }
+
+    .company-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Experience data
+  const experiences = [
+    {
+      id: "bytedance",
+      icon: "🌐",
+      title: "字节跳动 TikTok",
+      subtitle: "印尼电商策略",
+      period: "2026.01 - 2026.04",
+      brief: "主导斋月大促，Fashion GMV +52%",
+      projects: [
+        {
+          name: "斋月大促策略",
+          background: "负责印尼斋月大促 Fashion 品类运营，需要在有限时间内实现 GMV 突破",
+          challenge: "商家分散、用户需求多样、如何筛选优质商家并制定差异化策略",
+          solution: "搭建商家准入机制 + 直播/短视频梯度补贴，筛选800+优质商家，产出选品报告",
+          result: "Fashion GMV 环比增长 52%，商家 GMV 提升 2.8 倍，超 78% 商家提前完成目标"
+        },
+        {
+          name: "精细预算优化",
+          background: "电子设备与 Fashion 品类流量逻辑不同，需要差异化投放策略",
+          challenge: "预算有限，如何在类目间合理分配达到最优 ROI",
+          solution: "Fashion 以自播为核心、电子设备以达人+短视频为核心，制定差异化运营策略",
+          result: "优化后 Fashion GMV 同比增长 36%，广告预算降低 13%"
+        },
+        {
+          name: "头达撮合策略",
+          background: "达人资源丰富但商家不知如何对接，需要搭建撮合机制",
+          challenge: "如何精准匹配达人与商家，提升合作效率",
+          solution: "搭建达人筛选机制，筛选200+优质达人，完成300+商家调研",
+          result: "合作商家 GMV 平均提升 41%，ROI 提升至 1:3.3，覆盖率提升 23%"
+        }
+      ]
+    },
+    {
+      id: "xiaohongshu",
+      icon: "📕",
+      title: "小红书",
+      subtitle: "商业产品实习生",
+      period: "2025.09 - 2025.12",
+      brief: "AIGC笔记内测，ROI +176%",
+      projects: [
+        {
+          name: "AIGC 笔记内测",
+          background: "白牌、品牌商家笔记供给不足、信息流转化弱",
+          challenge: "如何用 AI 辅助内容生产，提升笔记质量和消耗",
+          solution: "调整北极星指标从生产笔记数到 ADVV 消耗价值，优化创编流程，筛选内测人群",
+          result: "800+客户参与，70%反馈质量提升，笔记生产数量提升 40%，点击曝光提升 18%"
+        },
+        {
+          name: "大促单品优化",
+          background: "年货节&三八节大促，需要为商家提供精准投放指南",
+          challenge: "单 SKU 跑量不足问题普遍存在",
+          solution: "拆解7大行业流量趋势，联动技术进行创编优化，提出多 SKU 组合投放策略",
+          result: "70% 达标客户主动增投，3C 家电 ROI 提升 176%，推动产品全量上线"
+        },
+        {
+          name: "新商投放冷启",
+          background: "商家掉量、ROI 下滑、空耗等高频问题缺乏系统解决方案",
+          challenge: "新商冷启动失败率高，急需方法论指导",
+          solution: "构建冷启动 235 方法论，明确基建标准、出价策略、定向规则与5节点监控体系",
+          result: "新商 30 天 ROI 达标率提升至 74%，有消耗客户数增长 12%"
+        }
+      ]
+    },
+    {
+      id: "meituan",
+      icon: "🚴",
+      title: "美团",
+      subtitle: "运动健身品类产品运营",
+      period: "2025.05 - 2025.09",
+      brief: "活动GTV +85%，达人曝光1.76亿",
+      projects: [
+        {
+          name: "新商冷启落地",
+          background: "原商家成长体系粗放、新供给接入慢、促活低效",
+          challenge: "如何让新商家快速上手并获得流量",
+          solution: "按健身房/私教/团操三级类目拆分任务，搭建流量激励闭环，推出 CPC 券+搜索加权组合权益",
+          result: "连续包月供给覆盖率提升 40%，商家上线周期缩至 T+2，核心供给从 10% 升至 60%"
+        },
+        {
+          name: "活动与品牌营销",
+          background: "运动品类商家分散、用户心智不统一",
+          challenge: "如何整合多方资源实现活动爆发",
+          solution: "筛选 2.2 万家高潜力商户，协调小红书、微博等多平台 KOL/KOC 资源，联动跨界品牌",
+          result: "活动 GTV 同比增长 85%，商家目标达成率 220%，达人曝光 1.76 亿"
+        }
+      ]
+    },
+    {
+      id: "hallo",
+      icon: "🚲",
+      title: "哈啰",
+      subtitle: "产品经理实习生",
+      period: "2025.02 - 2025.05",
+      brief: "游历中国DAU 35万，ARPPU 25→38元",
+      projects: [
+        {
+          name: "游历中国",
+          background: "App 曝光过低，需要提升用户粘性并赋能各业务导流",
+          challenge: "如何在游戏中心基础上从 0 开发创新玩法",
+          solution: "设计省份解锁+体力值打卡玩法，撰写 PRD，协调供应链资源特产实物奖励接入",
+          result: "上线首月 DAU 35 万，ARPPU 25元→38元"
+        }
+      ]
+    },
+    {
+      id: "medtronic",
+      icon: "🏥",
+      title: "美敦力 Medtronic",
+      subtitle: "战略实习生",
+      period: "2024.09 - 2024.11",
+      brief: "医疗器械行业研究，产出10+篇报告",
+      projects: [
+        {
+          name: "行业研究",
+          background: "深度分析医疗器械行业国内与海外顶级公司的业务板块与主要产品线",
+          challenge: "需要全面了解高/低值耗材、IVD 等多产品线",
+          solution: "进行宏观（VBP带量采购）与微观分析、竞品分析、进博会产品亮点整理",
+          result: "产出10+篇年报、月报，为战略决策提供支持"
+        },
+        {
+          name: "财报数据分析",
+          background: "需要对比分析医疗器械行业代表性企业的财务表现",
+          challenge: "数据量大，指标多，如何高效呈现",
+          solution: "运用 thinkcell、PowerBI 产出20+slides图表，进行差异拆解",
+          result: "完成迈瑞、鱼跃、强生、爱德华等公司财务对比分析"
+        }
+      ]
+    },
+    {
+      id: "merck",
+      icon: "💊",
+      title: "默克集团 Merck",
+      subtitle: "风险合规实习生",
+      period: "2024.05 - 2024.09",
+      brief: "合规风险评估，节省$25,000成本",
+      projects: [
+        {
+          name: "合规风险评估工具",
+          background: "需要识别和优先处理医药化工产品的合规问题",
+          challenge: "国际出口法规复杂，人工审单效率低",
+          solution: "开发风险评估工具辅助审单，自动化识别合规问题",
+          result: "为公司节省约$25,000的不必要的合规成本"
+        },
+        {
+          name: "关税豁免数据处理",
+          background: "中美贸易战下，需要为产品申请关税豁免",
+          challenge: "数据处理量大，需要自动化",
+          solution: "运行 BOT 编程程序自动化处理化学与生物产品数据",
+          result: "成功为产品申请关税豁免，成本降低 20%"
+        }
+      ]
+    },
+    {
+      id: "ey",
+      icon: "📊",
+      title: "安永华明 TCE 高科技组",
+      subtitle: "审计实习生",
+      period: "2023.12 - 2024.03",
+      brief: "紫光股份年审项目，参与16家子公司审计",
+      projects: [
+        {
+          name: "审计底稿编制",
+          background: "参与紫光股份集团年审项目，涵盖16家子公司",
+          challenge: "工作量大，需要高效处理",
+          solution: "运用数据透视表、X-lookup等函数，进行JE Testing、收入确认测试",
+          result: "完成16家子公司审计底稿编制"
+        },
+        {
+          name: "数据抽样分析",
+          background: "需要随机抽样代表性样本进行审计测试",
+          challenge: "抽样代表性不足，可能遗漏关键问题",
+          solution: "编写和优化 Python 代码随机抽样，与客户IT部门合作识别代码错误",
+          result: "成功识别并修正2处代码不合理错误"
+        }
+      ]
+    }
+  ];
+
+  // Get company from URL params
+  const params = new URLSearchParams(window.location.search);
+  const companyId = params.get('experience');
+
+  // Render content
+  const container = document.getElementById('detail-content');
+  if (container) {
+    const exp = experiences.find(e => e.id === companyId);
+
+    if (exp) {
+      container.innerHTML = `
+        <div class="company-header">
+          <div class="company-icon">${exp.icon}</div>
+          <h2 class="company-title">${exp.title}</h2>
+          <p class="company-subtitle">${exp.subtitle}</p>
+          <p class="company-period">${exp.period}</p>
+          <span class="company-brief">${exp.brief}</span>
+        </div>
+
+        <div class="projects-section">
+          <h3 class="projects-title">📂 项目详情</h3>
+          ${exp.projects.map(p => `
+            <div class="project-card">
+              <h4 class="project-name">${p.name}</h4>
+
+              <div class="project-block">
+                <div class="project-label">📌 背景</div>
+                <div class="project-text">${p.background}</div>
+              </div>
+
+              <div class="project-block">
+                <div class="project-label">⚡ 挑战</div>
+                <div class="project-text">${p.challenge}</div>
+              </div>
+
+              <div class="project-block">
+                <div class="project-label">💡 解决方案</div>
+                <div class="project-text">${p.solution}</div>
+              </div>
+
+              <div class="result-block">
+                <div class="project-label">🎯 成果</div>
+                <div class="project-text">${p.result}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else {
+      container.innerHTML = '<p style="text-align:center;color:#8B4513;">未找到公司信息</p>';
+    }
+  }
+
+  // Make back button work
+  document.querySelector('.back-btn')?.addEventListener('click', () => {
+    if (window.navigateTo) {
+      window.navigateTo('page-growth');
+    }
+  });
+</script>

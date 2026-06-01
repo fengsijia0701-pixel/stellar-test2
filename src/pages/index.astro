@@ -481,32 +481,38 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       }
     }
 
-    // Swipe navigation
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // Swipe navigation - Full-screen swipe gesture (not on drag character)
+    let swipeStartX = 0;
+    let swipeStartY = 0;
 
     document.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
+      // Only track if not touching the path-char element
+      if (!e.target.closest('#path-char')) {
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+        console.log('[SWIPE START] x:', swipeStartX, 'y:', swipeStartY);
+      }
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
+      // Skip if was touching the path-char element
+      if (e.target.closest('#path-char')) return;
+      const swipeEndX = e.changedTouches[0].clientX;
+      const swipeEndY = e.changedTouches[0].clientY;
+      const deltaX = swipeEndX - swipeStartX;
+      const deltaY = Math.abs(swipeEndY - swipeStartY);
+      console.log('[SWIPE END] deltaX:', deltaX, 'deltaY:', deltaY, 'threshold check:', Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY);
 
-    function handleSwipe() {
-      const diff = touchStartX - touchEndX;
-      const threshold = 50;
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0) {
-          // Swipe left - next page
+      if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
+        if (deltaX < 0) {
+          console.log('[SWIPE] Going to next page via swipe');
           navigator.next();
         } else {
-          // Swipe right - previous page
+          console.log('[SWIPE] Going to previous page via swipe');
           navigator.prev();
         }
       }
-    }
+    }, { passive: true });
 
     // Initialize path nav
     updatePathNav('page-welcome');

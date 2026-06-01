@@ -620,7 +620,9 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     let currentDragIndex = 0;
     let isDragging = false;
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
+    let currentY = 0;
     const maxOffset = 200;
 
     function updateDragPosition(pageIndex, animate = true) {
@@ -675,24 +677,36 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       }
     });
 
-    // Touch events
+    // Touch events - attach to character directly
+    let touchCharStartX = 0;
+    let touchCharStartY = 0;
+
     pathChar.addEventListener('touchstart', (e) => {
       isDragging = true;
+      touchCharStartX = e.touches[0].clientX;
+      touchCharStartY = e.touches[0].clientY;
       startX = e.touches[0].clientX;
       pathChar.classList.add('dragging');
-    }, { passive: true });
+      e.preventDefault();
+    }, { passive: false });
 
-    document.addEventListener('touchmove', (e) => {
+    pathChar.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       currentX = e.touches[0].clientX;
+      currentY = e.touches[0].clientY;
       const deltaX = currentX - startX;
-      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
-      const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
-      pathChar.style.left = (8 + newOffset) + 'px';
-      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
-    }, { passive: true });
+      const deltaY = Math.abs(currentY - touchCharStartY);
+      // Only horizontal drag moves the char
+      if (deltaY < 10) {
+        e.preventDefault();
+        const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
+        const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
+        pathChar.style.left = (8 + newOffset) + 'px';
+        progressFill.style.width = (newOffset / maxOffset * 100) + '%';
+      }
+    }, { passive: false });
 
-    document.addEventListener('touchend', () => {
+    pathChar.addEventListener('touchend', (e) => {
       if (!isDragging) return;
       isDragging = false;
       pathChar.classList.remove('dragging');
@@ -711,7 +725,42 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       } else {
         updateDragPosition(currentDragIndex);
       }
+
+      e.preventDefault();
+    }, { passive: false });
+
+    pathChar.addEventListener('touchcancel', () => {
+      isDragging = false;
+      pathChar.classList.remove('dragging');
+      updateDragPosition(currentDragIndex);
     });
+
+    // Full-screen swipe gesture to change pages (not on drag character)
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      if (!e.target.closest('#path-char')) {
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (e.target.closest('#path-char')) return;
+      const swipeEndX = e.changedTouches[0].clientX;
+      const swipeEndY = e.changedTouches[0].clientY;
+      const deltaX = swipeEndX - swipeStartX;
+      const deltaY = Math.abs(swipeEndY - swipeStartY);
+
+      if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
+        if (deltaX < 0) {
+          navigator.next();
+        } else {
+          navigator.prev();
+        }
+      }
+    }, { passive: true });
 
     // Sync drag position with page navigation
     const originalGoTo = (window as any).navigateTo;

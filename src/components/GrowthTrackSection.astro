@@ -200,6 +200,7 @@
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 3px 0 #5D3A1A;
+    position: relative;
   }
 
   .node:hover {
@@ -226,7 +227,8 @@
   }
 
   .node-period {
-    font-size: 0.7rem;
+    font-family: 'VT323', monospace;
+    font-size: 0.85rem;
     color: #8B4513;
   }
 
@@ -241,7 +243,7 @@
     padding: 8px 14px;
     border-radius: 8px;
     font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 0.85rem;
+    font-size: 1rem;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -266,8 +268,10 @@
     transform: translateX(-50%) translateY(-4px);
   }
 
-  .node {
-    position: relative;
+  .node-period {
+    font-family: 'VT323', monospace;
+    font-size: 0.85rem;
+    color: #8B4513;
   }
 
   .path-line {

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面流程图 - 冯思佳的世界</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #ffd93d;
+    }
+
+    .flow-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .flow-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .page-box {
+      background: linear-gradient(145deg, #2d2d44, #3d3d5c);
+      border-radius: 16px;
+      padding: 20px 30px;
+      min-width: 200px;
+      max-width: 280px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 2px solid #4a4a6a;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .page-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(255,215,61,0.2);
+      border-color: #ffd93d;
+    }
+
+    .page-box.main-path {
+      border-color: #4ade80;
+      background: linear-gradient(145deg, #1a3d2e, #2d4a3e);
+    }
+
+    .page-box.branch {
+      border-color: #60a5fa;
+      background: linear-gradient(145deg, #1a2d4d, #2d3d5c);
+    }
+
+    .page-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ffd93d;
+    }
+
+    .page-desc {
+      font-size: 0.85rem;
+      color: #aaa;
+      line-height: 1.4;
+    }
+
+    .page-label {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      margin-top: 10px;
+    }
+
+    .label-main {
+      background: #4ade80;
+      color: #1a1a2e;
+    }
+
+    .label-branch {
+      background: #60a5fa;
+      color: #1a1a2e;
+    }
+
+    .arrow {
+      font-size: 2rem;
+      color: #ffd93d;
+      animation: bounce 1s infinite;
+    }
+
+    .arrow-down {
+      display: block;
+      text-align: center;
+      font-size: 2rem;
+      color: #ffd93d;
+      margin: 10px 0;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .map-container {
+      background: linear-gradient(145deg, #2a3a2a, #1a2a1a);
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 40px;
+      border: 3px solid #4ade80;
+      position: relative;
+    }
+
+    .map-title {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #4ade80;
+      margin-bottom: 30px;
+    }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .map-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      z-index: 10;
+    }
+
+    .map-item {
+      background: #3d4a3d;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      border: 2px solid #4ade80;
+    }
+
+    .map-item.top-left { grid-column: 1; grid-row: 1; }
+    .map-item.top-right { grid-column: 2; grid-row: 1; }
+    .map-item.bottom-left { grid-column: 1; grid-row: 2; }
+    .map-item.bottom-right { grid-column: 2; grid-row: 2; }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
+
+    .summary {
+      background: rgba(255,215,61,0.1);
+      border: 1px solid #ffd93d;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .summary h3 {
+      color: #ffd93d;
+      margin-bottom: 15px;
+    }
+
+    .summary p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>🗺️ 冯思佳的世界 - 页面流程图</h1>
+
+  <div class="flow-container">
+    <!-- Step 1: Welcome -->
+    <div class="flow-row">
+      <div class="page-box main-path">
+        <div class="page-icon">👋</div>
+        <div class="page-title">欢迎页</div>
+        <div class="page-desc">你好，我是冯思佳<br>像素小人 + 音乐元素</div>
+        <span class="page-label label-main">主线路径</span>
+      </div>
+    </div>
+
+    <span class="arrow-down">⬇️</span>
+
+    <!-- Step 2: Who Am I -->
+    <div class="flow-row">
+      <div class="page-box main-path">
+        <div class="page-icon">👩‍💼</div>
+        <div class="page-title">我是谁</div>
+        <div class="page-desc">一句话介绍<br>气泡可视化<br>（公司/证书/能力/爱好）</div>
+        <span class="page-label label-main">主线路径</span>
+      </div>
+    </div>
+
+    <span class="arrow-down">⬇️</span>
+
+    <!-- Step 3: Growth Track -->
+    <div class="flow-row">
+      <div class="page-box main-path">
+        <div class="page-icon">🌱</div>
+        <div class="page-title">成长轨迹</div>
+        <div class="page-desc">RPG技能树风格<br>实习经历时间线<br>按行业+时间排序</div>
+        <span class="page-label label-main">主线路径</span>
+      </div>
+    </div>
+
+    <span class="arrow-down">⬇️</span>
+
+    <!-- Step 4: RPG Map -->
+    <div class="flow-row">
+      <div class="page-box main-path">
+        <div class="page-icon">🗺️</div>
+        <div class="page-title">RPG地图</div>
+        <div class="page-desc">分支选择入口<br>点击进入各区域</div>
+        <span class="page-label label-main">主线路径</span>
+      </div>
+    </div>
+
+    <span class="arrow-down">⬇️</span>
+
+    <!-- Step 5: Branch Pages -->
+    <div class="flow-row" style="margin-top: 20px;">
+      <div class="page-box branch">
+        <div class="page-icon">🚀</div>
+        <div class="page-title">项目空间</div>
+        <div class="page-desc">Pathway to Career</div>
+        <span class="page-label label-branch">分支</span>
+      </div>
+
+      <div class="page-box branch">
+        <div class="page-icon">🛍️</div>
+        <div class="page-title">项目经历</div>
+        <div class="page-desc">荐丰丰<br>小红书账号</div>
+        <span class="page-label label-branch">分支</span>
+      </div>
+
+      <div class="page-box branch">
+        <div class="page-icon">🏆</div>
+        <div class="page-title">竞赛经历</div>
+        <div class="page-desc">奥纬/经贸论文<br>上海证券杯</div>
+        <span class="page-label label-branch">分支</span>
+      </div>
+
+      <div class="page-box branch">
+        <div class="page-icon">⚔️</div>
+        <div class="page-title">技能大陆</div>
+        <div class="page-desc">产品/电商<br>商业化/市场</div>
+        <span class="page-label label-branch">分支</span>
+      </div>
+    </div>
+
+    <!-- Map Visualization -->
+    <div class="map-container">
+      <div class="map-title">🗺️ RPG 地图布局</div>
+
+      <div class="map-grid">
+        <div class="map-center">👩‍🌾</div>
+
+        <div class="map-item top-left">
+          <div style="font-size: 2rem;">🚀</div>
+          <div style="font-weight: bold;">项目空间</div>
+          <div style="font-size: 0.8rem; color: #aaa;">Pathway to Career</div>
+        </div>
+
+        <div class="map-item top-right">
+          <div style="font-size: 2rem;">🛍️</div>
+          <div style="font-weight: bold;">项目经历</div>
+          <div style="font-size: 0.8rem; color: #aaa;">荐丰丰/小红书</div>
+        </div>
+
+        <div class="map-item bottom-left">
+          <div style="font-size: 2rem;">🏆</div>
+          <div style="font-weight: bold;">竞赛经历</div>
+          <div style="font-size: 0.8rem; color: #aaa;">奥纬/经贸/上证杯</div>
+        </div>
+
+        <div class="map-item bottom-right">
+          <div style="font-size: 2rem;">⚔️</div>
+          <div style="font-weight: bold;">技能大陆</div>
+          <div style="font-size: 0.8rem; color: #aaa;">产品/电商/商业化</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #4ade80;"></div>
+          <span>主线路径（必看）</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #60a5fa;"></div>
+          <span>分支路径（可选）</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ffd93d;"></div>
+          <span>当前位置（你在这里）</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary">
+      <h3>📋 流程说明</h3>
+      <p>
+        <strong>主线路径（绿色）：</strong>欢迎页 → 我是谁 → 成长轨迹 → RPG地图<br>
+        <strong>分支路径（蓝色）：</strong>点击地图上的图标进入对应页面<br>
+        <strong>主线路径是每个访客都必须经过的核心内容</strong>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

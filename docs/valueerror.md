@@ -17,6 +17,7 @@ error: failed to connect to github.com port 443 after 21108 ms
 **解决方法：**
 - 多尝试几次推送，有时重试就能成功
 - 或使用 `--timeout` 参数增加超时时间
+- 等待几秒后再试（网络恢复）
 
 ---
 
@@ -109,36 +110,10 @@ Location: AboutSection.astro:41:40
 **解决方法：**
 - 将类型注解提前到脚本部分的 `const` 定义中
 - 不要在 JSX map 回调内部使用 inline 类型注解
-- 示例：
-```astro
-<!-- 错误写法 -->
-{timelineData.map((item) => {
-  const colorMap: Record<string, ...> = {...}  // 不能inline定义类型
-  return (...)
-})}
-
-<!-- 正确写法 -->
-<script>
-const colorMap: Record<string, ...> = {...};
-</script>
-{timelineData.map((item) => (
-  <div>{/* 使用外部定义的 colorMap */}</div>
-))}
-```
 
 ---
 
-## 问题 7：Tailwind 暗黑模式类名冲突
-
-**表现：** `text-dark/70` 写法部分环境可能不识别
-
-**解决方法：**
-- 使用完整的 Tailwind 颜色变量配置
-- 在 `tailwind.config.mjs` 中预定义颜色
-
----
-
-## 问题 8：文件编辑前未读取
+## 问题 7：文件编辑前未读取
 
 **表现：**
 ```
@@ -151,7 +126,7 @@ File has not been read yet. Read it first before writing to it.
 
 ---
 
-## 问题 9：跨目录操作 Git
+## 问题 8：跨目录操作 Git
 
 **表现：** `fatal: not a git repository`
 
@@ -163,7 +138,7 @@ File has not been read yet. Read it first before writing to it.
 
 ---
 
-## 问题 10：npm install 提交了 node_modules
+## 问题 9：npm install 提交了 node_modules
 
 **表现：** 仓库体积过大，包含数万文件
 
@@ -180,13 +155,35 @@ dist/
 
 ---
 
-## 问题 11：图片链接无法访问（阿里云 OSS）
+## 问题 10：sed 替换导致 CSS 语法错误
 
-**表现：** 无法直接通过 URL 获取图片内容
+**表现：**
+```
+Error: CSS syntax error at .../index.astro:534:3
+```
+
+**原因：** 使用 sed 批量替换时，把 `</style>` 标签后的 HTML 内容也替换了，导致 CSS 和 HTML 混在一起
 
 **解决方法：**
-- 让用户用文字描述代替图片内容
-- 或让用户直接在对话中粘贴文字信息
+- 使用更精确的 sed 模式
+- 或使用 Edit 工具手动替换
+- 必要时用 `git checkout` 恢复文件再重新编辑
+
+---
+
+## 问题 11：GitHub 网络连接持续失败
+
+**表现：**
+```
+fatal: unable to access 'https://github.com/...': Failed to connect to github.com port 443
+```
+
+**原因：** 国内网络长时间无法连接 GitHub
+
+**解决方法：**
+- 等待网络恢复后再次尝试
+- 多次重试，有时连接会恢复
+- 可以尝试 `git push` 多次（有时候第2-3次会成功）
 
 ---
 
@@ -196,8 +193,9 @@ dist/
 2. **Vercel 权限问题** → 确保 commit 作者和 Vercel 账号一致
 3. **工作目录** → 每条命令确认当前在正确目录
 4. **Astro 类型** → 不要在 JSX 表达式中 inline 类型定义
-5. **文档同步** → commit 后立即 push，避免本地堆积
+5. **sed 替换** → 使用精确匹配，避免破坏其他内容
+6. **文档同步** → commit 后立即 push，避免本地堆积
 
 ---
 
-*最后更新：2026-06-01*
+*最后更新：2026-06-02*

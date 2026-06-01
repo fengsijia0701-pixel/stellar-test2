@@ -2,13 +2,6 @@
 import timelineData from '../data/timeline.json';
 import ExperienceCard from './ExperienceCard.astro';
 
-const expColorMap: Record<string, { bg: string, border: string, text: string }> = {
-  accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
-  sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky' },
-  secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary' },
-  highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark' },
-};
-
 const projectColorMap: Record<string, { bg: string, border: string, text: string, icon: string }> = {
   accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent', icon: '📕' },
   highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark', icon: '🛍️' },

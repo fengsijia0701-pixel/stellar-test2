@@ -21,6 +21,7 @@
       "company": "字节跳动",
       "color": "accent",
       "icon": "🌐",
+      "industry": "internet",
       "brief": "主导斋月大促，Fashion GMV +52%",
       "projects": [
         {
@@ -53,6 +54,7 @@
       "company": "小红书",
       "color": "highlight",
       "icon": "📕",
+      "industry": "internet",
       "brief": "AIGC笔记内测，ROI +176%",
       "projects": [
         {
@@ -85,6 +87,7 @@
       "company": "美团",
       "color": "secondary",
       "icon": "🚴",
+      "industry": "internet",
       "brief": "活动GTV +85%，达人曝光1.76亿",
       "projects": [
         {
@@ -110,6 +113,7 @@
       "company": "哈啰",
       "color": "sky",
       "icon": "🚲",
+      "industry": "internet",
       "brief": "游历中国DAU 35万，ARPPU 25→38元",
       "projects": [
         {
@@ -128,6 +132,7 @@
       "company": "美敦力",
       "color": "accent",
       "icon": "🏥",
+      "industry": "medical",
       "brief": "医疗器械行业研究，产出10+篇报告",
       "projects": [
         {
@@ -153,6 +158,7 @@
       "company": "默克",
       "color": "secondary",
       "icon": "💊",
+      "industry": "medical",
       "brief": "合规风险评估，节省$25,000成本",
       "projects": [
         {
@@ -178,6 +184,7 @@
       "company": "安永",
       "color": "sky",
       "icon": "📊",
+      "industry": "finance",
       "brief": "紫光股份年审项目，参与16家子公司审计",
       "projects": [
         {

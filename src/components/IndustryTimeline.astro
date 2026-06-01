@@ -1,0 +1,139 @@
+---
+import timelineData from '../data/timeline.json';
+
+// 按行业分组
+const industries = {
+  internet: {
+    name: '互联网/科技',
+    icon: '🌐',
+    color: 'accent',
+    companies: [] as typeof timelineData.experience
+  },
+  medical: {
+    name: '医疗健康',
+    icon: '🏥',
+    color: 'secondary',
+    companies: [] as typeof timelineData.experience
+  },
+  finance: {
+    name: '金融/咨询',
+    icon: '💼',
+    color: 'sky',
+    companies: [] as typeof timelineData.experience
+  }
+};
+
+// 根据公司名称推断行业
+const companyToIndustry: Record<string, keyof typeof industries> = {
+  '字节跳动': 'internet',
+  '小红书': 'internet',
+  '美团': 'internet',
+  '哈啰': 'internet',
+  '美敦力': 'medical',
+  '默克': 'medical',
+  '安永': 'finance'
+};
+
+// 填充数据
+timelineData.experience.forEach(exp => {
+  const industry = companyToIndustry[exp.company];
+  if (industry && industries[industry]) {
+    industries[industry].companies.push(exp);
+  }
+});
+
+// 计算时长
+const calculateDuration = (period: string): string => {
+  const [start, end] = period.split(' - ');
+  const startDate = new Date(start.replace('.', '-'));
+  const endDate = end.includes('至今') ? new Date() : new Date(end.replace('.', '-'));
+  const months = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30));
+  if (months >= 12) {
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+    return remainingMonths > 0 ? `${years}年${remainingMonths}个月` : `${years}年`;
+  }
+  return `${months}个月`;
+};
+
+const colorMap = {
+  accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent', bar: 'bg-accent' },
+  sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky', bar: 'bg-sky' },
+  secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary', bar: 'bg-secondary' }
+};
+---
+
+<section class="py-16 bg-cream">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="font-heading text-3xl font-bold text-dark text-center mb-4">
+      🌱 成长轨迹
+    </h2>
+    <p class="text-dark/60 text-center mb-12 max-w-2xl mx-auto">
+      从互联网到医疗健康再到金融咨询，每一段经历都是升级路上的宝贵经验
+    </p>
+
+    <div class="space-y-12">
+      {Object.values(industries).map((industry) => (
+        <div class="bg-white rounded-stardew border-2 border-dark/10 p-6 shadow-stardew">
+          {/* 行业标题 */}
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-3xl">{industry.icon}</span>
+            <h3 class={`font-heading text-xl font-bold ${colorMap[industry.color as keyof typeof colorMap].text}`}>
+              {industry.name}
+            </h3>
+            <span class={`px-3 py-1 rounded-full text-sm ${colorMap[industry.color as keyof typeof colorMap].bg} ${colorMap[industry.color as keyof typeof colorMap].text}`}>
+              {industry.companies.length} 段经历
+            </span>
+          </div>
+
+          {/* 公司路径 */}
+          <div class="relative">
+            {/* 连接线 */}
+            <div class={`absolute top-6 left-0 right-0 h-1 ${colorMap[industry.color as keyof typeof colorMap].bar}/30 rounded`}
+                 style="left: 5%; right: 5%;" />
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+              {industry.companies.map((company, idx) => (
+                <div class="relative">
+                  {/* 路径节点 */}
+                  <div class={`absolute top-6 w-3 h-3 rounded-full ${colorMap[industry.color as keyof typeof colorMap].bar} z-10`}
+                       style={`left: ${5 + idx * 30}%`} />
+
+                  {/* 公司卡片 */}
+                  <div class={`mt-8 p-4 rounded-stardew border-2 ${colorMap[industry.color as keyof typeof colorMap].border} ${colorMap[industry.color as keyof typeof colorMap].bg} hover:shadow-stardew transition-all duration-300 hover:-translate-y-1`}>
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-2xl">{company.icon}</span>
+                      <span class="font-heading font-bold text-dark text-sm">{company.company}</span>
+                    </div>
+                    <p class="text-dark/70 text-xs">{company.subtitle}</p>
+                    <div class="flex items-center gap-2 mt-2">
+                      <p class={`${colorMap[industry.color as keyof typeof colorMap].text} text-xs font-medium`}>
+                        {company.period}
+                      </p>
+                      <span class="text-xs text-dark/50">
+                        ({calculateDuration(company.period)})
+                      </span>
+                    </div>
+                    <p class="text-dark/60 text-xs mt-2 line-clamp-2">{company.brief}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 成长进度条 */}
+          <div class="mt-6">
+            <div class="flex items-center justify-between text-xs text-dark/60 mb-2">
+              <span>成长进度</span>
+              <span>{industry.companies.reduce((acc, c) => acc + (c.projects?.length || 0), 0)} 个项目</span>
+            </div>
+            <div class={`h-2 rounded-full ${colorMap[industry.color as keyof typeof colorMap].bar}/20 overflow-hidden`}>
+              <div class={`h-full ${colorMap[industry.color as keyof typeof colorMap].bar} rounded-full transition-all duration-500`}
+                   style={`width: ${Math.min(100, industry.companies.length * 25)}%`} />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

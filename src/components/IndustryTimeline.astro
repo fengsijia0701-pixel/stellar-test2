@@ -1,6 +1,44 @@
 ---
 import timelineData from '../data/timeline.json';
 
+const companyInfo: Record<string, { description: string; scale: string; position: string }> = {
+  '字节跳动': {
+    description: '全球最大短视频平台 TikTok 母公司',
+    scale: '市值超 2000 亿美元，员工超 15 万人',
+    position: '全球最具价值独角兽之一'
+  },
+  '小红书': {
+    description: '月活 2.6 亿的生活方式分享平台',
+    scale: '估值超 200 亿美元',
+    position: '国内头部社交电商平台'
+  },
+  '美团': {
+    description: '国内最大本地生活服务平台',
+    scale: '年营收超 2000 亿元',
+    position: '外卖/酒旅/到店龙头'
+  },
+  '哈啰': {
+    description: '阿里旗下出行科技公司',
+    scale: '哈啰单车覆盖超 400 城市',
+    position: '共享单车行业头部'
+  },
+  '美敦力': {
+    description: '全球最大医疗器械公司',
+    scale: '市值超 1000 亿美元',
+    position: '心脏支架/胰岛素泵等领域全球第一'
+  },
+  '默克': {
+    description: '全球领先科技公司',
+    scale: '年营收超 200 亿欧元',
+    position: '生命科学/医药健康领域龙头'
+  },
+  '安永': {
+    description: '全球四大会计师事务所之一',
+    scale: '覆盖 150+ 国家，30 万+ 员工',
+    position: '全球顶级审计/咨询机构'
+  }
+};
+
 // 按行业分组
 const industries = {
   internet: {
@@ -111,7 +149,8 @@ const colorMap = {
                        style={`left: ${5 + idx * 30}%`} />
 
                   {/* 公司卡片 */}
-                  <div class={`mt-8 p-4 rounded-stardew border-2 ${colorMap[industry.color as keyof typeof colorMap].border} ${colorMap[industry.color as keyof typeof colorMap].bg} hover:shadow-stardew transition-all duration-300 hover:-translate-y-1`}>
+                  <div class={`mt-8 p-4 rounded-stardew border-2 ${colorMap[industry.color as keyof typeof colorMap].border} ${colorMap[industry.color as keyof typeof colorMap].bg} hover:shadow-stardew transition-all duration-300 hover:-translate-y-1`}
+                       data-company={company.company}>
                     <div class="flex items-center gap-2 mb-2">
                       <span class="text-2xl">{company.icon}</span>
                       <span class="font-heading font-bold text-dark text-sm">{company.company}</span>
@@ -148,3 +187,127 @@ const colorMap = {
     </div>
   </div>
 </section>
+
+<!-- Company Info Popup -->
+<div id="company-popup" class="fixed z-50 hidden pointer-events-none">
+  <div class="bg-white rounded-xl border-2 border-dark/10 shadow-elevated p-4 min-w-[280px] max-w-[320px]">
+    <h4 id="popup-company-name" class="font-heading font-bold text-dark text-lg mb-2"></h4>
+    <p id="popup-description" class="text-dark/80 text-sm mb-2"></p>
+    <div class="space-y-1 text-xs text-dark/60">
+      <p><span class="font-medium text-dark/70">规模：</span><span id="popup-scale"></span></p>
+      <p><span class="font-medium text-dark/70">地位：</span><span id="popup-position"></span></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  #company-popup {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  #company-popup.hidden {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  #company-popup:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  declare global {
+    interface Window {
+      companyInfo: Record<string, { description: string; scale: string; position: string }>;
+    }
+  }
+
+  window.companyInfo = {
+    '字节跳动': {
+      description: '全球最大短视频平台 TikTok 母公司',
+      scale: '市值超 2000 亿美元，员工超 15 万人',
+      position: '全球最具价值独角兽之一'
+    },
+    '小红书': {
+      description: '月活 2.6 亿的生活方式分享平台',
+      scale: '估值超 200 亿美元',
+      position: '国内头部社交电商平台'
+    },
+    '美团': {
+      description: '国内最大本地生活服务平台',
+      scale: '年营收超 2000 亿元',
+      position: '外卖/酒旅/到店龙头'
+    },
+    '哈啰': {
+      description: '阿里旗下出行科技公司',
+      scale: '哈啰单车覆盖超 400 城市',
+      position: '共享单车行业头部'
+    },
+    '美敦力': {
+      description: '全球最大医疗器械公司',
+      scale: '市值超 1000 亿美元',
+      position: '心脏支架/胰岛素泵等领域全球第一'
+    },
+    '默克': {
+      description: '全球领先科技公司',
+      scale: '年营收超 200 亿欧元',
+      position: '生命科学/医药健康领域龙头'
+    },
+    '安永': {
+      description: '全球四大会计师事务所之一',
+      scale: '覆盖 150+ 国家，30 万+ 员工',
+      position: '全球顶级审计/咨询机构'
+    }
+  };
+
+  const popup = document.getElementById('company-popup');
+  const popupCompanyName = document.getElementById('popup-company-name');
+  const popupDescription = document.getElementById('popup-description');
+  const popupScale = document.getElementById('popup-scale');
+  const popupPosition = document.getElementById('popup-position');
+
+  function showCompanyPopup(companyName: string, event: MouseEvent) {
+    const info = window.companyInfo[companyName];
+    if (!info || !popup || !popupCompanyName || !popupDescription || !popupScale || !popupPosition) return;
+
+    popupCompanyName.textContent = companyName;
+    popupDescription.textContent = info.description;
+    popupScale.textContent = info.scale;
+    popupPosition.textContent = info.position;
+
+    popup.classList.remove('hidden');
+
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const popupRect = popup.getBoundingClientRect();
+
+    let left = rect.left + rect.width / 2 - popupRect.width / 2;
+    let top = rect.bottom + 10;
+
+    // Keep popup within viewport
+    if (left < 10) left = 10;
+    if (left + popupRect.width > window.innerWidth - 10) {
+      left = window.innerWidth - popupRect.width - 10;
+    }
+    if (top + popupRect.height > window.innerHeight - 10) {
+      top = rect.top - popupRect.height - 10;
+    }
+
+    popup.style.left = `${left}px`;
+    popup.style.top = `${top}px`;
+  }
+
+  function hideCompanyPopup() {
+    if (popup) {
+      popup.classList.add('hidden');
+    }
+  }
+
+  // Attach hover events to company cards
+  document.querySelectorAll('[data-company]').forEach(card => {
+    const companyName = card.getAttribute('data-company');
+    if (companyName) {
+      card.addEventListener('mouseenter', (e: MouseEvent) => showCompanyPopup(companyName, e));
+      card.addEventListener('mouseleave', hideCompanyPopup);
+    }
+  });
+</script>

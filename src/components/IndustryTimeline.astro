@@ -1,44 +1,6 @@
 ---
 import timelineData from '../data/timeline.json';
 
-const companyInfo: Record<string, { description: string; scale: string; position: string }> = {
-  '字节跳动': {
-    description: '全球最大短视频平台 TikTok 母公司',
-    scale: '市值超 2000 亿美元，员工超 15 万人',
-    position: '全球最具价值独角兽之一'
-  },
-  '小红书': {
-    description: '月活 2.6 亿的生活方式分享平台',
-    scale: '估值超 200 亿美元',
-    position: '国内头部社交电商平台'
-  },
-  '美团': {
-    description: '国内最大本地生活服务平台',
-    scale: '年营收超 2000 亿元',
-    position: '外卖/酒旅/到店龙头'
-  },
-  '哈啰': {
-    description: '阿里旗下出行科技公司',
-    scale: '哈啰单车覆盖超 400 城市',
-    position: '共享单车行业头部'
-  },
-  '美敦力': {
-    description: '全球最大医疗器械公司',
-    scale: '市值超 1000 亿美元',
-    position: '心脏支架/胰岛素泵等领域全球第一'
-  },
-  '默克': {
-    description: '全球领先科技公司',
-    scale: '年营收超 200 亿欧元',
-    position: '生命科学/医药健康领域龙头'
-  },
-  '安永': {
-    description: '全球四大会计师事务所之一',
-    scale: '覆盖 150+ 国家，30 万+ 员工',
-    position: '全球顶级审计/咨询机构'
-  }
-};
-
 // 按行业分组
 const industries = {
   internet: {

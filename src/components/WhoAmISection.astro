@@ -5,121 +5,293 @@ import BubbleCloud from './BubbleCloud.astro';
 const { intro, companies, certificates, skills, hobbies } = whoAmIData;
 ---
 
-<section id="who-am-i" class="py-20 bg-bgLight relative overflow-hidden">
-  <!-- Decorative background elements -->
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-10 left-10 w-32 h-32 bg-highlight/10 rounded-full blur-3xl animate-float"></div>
-    <div class="absolute top-40 right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
-    <div class="absolute bottom-20 left-1/4 w-36 h-36 bg-secondary/10 rounded-full blur-3xl animate-float" style="animation-delay: 0.5s;"></div>
-  </div>
+<section id="whoami" class="fullscreen-page stardew-page">
+  <!-- Grass & Sky Background -->
+  <div class="grass-sky-background"></div>
 
-  <div class="max-w-6xl mx-auto px-4 relative z-10">
-    <!-- Page title -->
-    <h2 class="font-heading text-5xl font-bold text-dark text-center mb-4 animate-fade-in-up">
-      <span class="inline-block mr-2">🌻</span> 我是谁
-    </h2>
+  <!-- Wood Panel -->
+  <div class="stardew-panel content-panel">
+    <!-- Title -->
+    <h1 class="stardew-title">🌻 我是谁</h1>
 
-    <!-- Introduction text -->
-    <p class="text-center text-dark/70 text-lg max-w-3xl mx-auto mb-16 animate-fade-in-up" style="animation-delay: 0.1s;">
-      {intro}
+    <!-- One-line intro -->
+    <p class="intro-text">
+      港大市场营销硕士，擅长数据驱动增长与 AI 产品运营
     </p>
 
-    <!-- Bubble cloud visualization -->
-    <div class="space-y-16">
-      <!-- Companies section -->
-      <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
-        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
-          <span class="text-sky">🏢</span>
-          <span>实习经历</span>
-        </h3>
-        <p class="text-dark/50 text-sm text-center mb-8">气泡越大，代表角色越重要</p>
-        <BubbleCloud items={companies} type="company" />
-      </div>
+    <!-- Bubble Cloud -->
+    <div class="bubble-cloud">
+      <!-- Company bubbles -->
+      <div class="bubble company-bubble large">字节跳动</div>
+      <div class="bubble company-bubble medium">小红书</div>
+      <div class="bubble company-bubble medium">美团</div>
+      <div class="bubble company-bubble small">哈啰</div>
 
-      <!-- Certificates section -->
-      <div class="animate-fade-in-up" style="animation-delay: 0.3s;">
-        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
-          <span class="text-highlight">📜</span>
-          <span>证书与成就</span>
-        </h3>
-        <BubbleCloud items={certificates} type="certificate" />
-      </div>
+      <!-- Certificate bubbles -->
+      <div class="bubble cert-bubble">IELTS 7.5</div>
+      <div class="bubble cert-bubble">ACCA</div>
+      <div class="bubble cert-bubble">港大硕士</div>
 
-      <!-- Skills section -->
-      <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
-        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
-          <span class="text-secondary">💼</span>
-          <span>核心能力</span>
-        </h3>
-        <BubbleCloud items={skills} type="skill" />
-      </div>
+      <!-- Skill bubbles -->
+      <div class="bubble skill-bubble">数据分析</div>
+      <div class="bubble skill-bubble">电商运营</div>
 
-      <!-- Hobbies section -->
-      <div class="animate-fade-in-up" style="animation-delay: 0.5s;">
-        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
-          <span class="text-accent">🎵</span>
-          <span>特长爱好</span>
-        </h3>
-        <BubbleCloud items={hobbies} type="hobby" />
-      </div>
+      <!-- Hobby bubbles -->
+      <div class="bubble hobby-bubble">🎵 唱歌</div>
+      <div class="bubble hobby-bubble">🎧 听音乐</div>
     </div>
 
-    <!-- Navigation buttons -->
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-20 animate-fade-in-up" style="animation-delay: 0.6s;">
-      <a
-        href="#about"
-        class="px-6 py-3 bg-secondary/20 border-2 border-secondary text-secondary font-heading font-bold rounded-stardew hover:bg-secondary/30 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
-      >
-        <span>👈</span>
-        <span>返回关于我</span>
-      </a>
-      <a
-        href="#skills"
-        class="px-6 py-3 bg-accent/20 border-2 border-accent text-accent font-heading font-bold rounded-stardew hover:bg-accent/30 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
-      >
-        <span>继续探索</span>
-        <span>👉</span>
-      </a>
-      <a
-        href="/"
-        class="px-6 py-3 bg-highlight/30 border-2 border-highlight text-dark font-heading font-bold rounded-stardew hover:bg-highlight/40 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
-      >
-        <span>🏠</span>
-        <span>返回首页</span>
-      </a>
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button id="prevBtn" class="stardew-button">◀ 上一步</button>
+      <button id="nextBtn" class="stardew-button">继续 ▶</button>
     </div>
+  </div>
+
+  <!-- Decorations -->
+  <div class="decorations">
+    <span class="float">🌸</span>
+    <span class="float">🌼</span>
   </div>
 </section>
 
 <style>
-  /* Fade in up animation */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Fullscreen page layout */
+  .fullscreen-page {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow: hidden;
   }
 
-  .animate-fade-in-up {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease-out forwards;
+  /* Grass & Sky Background */
+  .grass-sky-background {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, #87CEEB 0%, #87CEEB 60%, #7CB342 60%, #7CB342 100%);
+    z-index: 0;
   }
 
-  /* Floating animation for decorations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-15px);
-    }
+  .grass-sky-background::before {
+    content: '';
+    position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 20px,
+        rgba(139, 90, 43, 0.1) 20px,
+        rgba(139, 90, 43, 0.1) 22px
+      );
+    pointer-events: none;
   }
 
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
+  /* Content panel */
+  .content-panel {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    width: 100%;
+    padding: 2.5rem;
+    background:
+      linear-gradient(135deg, var(--color-parchment) 0%, #F5E6C8 50%, var(--color-parchment) 100%);
+    border: 6px solid var(--color-wood);
+    border-radius: 16px;
+    box-shadow:
+      inset 0 0 30px rgba(139, 90, 43, 0.15),
+      0 8px 0 var(--color-wood-dark),
+      0 12px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Title styling */
+  .stardew-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-wood-dark);
+    text-align: center;
+    text-shadow:
+      3px 3px 0 var(--color-cream),
+      -1px -1px 0 var(--color-wood);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Intro text */
+  .intro-text {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 248, 231, 0.7);
+    border-radius: 12px;
+    border: 2px dashed var(--color-wood-light);
+  }
+
+  /* Bubble cloud layout */
+  .bubble-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  /* Bubble base styles */
+  .bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 12px 20px;
+    font-family: 'Gaegu', cursive;
+    font-weight: 700;
+    box-shadow:
+      0 4px 0 var(--color-wood-dark),
+      0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: bubbleFloat 3s ease-in-out infinite;
+    cursor: default;
+  }
+
+  .bubble:hover {
+    transform: scale(1.1) translateY(-4px);
+    box-shadow:
+      0 6px 0 var(--color-wood-dark),
+      0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Company bubble - blue gradient */
+  .company-bubble {
+    background: linear-gradient(135deg, #64B5F6, #42A5F5);
+    color: white;
+    font-size: 1rem;
+  }
+
+  /* Certificate bubble - gold gradient */
+  .cert-bubble {
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    color: var(--color-wood-dark);
+    font-size: 0.9rem;
+  }
+
+  /* Skill bubble - green gradient */
+  .skill-bubble {
+    background: linear-gradient(135deg, #81C784, #66BB6A);
+    color: white;
+    font-size: 1rem;
+  }
+
+  /* Hobby bubble - pink gradient */
+  .hobby-bubble {
+    background: linear-gradient(135deg, #F48FB1, #F06292);
+    color: white;
+    font-size: 1rem;
+  }
+
+  /* Size variants */
+  .large {
+    width: 120px;
+    height: 120px;
+    font-size: 1.1rem;
+  }
+
+  .medium {
+    width: 100px;
+    height: 100px;
+    font-size: 1rem;
+  }
+
+  .small {
+    width: 80px;
+    height: 80px;
+    font-size: 0.9rem;
+  }
+
+  /* Bubble float animation */
+  @keyframes bubbleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .bubble:nth-child(odd) { animation-delay: 0.5s; }
+  .bubble:nth-child(even) { animation-delay: 1s; }
+
+  /* Navigation buttons container */
+  .navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 3px solid var(--color-wood-light);
+  }
+
+  /* Decorations */
+  .decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .decorations .float {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatDecor 4s ease-in-out infinite;
+  }
+
+  .decorations .float:nth-child(1) {
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .decorations .float:nth-child(2) {
+    top: 25%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+
+  @keyframes floatDecor {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(10deg); }
   }
 </style>
+
+<script>
+  import { soundEffects } from '../scripts/sound';
+
+  // Button click handlers with sound
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  prevBtn?.addEventListener('click', () => {
+    soundEffects.playClick();
+    // Navigate to previous section (about)
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    soundEffects.playClick();
+    // Navigate to next section (experience)
+    const experienceSection = document.getElementById('experience');
+    if (experienceSection) {
+      experienceSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>

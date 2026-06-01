@@ -63,33 +63,6 @@ const compColorMap: Record<string, { bg: string, border: string, text: string }>
       </div>
     </div>
 
-    <!-- 实习经历 -->
-    <div class="mt-20">
-      <h3 class="font-heading text-2xl font-semibold text-dark mb-8 flex items-center gap-2">
-        <span>💼</span> 实习经历
-      </h3>
-
-      <!-- Connected Timeline with Icons -->
-      <div class="relative">
-        <!-- Connection line -->
-        <div class="absolute top-8 left-0 right-0 h-1 bg-gradient-to-r from-accent/30 via-secondary/30 to-sky/30 hidden md:block" style="left: 5%; right: 5%;" />
-
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-          {timelineData.experience.map((item) => (
-            <ExperienceCard
-              company={item.company}
-              period={item.period}
-              role={item.subtitle}
-              color={item.color}
-              icon={item.icon}
-              brief={item.brief}
-              projects={item.projects}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-
     <!-- 项目经历 -->
     <div class="mt-20">
       <h3 class="font-heading text-2xl font-semibold text-dark mb-8 flex items-center gap-2">

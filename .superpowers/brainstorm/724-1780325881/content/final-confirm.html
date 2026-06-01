@@ -1,0 +1,110 @@
+<h2>最终选择确认</h2>
+<p class="subtitle">请检查你的选择，点击提交按钮确认</p>
+
+<div class="section">
+  <h3>已选项目：</h3>
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>✅ AboutSection 处理</h4>
+      <ul>
+        <li>选项 A：保留"我是谁"介绍 + 教育背景，删除实习经历卡片</li>
+        <li>IndustryTimeline 完全替代实习经历部分</li>
+      </ul>
+    </div>
+    <div class="pros">
+      <h4>✅ Hover 弹窗内容</h4>
+      <ul>
+        <li>选项 B（中等弹窗）：行业地位 + 主营业务 + 公司规模</li>
+      </ul>
+    </div>
+    <div class="pros">
+      <h4>⏳ 光标样式</h4>
+      <ul>
+        <li>请在下方选择</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top: 1.5rem;">光标样式</h3>
+
+<div class="options">
+  <div class="option" data-choice="fork" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>🌾 叉耙光标</h3>
+      <p>Stardew Valley 农具风格</p>
+    </div>
+  </div>
+  <div class="option" data-choice="sparkle" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>✨ 星星拖尾</h3>
+      <p>梦幻星星闪烁效果</p>
+    </div>
+  </div>
+  <div class="option" data-choice="sunflower" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>🌻 向日葵光标</h3>
+      <p>向日葵 emoji 替换光标</p>
+    </div>
+  </div>
+  <div class="option" data-choice="custom" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>🎨 自定义</h3>
+      <p>你来指定 emoji 或效果</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 2rem; padding: 1.5rem; background: #f5f5f5; border-radius: 12px; text-align: center;">
+  <p style="font-weight: bold; margin-bottom: 1rem;">确认以上选择并提交</p>
+  <button onclick="submitChoices()" style="padding: 1rem 3rem; font-size: 1.2rem; background: linear-gradient(135deg, #FF6B35, #4CAF50); color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    🚀 提交并开始执行
+  </button>
+</div>
+
+<script>
+let submitted = false;
+
+function submitChoices() {
+  if (submitted) return;
+
+  const selections = Array.from(document.querySelectorAll('.option.selected')).map(el => el.dataset.choice);
+
+  if (selections.length === 0) {
+    alert('请先选择光标样式！');
+    return;
+  }
+
+  submitted = true;
+
+  // 记录提交事件
+  const choice = selections[selections.length - 1];
+  const choiceTexts = {
+    'fork': 'A-叉耙光标',
+    'sparkle': 'B-星星拖尾',
+    'sunflower': 'C-向日葵光标',
+    'custom': 'D-自定义'
+  };
+
+  // 创建一个标记文件表示提交
+  const event = {
+    type: 'submit',
+    choices: {
+      aboutSection: 'a',
+      hoverPopup: 'medium',
+      cursorStyle: choice
+    },
+    text: 'ABOUT:A-保留教育删除实习 | HOVER:B-中等弹窗 | CURSOR:' + choiceTexts[choice],
+    timestamp: Date.now()
+  };
+
+  // 触发自定义事件让服务器记录
+  window.dispatchEvent(new CustomEvent('submit-choices', { detail: event }));
+
+  alert('✅ 选择已提交！\n\nAboutSection: A（保留教育删除实习）\nHover弹窗: B（中等弹窗）\n光标样式: ' + choiceTexts[choice] + '\n\n正在返回终端开始执行...');
+}
+</script>

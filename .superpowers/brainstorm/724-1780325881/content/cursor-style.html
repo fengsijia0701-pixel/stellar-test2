@@ -1,0 +1,53 @@
+<h2>光标样式选择</h2>
+<p class="subtitle">你希望网站的光标是什么风格？</p>
+
+<div class="options">
+  <div class="option" data-choice="fork" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>🌾 叉耙光标</h3>
+      <p>Stardew Valley 农具风格的手型光标，保留游戏特色</p>
+    </div>
+  </div>
+  <div class="option" data-choice="sparkle" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>✨ 星星拖尾</h3>
+      <p>光标移动时带有星星闪烁和拖尾效果，梦幻可爱</p>
+    </div>
+  </div>
+  <div class="option" data-choice="sunflower" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>🌻 向日葵光标</h3>
+      <p>用向日葵 emoji 替换默认光标，呼应你的农民形象定位</p>
+    </div>
+  </div>
+  <div class="option" data-choice="custom" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>自定义</h3>
+      <p>你提供一个 emoji 或参考图</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 2rem;">
+  <h3>确认提交</h3>
+  <p>请确认以上所有选择后，点击下方按钮提交</p>
+  <button onclick="submitAll()" style="margin-top: 1rem; padding: 1rem 2rem; font-size: 1.1rem; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+    ✅ 提交确认所有选择
+  </button>
+</div>
+
+<script>
+function submitAll() {
+  const events = document.querySelector('.state-indicator');
+  if (events) {
+    const selected = Array.from(document.querySelectorAll('.option.selected')).map(el => el.dataset.choice);
+    alert('已提交选择:\n1. AboutSection: 选项A（保留教育删除实习）\n2. Hover弹窗: 选项B（中等弹窗）\n3. 光标样式: ' + (selected.includes('fork') ? 'A-叉耙' : selected.includes('sparkle') ? 'B-星星拖尾' : selected.includes('sunflower') ? 'C-向日葵' : 'D-自定义') + '\n\n正在返回终端处理...');
+  } else {
+    alert('请先做出选择！');
+  }
+}
+</script>

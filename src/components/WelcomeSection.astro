@@ -1,0 +1,323 @@
+---
+---
+
+<section id="welcome" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-sky/20 via-white to-secondary/10">
+  <!-- Particle Background -->
+  <div class="particles" aria-hidden="true">
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 0.5s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 2.5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 4.5s;"></div>
+    <div class="particle" style="left: 15%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 25%; animation-delay: 7s;"></div>
+    <div class="particle" style="left: 35%; animation-delay: 1.5s;"></div>
+    <div class="particle" style="left: 45%; animation-delay: 3.5s;"></div>
+    <div class="particle" style="left: 55%; animation-delay: 5.5s;"></div>
+    <div class="particle" style="left: 65%; animation-delay: 7.5s;"></div>
+    <div class="particle" style="left: 75%; animation-delay: 2.2s;"></div>
+    <div class="particle" style="left: 85%; animation-delay: 4.2s;"></div>
+    <div class="particle" style="left: 95%; animation-delay: 6.2s;"></div>
+  </div>
+
+  <!-- Background decorations -->
+  <div class="absolute top-10 left-10 text-6xl animate-float opacity-60">🌸</div>
+  <div class="absolute top-20 right-20 text-4xl animate-float" style="animation-delay: 0.5s">🌼</div>
+  <div class="absolute bottom-20 left-1/4 text-5xl animate-float" style="animation-delay: 1s">🍀</div>
+  <div class="absolute bottom-10 right-1/4 text-4xl animate-float" style="animation-delay: 1.5s">🌻</div>
+  <div class="absolute top-1/3 left-10 text-3xl animate-float" style="animation-delay: 0.8s">✨</div>
+  <div class="absolute top-1/4 right-10 text-3xl animate-float" style="animation-delay: 1.2s">⭐</div>
+
+  <div class="text-center relative z-10 px-4">
+    <!-- Pixel Character -->
+    <div class="pixel-character mb-8 animate-float">
+      <!-- Character body using pixel art technique -->
+      <div class="pixel-character-sprite">
+        <!-- Hair -->
+        <div class="pixel-hair"></div>
+        <!-- Face -->
+        <div class="pixel-face">
+          <!-- Eyes -->
+          <div class="pixel-eyes">
+            <div class="pixel-eye left"></div>
+            <div class="pixel-eye right"></div>
+          </div>
+          <!-- Blush -->
+          <div class="pixel-blush left"></div>
+          <div class="pixel-blush right"></div>
+          <!-- Smile -->
+          <div class="pixel-smile"></div>
+        </div>
+        <!-- Body/Shirt -->
+        <div class="pixel-body"></div>
+        <!-- Backpack -->
+        <div class="pixel-backpack"></div>
+      </div>
+      <!-- Shadow -->
+      <div class="pixel-shadow"></div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="font-heading text-4xl md:text-6xl font-bold text-dark mb-4 animate-fade-in-up">
+      你好，我是
+    </h1>
+    <h2 class="font-heading text-5xl md:text-7xl font-bold text-primary mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
+      冯思佳
+    </h2>
+
+    <!-- Subtitle -->
+    <p class="text-xl md:text-2xl text-dark/70 mb-8 animate-fade-in-up" style="animation-delay: 0.2s">
+      产品 / 运营 / 市场营销
+    </p>
+
+    <!-- Tagline -->
+    <div class="inline-block animate-fade-in-up" style="animation-delay: 0.3s">
+      <span class="px-6 py-3 bg-highlight/20 border-2 border-highlight/50 rounded-full text-dark font-medium text-lg">
+        让每一次大促都有迹可循
+      </span>
+    </div>
+
+    <!-- Start Button -->
+    <div class="mt-12 animate-fade-in-up" style="animation-delay: 0.4s">
+      <button
+        id="startBtn"
+        class="group px-10 py-4 bg-primary text-light rounded-stardew font-medium text-xl hover:scale-105 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-3 mx-auto"
+      >
+        <span>开始探索</span>
+        <span class="group-hover:translate-x-1 transition-transform">➤</span>
+      </button>
+      <p class="mt-3 text-sm text-dark/40">点击进入我的 RPG 世界</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Pixel Character */
+  .pixel-character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pixel-character-sprite {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    image-rendering: pixelated;
+  }
+
+  /* Hair - dark brown, bob cut style */
+  .pixel-hair {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 60px;
+    height: 35px;
+    background: transparent;
+    box-shadow:
+      /* Top row */
+      8px 0 0 #4a3728,
+      16px 0 0 #4a3728,
+      24px 0 0 #4a3728,
+      32px 0 0 #4a3728,
+      40px 0 0 #4a3728,
+      48px 0 0 #4a3728,
+      /* Second row */
+      0 8px 0 #4a3728,
+      8px 8px 0 #4a3728,
+      16px 8px 0 #5c4033,
+      24px 8px 0 #5c4033,
+      32px 8px 0 #5c4033,
+      40px 8px 0 #5c4033,
+      48px 8px 0 #4a3728,
+      56px 8px 0 #4a3728,
+      /* Third row - bangs */
+      0 16px 0 #4a3728,
+      8px 16px 0 #5c4033,
+      16px 16px 0 #6b4c3a,
+      24px 16px 0 #6b4c3a,
+      32px 16px 0 #5c4033,
+      40px 16px 0 #5c4033,
+      48px 16px 0 #4a3728,
+      56px 16px 0 #4a3728,
+      /* Side hair left */
+      0 24px 0 #4a3728,
+      8px 24px 0 #4a3728,
+      /* Side hair right */
+      48px 24px 0 #4a3728,
+      56px 24px 0 #4a3728,
+      /* More hair sides */
+      0 32px 0 #4a3728,
+      8px 32px 0 #4a3728,
+      48px 32px 0 #4a3728,
+      56px 32px 0 #4a3728,
+      /* Hair bottom */
+      8px 40px 0 #4a3728,
+      48px 40px 0 #4a3728;
+    background-color: transparent;
+  }
+
+  /* Face - skin tone */
+  .pixel-face {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+    width: 48px;
+    height: 32px;
+    background: #fdbf8f;
+    box-shadow:
+      /* Eyes */
+      8px 12px 0 #3d2914,
+      32px 12px 0 #3d2914,
+      /* Blush */
+      4px 18px 0 #ffb6a3,
+      36px 18px 0 #ffb6a3,
+      /* Smile */
+      20px 22px 0 #3d2914,
+      24px 22px 0 #3d2914;
+  }
+
+  .pixel-eyes {
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  .pixel-eye {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #3d2914;
+    top: 12px;
+  }
+
+  .pixel-eye.left { left: 10px; }
+  .pixel-eye.right { right: 10px; }
+
+  .pixel-blush {
+    position: absolute;
+    width: 8px;
+    height: 4px;
+    background: #ffb6a3;
+    border-radius: 50%;
+    top: 18px;
+    opacity: 0.7;
+  }
+
+  .pixel-blush.left { left: 4px; }
+  .pixel-blush.right { right: 4px; }
+
+  .pixel-smile {
+    position: absolute;
+    width: 8px;
+    height: 4px;
+    border-bottom: 3px solid #3d2914;
+    border-radius: 0 0 50% 50%;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Body - pink shirt with collar */
+  .pixel-body {
+    position: absolute;
+    top: 56px;
+    left: 16px;
+    width: 48px;
+    height: 28px;
+    background: #e8a0a0;
+    box-shadow:
+      /* Collar */
+      16px 0 0 #d88888,
+      24px 0 0 #d88888,
+      32px 0 0 #d88888,
+      /* Shirt body */
+      0 8px 0 #e8a0a0,
+      8px 8px 0 #e8a0a0,
+      16px 8px 0 #e8a0a0,
+      24px 8px 0 #f0b0b0,
+      32px 8px 0 #e8a0a0,
+      40px 8px 0 #e8a0a0,
+      8px 16px 0 #e8a0a0,
+      16px 16px 0 #e8a0a0,
+      24px 16px 0 #e8a0a0,
+      32px 16px 0 #e8a0a0,
+      40px 16px 0 #e8a0a0,
+      8px 24px 0 #e8a0a0,
+      16px 24px 0 #e8a0a0,
+      24px 24px 0 #e8a0a0,
+      32px 24px 0 #e8a0a0,
+      40px 24px 0 #e8a0a0;
+  }
+
+  /* Backpack - teal color */
+  .pixel-backpack {
+    position: absolute;
+    top: 52px;
+    left: 4px;
+    width: 16px;
+    height: 32px;
+    background: transparent;
+    box-shadow:
+      /* Straps */
+      0 0 0 #2a9d8f,
+      8px 0 0 #2a9d8f,
+      /* Main bag */
+      0 8px 0 #2a9d8f,
+      8px 8px 0 #2a9d8f,
+      0 16px 0 #40b4a6,
+      8px 16px 0 #40b4a6,
+      0 24px 0 #2a9d8f,
+      8px 24px 0 #2a9d8f;
+  }
+
+  /* Shadow on ground */
+  .pixel-shadow {
+    width: 60px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    margin-top: 4px;
+    margin-left: 10px;
+  }
+
+  /* Scale up the pixel art */
+  .pixel-character-sprite {
+    transform: scale(1.5);
+    transform-origin: top center;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const startBtn = document.getElementById('startBtn');
+    const welcomeSection = document.getElementById('welcome');
+
+    if (startBtn && welcomeSection) {
+      startBtn.addEventListener('click', () => {
+        // Fade out welcome section
+        welcomeSection.style.transition = 'opacity 0.6s ease-out';
+        welcomeSection.style.opacity = '0';
+
+        setTimeout(() => {
+          // Scroll to RPG map or trigger navigation
+          welcomeSection.style.display = 'none';
+
+          // Find and show the RPG map section
+          const rpgMap = document.getElementById('rpg-map');
+          if (rpgMap) {
+            rpgMap.style.display = 'block';
+            rpgMap.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // If no RPG map section exists, just scroll to the main content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 600);
+      });
+    }
+  });
+</script>

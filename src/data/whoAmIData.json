@@ -1,0 +1,29 @@
+{
+  "intro": "港大市场营销硕士，擅长数据驱动增长与 AI 产品运营",
+  "companies": [
+    { "name": "字节跳动", "size": "large", "role": "印尼电商策略", "period": "2026.01-2026.04" },
+    { "name": "小红书", "size": "medium", "role": "商业产品实习", "period": "2025.09-2025.12" },
+    { "name": "美团", "size": "medium", "role": "运动健身运营", "period": "2025.05-2025.09" },
+    { "name": "哈啰", "size": "small", "role": "产品经理实习", "period": "2025.02-2025.05" },
+    { "name": "美敦力", "size": "small", "role": "战略实习", "period": "2024.09-2024.11" },
+    { "name": "默克", "size": "small", "role": "风险合规实习", "period": "2024.05-2024.09" },
+    { "name": "安永", "size": "small", "role": "审计实习", "period": "2023.12-2024.03" }
+  ],
+  "certificates": [
+    { "name": "港大硕士", "type": "education", "detail": "香港大学 市场营销硕士" },
+    { "name": "IELTS 7.5", "type": "language", "detail": "雅思总分7.5" },
+    { "name": "ACCA", "type": "professional", "detail": "特许公认会计师" }
+  ],
+  "skills": [
+    { "name": "数据分析", "type": "skill" },
+    { "name": "电商运营", "type": "skill" },
+    { "name": "AI产品", "type": "skill" },
+    { "name": "大促策略", "type": "skill" },
+    { "name": "广告投放", "type": "skill" },
+    { "name": "PRD撰写", "type": "skill" }
+  ],
+  "hobbies": [
+    { "name": "唱歌", "type": "hobby" },
+    { "name": "听音乐", "type": "hobby" }
+  ]
+}

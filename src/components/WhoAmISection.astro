@@ -1,0 +1,125 @@
+---
+import whoAmIData from '../data/whoAmIData.json';
+import BubbleCloud from './BubbleCloud.astro';
+
+const { intro, companies, certificates, skills, hobbies } = whoAmIData;
+---
+
+<section id="who-am-i" class="py-20 bg-bgLight relative overflow-hidden">
+  <!-- Decorative background elements -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-10 left-10 w-32 h-32 bg-highlight/10 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute top-40 right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-36 h-36 bg-secondary/10 rounded-full blur-3xl animate-float" style="animation-delay: 0.5s;"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+    <!-- Page title -->
+    <h2 class="font-heading text-5xl font-bold text-dark text-center mb-4 animate-fade-in-up">
+      <span class="inline-block mr-2">🌻</span> 我是谁
+    </h2>
+
+    <!-- Introduction text -->
+    <p class="text-center text-dark/70 text-lg max-w-3xl mx-auto mb-16 animate-fade-in-up" style="animation-delay: 0.1s;">
+      {intro}
+    </p>
+
+    <!-- Bubble cloud visualization -->
+    <div class="space-y-16">
+      <!-- Companies section -->
+      <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
+        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
+          <span class="text-sky">🏢</span>
+          <span>实习经历</span>
+        </h3>
+        <p class="text-dark/50 text-sm text-center mb-8">气泡越大，代表角色越重要</p>
+        <BubbleCloud items={companies} type="company" />
+      </div>
+
+      <!-- Certificates section -->
+      <div class="animate-fade-in-up" style="animation-delay: 0.3s;">
+        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
+          <span class="text-highlight">📜</span>
+          <span>证书与成就</span>
+        </h3>
+        <BubbleCloud items={certificates} type="certificate" />
+      </div>
+
+      <!-- Skills section -->
+      <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
+        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
+          <span class="text-secondary">💼</span>
+          <span>核心能力</span>
+        </h3>
+        <BubbleCloud items={skills} type="skill" />
+      </div>
+
+      <!-- Hobbies section -->
+      <div class="animate-fade-in-up" style="animation-delay: 0.5s;">
+        <h3 class="font-heading text-2xl font-bold text-dark text-center mb-6 flex items-center justify-center gap-2">
+          <span class="text-accent">🎵</span>
+          <span>特长爱好</span>
+        </h3>
+        <BubbleCloud items={hobbies} type="hobby" />
+      </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-20 animate-fade-in-up" style="animation-delay: 0.6s;">
+      <a
+        href="#about"
+        class="px-6 py-3 bg-secondary/20 border-2 border-secondary text-secondary font-heading font-bold rounded-stardew hover:bg-secondary/30 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+      >
+        <span>👈</span>
+        <span>返回关于我</span>
+      </a>
+      <a
+        href="#skills"
+        class="px-6 py-3 bg-accent/20 border-2 border-accent text-accent font-heading font-bold rounded-stardew hover:bg-accent/30 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+      >
+        <span>继续探索</span>
+        <span>👉</span>
+      </a>
+      <a
+        href="/"
+        class="px-6 py-3 bg-highlight/30 border-2 border-highlight text-dark font-heading font-bold rounded-stardew hover:bg-highlight/40 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+      >
+        <span>🏠</span>
+        <span>返回首页</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fade in up animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  /* Floating animation for decorations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+</style>

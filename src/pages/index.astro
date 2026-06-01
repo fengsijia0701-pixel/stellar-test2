@@ -1,32 +1,189 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import NavBar from '../components/NavBar.astro';
 import WelcomeSection from '../components/WelcomeSection.astro';
-import RPGMapNavigation from '../components/RPGMapNavigation.astro';
-import AboutSection from '../components/AboutSection.astro';
-import IndustryTimeline from '../components/IndustryTimeline.astro';
-import StatsBanner from '../components/StatsBanner.astro';
-import WhyChooseMe from '../components/WhyChooseMe.astro';
-import ProjectsSection from '../components/ProjectsSection.astro';
-import SkillsSection from '../components/SkillsSection.astro';
 import WhoAmISection from '../components/WhoAmISection.astro';
+import GrowthTrackSection from '../components/GrowthTrackSection.astro';
+import RPGMapSection from '../components/RPGMapSection.astro';
+import ProjectsSpace from '../components/ProjectsSpace.astro';
+import ProjectsExperience from '../components/ProjectsExperience.astro';
+import CompetitionsSection from '../components/CompetitionsSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
 import ContactSection from '../components/ContactSection.astro';
-import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout title="冯思佳 | 产品/运营/市场营销">
-  <NavBar />
-  <main>
-    <WelcomeSection />
-    <RPGMapNavigation />
-    <section id="about"><AboutSection /></section>
-    <section id="who-am-i"><WhoAmISection /></section>
-    <section id="experience"><IndustryTimeline /></section>
-    <section id="skills"><SkillsSection /></section>
-    <StatsBanner />
-    <WhyChooseMe />
-    <section id="projects"><ProjectsSection /></section>
-    <ContactSection />
+  <main class="game-container">
+    <!-- Page 1: Welcome -->
+    <section id="welcome-page" class="game-page active">
+      <WelcomeSection />
+    </section>
+
+    <!-- Page 2: Who Am I -->
+    <section id="whoami-page" class="game-page">
+      <WhoAmISection />
+    </section>
+
+    <!-- Page 3: Growth Track -->
+    <section id="growth-page" class="game-page">
+      <GrowthTrackSection />
+    </section>
+
+    <!-- Page 4: RPG Map -->
+    <section id="map-page" class="game-page">
+      <RPGMapSection />
+    </section>
+
+    <!-- Branch Pages -->
+    <section id="projects-space-page" class="game-page">
+      <ProjectsSpace />
+    </section>
+
+    <section id="projects-experience-page" class="game-page">
+      <ProjectsExperience />
+    </section>
+
+    <section id="competitions-page" class="game-page">
+      <CompetitionsSection />
+    </section>
+
+    <section id="skills-page" class="game-page">
+      <SkillsSection />
+    </section>
+
+    <section id="contact-page" class="game-page">
+      <ContactSection />
+    </section>
   </main>
-  <Footer />
 </BaseLayout>
+
+<style>
+  .game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .game-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+  }
+
+  .game-page.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .game-page.page-enter {
+    animation: pageIn 0.4s ease-out forwards;
+  }
+
+  .game-page.page-exit {
+    animation: pageOut 0.3s ease-in forwards;
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes pageOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-30px); }
+  }
+</style>
+
+<script>
+  // Page navigation system
+  class PageNavigator {
+    private currentPage: string = 'welcome-page';
+    private soundEffects: any = null;
+
+    constructor() {
+      this.initSound();
+      this.setupNavigation();
+    }
+
+    private async initSound() {
+      document.addEventListener('click', () => {
+        if (!this.soundEffects && (window as any).soundEffects) {
+          this.soundEffects = (window as any).soundEffects;
+        }
+      }, { once: true });
+    }
+
+    private setupNavigation() {
+      document.addEventListener('navigate', ((e: CustomEvent) => {
+        const targetPage = e.detail?.target;
+        if (targetPage) {
+          this.goToPage(targetPage);
+        }
+      }) as EventListener);
+
+      window.addEventListener('popstate', ((e: PopStateEvent) => {
+        const page = e.state?.page;
+        if (page) {
+          this.goToPage(page, false);
+        }
+      }) as EventListener);
+    }
+
+    public goToPage(pageId: string, pushState: boolean = true) {
+      const currentPageEl = document.getElementById(this.currentPage);
+      const targetPageEl = document.getElementById(pageId);
+
+      if (!targetPageEl || currentPageEl?.id === pageId) return;
+
+      if (this.soundEffects) {
+        this.soundEffects.playPageTransition();
+      }
+
+      if (currentPageEl) {
+        currentPageEl.classList.add('page-exit');
+        currentPageEl.classList.remove('active', 'page-enter');
+      }
+
+      setTimeout(() => {
+        if (currentPageEl) {
+          currentPageEl.classList.remove('page-exit');
+        }
+
+        targetPageEl.classList.add('active', 'page-enter');
+        this.currentPage = pageId;
+
+        if (pushState) {
+          history.pushState({ page: pageId }, '', `#${pageId}`);
+        }
+
+        this.lockScrollIfNeeded(pageId);
+      }, 300);
+    }
+
+    private lockScrollIfNeeded(pageId: string) {
+      if (pageId === 'welcome-page') {
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+      } else {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+      }
+    }
+  }
+
+  const pageNavigator = new PageNavigator();
+  (window as any).pageNavigator = pageNavigator;
+  (window as any).navigateTo = (pageId: string) => {
+    pageNavigator.goToPage(pageId);
+  };
+
+  if (window.location.hash) {
+    const pageId = window.location.hash.substring(1) + '-page';
+    setTimeout(() => pageNavigator.goToPage(pageId, false), 100);
+  }
+</script>

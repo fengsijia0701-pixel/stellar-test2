@@ -1,52 +1,218 @@
 ---
 import skillsData from '../data/skills.json';
 
-const levelColors = {
-  '熟练': { bg: 'bg-highlight/30', text: 'text-dark', border: 'border-highlight/50' },
-  '掌握': { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40' },
-  '了解': { bg: 'bg-sky/20', text: 'text-sky', border: 'border-sky/40' },
-};
-
 const categories = [
-  { key: 'product', color: 'bg-accent/20', border: 'border-accent/40', icon: '📋' },
-  { key: 'ecommerce', color: 'bg-highlight/20', border: 'border-highlight/40', icon: '🛒' },
-  { key: 'commercial', color: 'bg-sky/20', border: 'border-sky/40', icon: '💰' },
-  { key: 'marketing', color: 'bg-secondary/20', border: 'border-secondary/40', icon: '📢' },
+  { key: 'product', icon: '💼', label: '产品经理' },
+  { key: 'ecommerce', icon: '🛒', label: '电商运营' },
+  { key: 'commercial', icon: '📊', label: '商业化运营' },
+  { key: 'marketing', icon: '📢', label: '市场营销' },
 ];
+
+const levelColors = {
+  '熟练': 'proficient',
+  '掌握': 'intermediate',
+  '了解': 'basic'
+};
 ---
 
-<section id="skills" class="py-20 bg-bgLight">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="font-heading text-4xl font-bold text-dark text-center mb-4">
-      技能标签
-    </h2>
-    <p class="text-dark/60 text-center max-w-2xl mx-auto mb-12">
-      按岗位分类 · 熟练程度代表实际业务中的应用深度
-    </p>
+<section id="skills" class="fullscreen-page stardew-page">
+  <div class="grass-sky-background"></div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {categories.map((cat, idx) => {
-        const category = skillsData[cat.key];
-        return (
-          <div class={`${cat.color} border-2 ${cat.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1`}>
-            <div class="flex items-center gap-2 mb-4">
-              <span class="text-2xl">{cat.icon}</span>
-              <h3 class="font-heading text-lg font-bold text-dark">{category.label}</h3>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              {category.skills.map((skill) => {
-                const colors = levelColors[skill.level as keyof typeof levelColors] || levelColors['了解'];
-                return (
-                  <span class={`px-3 py-1.5 rounded-full text-sm font-medium border ${colors.bg} ${colors.text} ${colors.border} hover:scale-105 transition-transform cursor-default`}>
+  <div class="stardew-panel content-panel">
+    <h1 class="stardew-title">⚔️ 技能大陆</h1>
+
+    <div class="content-area">
+      <div class="skills-grid">
+        {categories.map((cat) => {
+          const category = skillsData[cat.key];
+          return (
+            <div class="skill-category">
+              <h3>{cat.icon} {cat.label}</h3>
+              <div class="skill-tags">
+                {category.skills.map((skill) => (
+                  <span class={`tag ${levelColors[skill.level as keyof typeof levelColors] || 'basic'}`}>
                     {skill.name}
-                    <span class="ml-1 text-xs opacity-70">({skill.level})</span>
                   </span>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="navigation-buttons">
+      <button id="backBtn" class="stardew-button" data-target="rpg-map">◀ 返回地图</button>
     </div>
   </div>
 </section>
+
+<style>
+  .fullscreen-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stardew-page {
+    background: linear-gradient(to bottom,
+      #87CEEB 0%,
+      #87CEEB 40%,
+      #90EE90 40%,
+      #7CB342 100%
+    );
+  }
+
+  .grass-sky-background {
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 20px,
+        rgba(124, 179, 66, 0.15) 20px,
+        rgba(124, 179, 66, 0.15) 40px
+      );
+  }
+
+  .content-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 700px;
+    max-height: 85vh;
+    padding: 30px;
+    z-index: 10;
+  }
+
+  .stardew-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .content-area {
+    padding: 10px 0;
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .skill-category {
+    background: rgba(255, 255, 255, 0.85);
+    border: 3px solid var(--color-wood);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 0 var(--color-wood-dark);
+  }
+
+  .skill-category h3 {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.2rem;
+    color: var(--color-wood-dark);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Gaegu', cursive;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .tag.proficient {
+    background: var(--color-wood);
+    color: var(--color-cream);
+  }
+
+  .tag.intermediate {
+    background: var(--color-grass);
+    color: var(--color-cream);
+  }
+
+  .tag.basic {
+    background: var(--color-wood-light);
+    color: var(--color-cream);
+  }
+
+  .navigation-buttons {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px dashed var(--color-wood-light);
+  }
+
+  /* Scrollbar styling */
+  .content-area::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .content-area::-webkit-scrollbar-track {
+    background: var(--color-parchment);
+    border-radius: 4px;
+  }
+
+  .content-area::-webkit-scrollbar-thumb {
+    background: var(--color-wood);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .content-panel {
+      width: 95%;
+      padding: 20px;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skill-category h3 {
+      font-size: 1.1rem;
+    }
+
+    .tag {
+      font-size: 0.85rem;
+      padding: 5px 10px;
+    }
+  }
+</style>
+
+<script>
+  import { soundEffects } from '../scripts/sound';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        soundEffects.playClick();
+        const target = backBtn.getAttribute('data-target');
+        if (target) {
+          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+
+    document.querySelectorAll('.stardew-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        soundEffects.playClick();
+      });
+    });
+  });
+</script>

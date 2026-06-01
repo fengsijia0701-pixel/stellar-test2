@@ -686,6 +686,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       touchCharStartX = e.touches[0].clientX;
       touchCharStartY = e.touches[0].clientY;
       startX = e.touches[0].clientX;
+      console.log('[TOUCH START] x:', e.touches[0].clientX, 'y:', e.touches[0].clientY);
       pathChar.classList.add('dragging');
       e.preventDefault();
     }, { passive: false });
@@ -713,16 +714,20 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
       const deltaX = currentX - startX;
       const threshold = 30;
+      console.log('[TOUCH] deltaX:', deltaX, 'threshold:', threshold, 'currentDragIndex:', currentDragIndex);
 
       if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
+        console.log('[TOUCH] Going to next page');
         const nextIndex = currentDragIndex + 1;
         updateDragPosition(nextIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
       } else if (deltaX < -threshold && currentDragIndex > 0) {
+        console.log('[TOUCH] Going to previous page');
         const prevIndex = currentDragIndex - 1;
         updateDragPosition(prevIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
       } else {
+        console.log('[TOUCH] Snapping back');
         updateDragPosition(currentDragIndex);
       }
 
@@ -763,12 +768,23 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }, { passive: true });
 
     // Sync drag position with page navigation
-    const originalGoTo = (window as any).navigateTo;
+    // Override navigateTo to sync drag position when pages change
+    const originalNavigateTo = (window as any).navigateTo;
     (window as any).navigateTo = function(pageId: string) {
-      if (originalGoTo) originalGoTo(pageId);
+      console.log('[DEBUG] navigateTo called with:', pageId);
+      if (originalNavigateTo) {
+        originalNavigateTo(pageId);
+      } else {
+        console.log('[DEBUG] originalNavigateTo is undefined, calling navigator.goTo directly');
+        navigator.goTo(pageId);
+      }
       const pageIndex = ALL_NAV_PAGES.indexOf(pageId);
+      console.log('[DEBUG] pageIndex:', pageIndex);
       if (pageIndex !== -1) {
-        setTimeout(() => updateDragPosition(pageIndex, true), 400);
+        setTimeout(() => {
+          console.log('[DEBUG] Updating drag position to:', pageIndex);
+          updateDragPosition(pageIndex, true);
+        }, 400);
       }
     };
   </script>

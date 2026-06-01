@@ -680,13 +680,16 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     // Touch events - attach to character directly
     let touchCharStartX = 0;
     let touchCharStartY = 0;
+    let touchStartCharLeft = 0;
 
     pathChar.addEventListener('touchstart', (e) => {
       isDragging = true;
       touchCharStartX = e.touches[0].clientX;
       touchCharStartY = e.touches[0].clientY;
       startX = e.touches[0].clientX;
-      console.log('[TOUCH START] x:', e.touches[0].clientX, 'y:', e.touches[0].clientY);
+      // Get current left position of the character
+      touchStartCharLeft = parseInt(pathChar.style.left) || 8;
+      console.log('[TOUCH START] x:', e.touches[0].clientX, 'y:', e.touches[0].clientY, 'charLeft:', touchStartCharLeft);
       pathChar.classList.add('dragging');
       e.preventDefault();
     }, { passive: false });
@@ -697,6 +700,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       currentY = e.touches[0].clientY;
       const deltaX = currentX - startX;
       const deltaY = Math.abs(currentY - touchCharStartY);
+      console.log('[TOUCH MOVE] deltaX:', deltaX, 'deltaY:', deltaY);
       // Only horizontal drag moves the char
       if (deltaY < 10) {
         e.preventDefault();
@@ -708,13 +712,18 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }, { passive: false });
 
     pathChar.addEventListener('touchend', (e) => {
+      console.log('[TOUCH END] isDragging:', isDragging);
       if (!isDragging) return;
       isDragging = false;
       pathChar.classList.remove('dragging');
 
       const deltaX = currentX - startX;
       const threshold = 30;
-      console.log('[TOUCH] deltaX:', deltaX, 'threshold:', threshold, 'currentDragIndex:', currentDragIndex);
+      console.log('[TOUCH] deltaX:', deltaX, 'threshold:', threshold, 'currentDragIndex:', currentDragIndex, 'totalNavPages:', totalNavPages);
+
+      // Check if dragged to the rightmost position
+      const charLeft = parseInt(pathChar.style.left) || 8;
+      console.log('[TOUCH] charLeft:', charLeft, 'maxOffset:', maxOffset, 'isAtEnd:', charLeft >= (8 + maxOffset - 5));
 
       if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
         console.log('[TOUCH] Going to next page');
@@ -723,6 +732,18 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
       } else if (deltaX < -threshold && currentDragIndex > 0) {
         console.log('[TOUCH] Going to previous page');
+        const prevIndex = currentDragIndex - 1;
+        updateDragPosition(prevIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
+      } else if (charLeft >= (8 + maxOffset - 5) && currentDragIndex < totalNavPages - 1) {
+        // Special case: if at rightmost position, go to next page regardless of deltaX
+        console.log('[TOUCH] At right edge, going to next page');
+        const nextIndex = currentDragIndex + 1;
+        updateDragPosition(nextIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+      } else if (charLeft <= 10 && currentDragIndex > 0) {
+        // Special case: if at leftmost position, go to previous page
+        console.log('[TOUCH] At left edge, going to previous page');
         const prevIndex = currentDragIndex - 1;
         updateDragPosition(prevIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);

@@ -328,26 +328,27 @@
 
   /* Title */
   .title-small {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-family: var(--font-game);
     font-size: 1.6rem;
-    color: #5D3A1A;
+    font-weight: 700;
+    color: var(--color-wood-dark);
     margin: 0 0 4px 0;
   }
 
   .title-name {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-family: var(--font-game);
     font-size: 2.8rem;
     font-weight: 700;
-    color: #8B4513;
+    color: var(--color-wood);
     margin: 0 0 12px 0;
     text-shadow: 2px 2px 0 rgba(139, 90, 43, 0.2);
   }
 
   .subtitle {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 1.1rem;
-    color: #6B5344;
-    letter-spacing: 3px;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: var(--color-wood-dark);
+    letter-spacing: 2px;
     margin: 0 0 24px 0;
   }
 
@@ -357,32 +358,34 @@
     align-items: center;
     gap: 8px;
     padding: 14px 32px;
-    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
-    color: #FDF5E6;
+    background: linear-gradient(180deg, var(--color-wood) 0%, var(--color-wood-dark) 100%);
+    color: var(--color-cream);
     border: none;
     border-radius: 6px;
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 1.3rem;
+    font-family: var(--font-game);
+    font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
     box-shadow:
-      0 4px 0 #5D3A1A,
-      0 6px 12px rgba(0, 0, 0, 0.3);
+      0 4px 0 var(--color-wood-dark),
+      0 6px 12px rgba(0, 0, 0, 0.3),
+      0 0 15px rgba(139, 90, 43, 0.3);
     transition: all 0.15s ease;
   }
 
   .wood-btn:hover {
     transform: translateY(-2px);
-    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
+    background: linear-gradient(180deg, var(--color-wood-light) 0%, var(--color-wood) 100%);
     box-shadow:
-      0 6px 0 #5D3A1A,
-      0 8px 16px rgba(0, 0, 0, 0.35);
+      0 6px 0 var(--color-wood-dark),
+      0 8px 16px rgba(0, 0, 0, 0.35),
+      0 0 25px rgba(139, 90, 43, 0.5);
   }
 
   .wood-btn:active {
     transform: translateY(2px);
     box-shadow:
-      0 2px 0 #5D3A1A,
+      0 2px 0 var(--color-wood-dark),
       0 4px 8px rgba(0, 0, 0, 0.25);
   }
 

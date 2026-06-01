@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>艺术像素风字体选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+      color: #fff;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* Scanline overlay effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1rem;
+      color: #00ff88;
+      margin-bottom: 6px;
+      text-shadow: 0 0 20px rgba(0,255,136,0.5);
+      letter-spacing: 4px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.55rem;
+      color: #666;
+      margin-bottom: 24px;
+      letter-spacing: 2px;
+    }
+
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .font-card {
+      background: linear-gradient(135deg, #1e1e3f, #252550);
+      border: 2px solid #333;
+      border-radius: 8px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .font-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    .font-card:hover::before { left: 100%; }
+    .font-card:hover {
+      border-color: #00ff88;
+      box-shadow: 0 0 25px rgba(0,255,136,0.25), inset 0 0 30px rgba(0,255,136,0.05);
+      transform: translateY(-3px);
+    }
+    .font-card.selected {
+      border-color: #ff00ff;
+      box-shadow: 0 0 30px rgba(255,0,255,0.3), inset 0 0 30px rgba(255,0,255,0.05);
+    }
+
+    .font-letter {
+      font-size: 0.55rem;
+      color: #00ff88;
+      margin-bottom: 10px;
+      font-family: 'Courier New', monospace;
+    }
+    .font-preview {
+      font-size: 1.6rem;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      min-height: 55px;
+      display: flex;
+      align-items: center;
+    }
+    .font-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .font-name {
+      font-size: 0.65rem;
+      color: #ff00ff;
+      font-family: 'Courier New', monospace;
+    }
+    .font-tags {
+      display: flex;
+      gap: 5px;
+    }
+    .font-tag {
+      font-size: 0.45rem;
+      padding: 2px 6px;
+      background: rgba(0,255,136,0.15);
+      color: #00ff88;
+      border-radius: 3px;
+    }
+
+    /* Font style classes - artistic pixel/game fonts */
+    .font-e { font-family: 'Silkscreen', cursive; }
+    .font-f { font-family: 'VT323', monospace; font-size: 2rem; }
+    .font-g { font-family: 'Russo One', sans-serif; letter-spacing: 2px; }
+    .font-h { font-family: 'Black Ops One', cursive; letter-spacing: 1px; }
+    .font-i { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; letter-spacing: 3px; }
+    .font-j { font-family: 'Audiowide', cursive; }
+    .font-k { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.8rem; }
+    .font-l { font-family: 'Bungee', cursive; }
+    .font-m { font-family: 'Press Start 2P', cursive; font-size: 0.9rem; letter-spacing: 1px; }
+    .font-n { font-family: 'Share Tech Mono', monospace; }
+
+    /* Custom pixel text effect */
+    .pixel-text {
+      position: relative;
+      display: inline-block;
+    }
+    .pixel-text::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      color: rgba(0,255,136,0.5);
+      z-index: -1;
+    }
+
+    /* Glow effect for certain cards */
+    .glow-magenta { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
+    .glow-cyan { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+    .glow-green { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88; }
+    .glow-yellow { text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00; color: #ffff00; }
+
+    /* Decorative elements */
+    .deco-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #00ff88;
+    }
+    .deco-corner.tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
+    .deco-corner.tr { top: 5px; right: 5px; border-left: none; border-bottom: none; }
+    .deco-corner.bl { bottom: 5px; left: 5px; border-right: none; border-top: none; }
+    .deco-corner.br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+
+    /* Confirm section */
+    .confirm-section {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .confirm-btn {
+      padding: 14px 40px;
+      background: linear-gradient(180deg, #ff00ff, #cc00cc);
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #990099, 0 0 20px rgba(255,0,255,0.3);
+      transition: all 0.15s;
+      letter-spacing: 2px;
+    }
+    .confirm-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #990099, 0 0 30px rgba(255,0,255,0.5);
+    }
+    .confirm-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #990099;
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(0,255,136,0.1);
+      border: 2px solid #00ff88;
+      border-radius: 8px;
+      display: none;
+    }
+    .result-box.show { display: block; }
+    .result-text {
+      font-size: 0.7rem;
+      color: #00ff88;
+      line-height: 2;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.5rem;
+      color: #888;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  </style>
+  <!-- Google Fonts - Artistic Pixel/Game Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&family=Russo+One&family=Black+Ops+One&family=Orbitron:wght@400;700;900&family=Audiowide&family=Rajdhani:wght@500;700&family=Bungee&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>★ ARTISTIC PIXEL FONTS ★</h1>
+    <p class="subtitle">艺术像素游戏风字体 / ARTISTIC PIXEL GAME FONTS</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background: #ff00ff;"></div> 洋红发光</div>
+      <div class="legend-item"><div class="legend-dot" style="background: #00ffff;"></div> 青色发光</div>
+      <div class="legend-item"><div class="legend-dot" style="background: #00ff88;"></div> 绿色发光</div>
+      <div class="legend-item"><div class="legend-dot" style="background: #ffff00;"></div> 黄色发光</div>
+    </div>
+
+    <div class="font-grid" id="fontGrid">
+
+      <!-- E: Silkscreen -->
+      <div class="font-card" data-font="silkscreen" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-E</div>
+        <div class="font-preview font-e glow-magenta">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">E) SILKSCREEN</div>
+          <div class="font-tags">
+            <span class="font-tag">像素</span>
+            <span class="font-tag">日本</span>
+            <span class="font-tag">复古</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- F: VT323 -->
+      <div class="font-card" data-font="vt323" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-F</div>
+        <div class="font-preview font-f glow-cyan">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">F) VT323</div>
+          <div class="font-tags">
+            <span class="font-tag">终端</span>
+            <span class="font-tag">复古</span>
+            <span class="font-tag">CRT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- G: Russo One -->
+      <div class="font-card" data-font="russo" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-G</div>
+        <div class="font-preview font-g glow-yellow">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">G) RUSSO ONE</div>
+          <div class="font-tags">
+            <span class="font-tag">粗犷</span>
+            <span class="font-tag">游戏</span>
+            <span class="font-tag">军事</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- H: Black Ops One -->
+      <div class="font-card" data-font="blackops" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-H</div>
+        <div class="font-preview font-h glow-green">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">H) BLACK OPS</div>
+          <div class="font-tags">
+            <span class="font-tag">特种部队</span>
+            <span class="font-tag">战术</span>
+            <span class="font-tag">硬核</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- I: Orbitron -->
+      <div class="font-card" data-font="orbitron" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-I</div>
+        <div class="font-preview font-i glow-magenta">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">I) ORBITRON</div>
+          <div class="font-tags">
+            <span class="font-tag">科幻</span>
+            <span class="font-tag">太空</span>
+            <span class="font-tag">未来</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- J: Audiowide -->
+      <div class="font-card" data-font="audiowide" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-J</div>
+        <div class="font-preview font-j glow-cyan">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">J) AUDIOWIDE</div>
+          <div class="font-tags">
+            <span class="font-tag">宽体</span>
+            <span class="font-tag">科技</span>
+            <span class="font-tag">电子</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- K: Rajdhani -->
+      <div class="font-card" data-font="rajdhani" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-K</div>
+        <div class="font-preview font-k glow-green">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">K) RAJDHANI</div>
+          <div class="font-tags">
+            <span class="font-tag">几何</span>
+            <span class="font-tag">锐利</span>
+            <span class="font-tag">现代</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- L: Bungee -->
+      <div class="font-card" data-font="bungee" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-L</div>
+        <div class="font-preview font-l glow-magenta">港大</div>
+        <div class="font-meta">
+          <div class="font-name">L) BUNGEE</div>
+          <div class="font-tags">
+            <span class="font-tag">立体</span>
+            <span class="font-tag">街头</span>
+            <span class="font-tag">招牌</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- M: Press Start 2P -->
+      <div class="font-card" data-font="pressstart" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-M</div>
+        <div class="font-preview font-m glow-yellow">港大</div>
+        <div class="font-meta">
+          <div class="font-name">M) PRESS START 2P</div>
+          <div class="font-tags">
+            <span class="font-tag">经典</span>
+            <span class="font-tag">像素</span>
+            <span class="font-tag">复古</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- N: Share Tech Mono -->
+      <div class="font-card" data-font="sharetech" onclick="selectFont(this)">
+        <div class="deco-corner tl"></div>
+        <div class="deco-corner tr"></div>
+        <div class="deco-corner bl"></div>
+        <div class="deco-corner br"></div>
+        <div class="font-letter">// FONT-N</div>
+        <div class="font-preview font-n glow-cyan">港大硕士</div>
+        <div class="font-meta">
+          <div class="font-name">N) SHARE TECH</div>
+          <div class="font-tags">
+            <span class="font-tag">等宽</span>
+            <span class="font-tag">终端</span>
+            <span class="font-tag">代码</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Extra: Combined display example -->
+    <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid #333;">
+      <p style="font-size: 0.55rem; color: #00ff88; margin-bottom: 12px; font-family: 'Courier New', monospace;">// 组合效果示例 / COMBINED EFFECT</p>
+      <div style="font-size: 1.2rem; text-align: center; line-height: 2;">
+        <span class="font-g" style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff;">港大硕士</span>
+        <span style="color: #00ff88;"> · </span>
+        <span class="font-i" style="color: #00ffff;">数据分析</span>
+        <span style="color: #00ff88;"> · </span>
+        <span class="font-m" style="font-size: 0.7rem; color: #ffff00;">52% ROI</span>
+      </div>
+      <div style="text-align: center; margin-top: 8px;">
+        <span class="font-f glow-cyan" style="font-size: 1rem;">产品力 + 运营力 + 数据力</span>
+      </div>
+    </div>
+
+    <div class="confirm-section">
+      <button class="confirm-btn" onclick="confirmSelection()">[ CONFIRM SELECTION ]</button>
+      <div class="result-box" id="resultBox">
+        <div class="result-text" id="resultText"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedFont = null;
+
+    function selectFont(card) {
+      document.querySelectorAll('.font-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedFont = card.dataset.font;
+      console.log('Selected:', selectedFont);
+    }
+
+    function confirmSelection() {
+      if (!selectedFont) {
+        alert('请先选择一种字体！');
+        return;
+      }
+      const names = {
+        silkscreen: 'SILKSCREEN (像素日式)',
+        vt323: 'VT323 (终端复古)',
+        russo: 'RUSSO ONE (粗犷游戏)',
+        blackops: 'BLACK OPS (军事战术)',
+        orbitron: 'ORBITRON (科幻未来)',
+        audiowide: 'AUDIOWIDE (宽体科技)',
+        rajdhani: 'RAJDHANI (几何锐利)',
+        bungee: 'BUNGEE (立体街头)',
+        pressstart: 'PRESS START 2P (经典像素)',
+        sharetech: 'SHARE TECH MONO (终端代码)'
+      };
+      document.getElementById('resultText').innerHTML =
+        '✅ 已确认选择:<br><br>' +
+        '📟 英文/数字: D) PRESS START 2P<br>' +
+        '🎨 中文字体: ' + selectedFont.toUpperCase() + ') ' + names[selectedFont];
+      document.getElementById('resultBox').classList.add('show');
+    }
+  </script>
+</body>
+</html>

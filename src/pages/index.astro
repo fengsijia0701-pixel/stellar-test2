@@ -20,7 +20,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
   <title>冯思佳 | 产品/运营/市场营销</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Page Container - Full Screen Pages -->
@@ -74,15 +74,33 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
   <style is:global>
     :root {
+      /* 像素复古游戏风色彩 */
+      --color-bg-dark: #0f1f0f;
+      --color-bg-forest: #1a2f1a;
+      --color-grass: #2d5a27;
+      --color-dirt: #3d2817;
+
+      /* 霓虹强调色 */
+      --color-neon-green: #00ff88;
+      --color-neon-yellow: #ffff00;
+      --color-neon-cyan: #00ffff;
+      --color-neon-magenta: #ff00ff;
+      --color-neon-orange: #ff8e53;
+
+      /* 星露谷经典色 */
       --color-wood: #8B5A2B;
       --color-wood-dark: #5D4037;
       --color-wood-light: #A67C52;
-      --color-grass: #7CB342;
-      --color-sky: #64B5F6;
+      --color-sky: #87CEEB;
+      --color-grass-stardew: #7CB342;
       --color-gold: #FFD700;
       --color-parchment: #F5E6C8;
       --color-cream: #FFF8E7;
-      --color-text: #5D4037;
+      --color-text: #E8DCC8;
+
+      /* 字体 */
+      --font-pixel: 'Press Start 2P', cursive;
+      --font-game: 'Rajdhani', 'Noto Sans SC', sans-serif;
     }
 
     * {
@@ -92,10 +110,12 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     html, body {
-      font-family: 'Gaegu', cursive, sans-serif;
+      font-family: var(--font-game);
       overflow: hidden;
       height: 100%;
       width: 100%;
+      background: var(--color-bg-dark);
+      color: var(--color-text);
     }
 
     body {
@@ -146,85 +166,77 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       height: 100%;
     }
 
-    /* Path Navigation */
+    /* Path Navigation - Fixed at bottom */
     #path-nav {
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 55px;
+      z-index: 100;
+      background: linear-gradient(180deg, #3d2817, #2a1a0f);
+      border-top: 3px solid #8B4513;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 4px;
       touch-action: none;
     }
 
     .path-container {
       position: relative;
       width: 260px;
-      height: 50px;
-      background: linear-gradient(180deg, #8B5A2B 0%, #6B3E26 100%);
-      border-radius: 25px;
-      padding: 8px 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .arrow-hint {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.2rem;
-      color: #FDF5E6;
-      opacity: 0.6;
-      z-index: 5;
+      font-size: 1rem;
+      color: #ffff00;
+      text-shadow: 0 0 5px #ffff00;
     }
-
-    .arrow-hint.left { left: -20px; }
-    .arrow-hint.right { right: -20px; }
 
     .path-trail {
-      position: absolute;
-      top: 50%;
-      left: 20px;
-      right: 20px;
-      transform: translateY(-50%);
+      flex: 1;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
     }
 
-    .footprint {
-      width: 18px;
-      height: 22px;
-      background: rgba(245, 230, 200, 0.3);
-      border-radius: 50% 50% 40% 40%;
-      opacity: 0.5;
-      transition: all 0.3s ease;
+    .nav-progress-track {
+      width: 100%;
+      height: 10px;
+      background: #1a2f1a;
+      border: 2px solid #2d5a27;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .footprint.passed {
-      background: rgba(245, 230, 200, 0.7);
-      opacity: 1;
-    }
-
-    .footprint.current {
-      background: #7CB342;
-      opacity: 1;
-      transform: scale(1.2);
+    .nav-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ffff00, #ffcc00);
+      border-radius: 3px;
+      transition: width 0.3s ease-out;
+      box-shadow: 0 0 10px rgba(255,255,0,0.5);
     }
 
     .char-on-path {
       position: absolute;
-      top: 50%;
       left: 8px;
-      transform: translateY(-50%);
-      font-size: 2rem;
-      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
+      font-size: 1.5rem;
       cursor: grab;
       user-select: none;
-      transition: left 0.1s ease-out;
+      transition: left 0.3s ease-out;
       z-index: 10;
+      filter: drop-shadow(0 0 8px rgba(255,255,0,0.8));
     }
 
     .char-on-path:active {
@@ -233,27 +245,14 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     .char-on-path.dragging {
       transition: none;
-    }
-
-    .drag-progress {
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0%;
-      height: 4px;
-      background: #7CB342;
-      border-radius: 2px;
-      transition: width 0.1s;
+      filter: drop-shadow(0 0 15px rgba(255,255,0,1));
     }
 
     .swipe-hint {
-      font-family: 'ZCOOL QingKe HuangYou', cursive;
-      font-size: 0.8rem;
-      color: #8B4513;
-      background: rgba(245, 230, 200, 0.9);
-      padding: 4px 12px;
-      border-radius: 10px;
+      font-family: var(--font-game);
+      font-size: 0.7rem;
+      color: #90EE90;
+      letter-spacing: 1px;
     }
   </style>
 
@@ -515,70 +514,125 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
   <style is:global>
     .page-enter {
-      animation: pageEnter 0.4s ease-out forwards;
+      animation: pixelEnter 0.4s ease-out forwards;
     }
 
     .page-exit {
-      animation: pageExit 0.3s ease-in forwards;
+      animation: pixelExit 0.3s ease-in forwards;
     }
 
-    @keyframes pageEnter {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
+    @keyframes pixelEnter {
+      0% {
+        opacity: 0;
+        transform: translateX(40px);
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+      }
     }
 
-    @keyframes pageExit {
-      from { opacity: 1; transform: translateX(0); }
-      to { opacity: 0; transform: translateX(-30px); }
+    @keyframes pixelExit {
+      0% {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-40px);
+        filter: blur(4px);
+      }
+    }
+
+    /* Scanlines overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.08) 0px,
+        rgba(0, 0, 0, 0.08) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Pixel glow effects */
+    .pixel-glow-green {
+      color: #00ff88;
+      text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 2px 2px 0 #000;
+    }
+
+    .pixel-glow-yellow {
+      color: #ffff00;
+      text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 2px 2px 0 #5d4a00;
+    }
+
+    .pixel-glow-cyan {
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 2px 2px 0 #005555;
     }
   </style>
 
-  <!-- Path Navigation -->
+  <!-- Path Navigation - Fixed at bottom -->
   <div id="path-nav">
     <div class="path-container">
       <div class="arrow-hint left">◀</div>
-      <div class="arrow-hint right">▶</div>
       <div class="path-trail">
-        <div class="footprint" data-index="0"></div>
-        <div class="footprint" data-index="1"></div>
-        <div class="footprint" data-index="2"></div>
-        <div class="footprint" data-index="3"></div>
-        <div class="footprint" data-index="4"></div>
+        <div class="nav-progress-track">
+          <div class="nav-progress-fill" id="nav-progress-fill"></div>
+        </div>
       </div>
+      <div class="arrow-hint right">▶</div>
       <div class="char-on-path" id="path-char">👩‍🌾</div>
-      <div class="drag-progress" id="drag-progress"></div>
     </div>
-    <div class="swipe-hint">拖动小人到 ▶ 下一页</div>
+    <div class="swipe-hint">拖动 ▶ 切换</div>
   </div>
 
   <script>
     // Drag Navigation
+    // All 10 pages for drag navigation
+    const ALL_NAV_PAGES = [
+      'page-welcome',              // 0
+      'page-whoami',               // 1
+      'page-growth',               // 2
+      'page-experience',           // 3
+      'page-map',                  // 4
+      'page-projects-space',       // 5
+      'page-projects-experience',  // 6
+      'page-competitions',         // 7
+      'page-skills',               // 8
+      'page-contact'              // 9
+    ];
+
     const pathChar = document.getElementById('path-char');
-    const progressBar = document.getElementById('drag-progress');
-    const footprints = document.querySelectorAll('.footprint');
-    const totalPages = 5;
-    let currentPageIndex = 0;
+    const progressFill = document.getElementById('nav-progress-fill');
+    const totalNavPages = ALL_NAV_PAGES.length; // 10 pages
+    let currentDragIndex = 0;
     let isDragging = false;
     let startX = 0;
     let currentX = 0;
     const maxOffset = 200;
 
-    function updateCharPosition(pageIndex, animate = true) {
-      currentPageIndex = pageIndex;
-      const offset = (pageIndex / (totalPages - 1)) * maxOffset;
+    function updateDragPosition(pageIndex, animate = true) {
+      currentDragIndex = pageIndex;
+      const offset = (pageIndex / (totalNavPages - 1)) * maxOffset;
       pathChar.style.transition = animate ? 'left 0.3s ease-out' : 'none';
       pathChar.style.left = (8 + offset) + 'px';
-
-      footprints.forEach((fp, i) => {
-        fp.classList.remove('passed', 'current');
-        if (i < pageIndex) fp.classList.add('passed');
-        else if (i === pageIndex) fp.classList.add('current');
-      });
-
-      progressBar.style.width = (pageIndex / (totalPages - 1) * 100) + '%';
+      progressFill.style.width = (pageIndex / (totalNavPages - 1) * 100) + '%';
     }
 
-    updateCharPosition(0, false);
+    // Initialize drag position
+    updateDragPosition(0, false);
 
     pathChar.addEventListener('mousedown', (e) => {
       isDragging = true;
@@ -591,10 +645,10 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       if (!isDragging) return;
       currentX = e.clientX;
       const deltaX = currentX - startX;
-      const currentOffset = (currentPageIndex / (totalPages - 1)) * maxOffset;
+      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
       const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
       pathChar.style.left = (8 + newOffset) + 'px';
-      progressBar.style.width = (newOffset / maxOffset * 100) + '%';
+      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
     });
 
     document.addEventListener('mouseup', () => {
@@ -605,19 +659,23 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       const deltaX = currentX - startX;
       const threshold = 30;
 
-      if (deltaX > threshold && currentPageIndex < totalPages - 1) {
-        updateCharPosition(currentPageIndex + 1);
-        const pages = ['welcome', 'whoami', 'growth', 'map', 'projects-space'];
-        if (window.navigateTo) window.navigateTo('page-' + pages[currentPageIndex]);
-      } else if (deltaX < -threshold && currentPageIndex > 0) {
-        updateCharPosition(currentPageIndex - 1);
-        const pages = ['welcome', 'whoami', 'growth', 'map', 'projects-space'];
-        if (window.navigateTo) window.navigateTo('page-' + pages[currentPageIndex]);
+      if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
+        // Next page
+        const nextIndex = currentDragIndex + 1;
+        updateDragPosition(nextIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+      } else if (deltaX < -threshold && currentDragIndex > 0) {
+        // Previous page
+        const prevIndex = currentDragIndex - 1;
+        updateDragPosition(prevIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
       } else {
-        updateCharPosition(currentPageIndex);
+        // Snap back
+        updateDragPosition(currentDragIndex);
       }
     });
 
+    // Touch events
     pathChar.addEventListener('touchstart', (e) => {
       isDragging = true;
       startX = e.touches[0].clientX;
@@ -628,10 +686,10 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       if (!isDragging) return;
       currentX = e.touches[0].clientX;
       const deltaX = currentX - startX;
-      const currentOffset = (currentPageIndex / (totalPages - 1)) * maxOffset;
+      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
       const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
       pathChar.style.left = (8 + newOffset) + 'px';
-      progressBar.style.width = (newOffset / maxOffset * 100) + '%';
+      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
     }, { passive: true });
 
     document.addEventListener('touchend', () => {
@@ -642,25 +700,27 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       const deltaX = currentX - startX;
       const threshold = 30;
 
-      if (deltaX > threshold && currentPageIndex < totalPages - 1) {
-        updateCharPosition(currentPageIndex + 1);
-        const pages = ['welcome', 'whoami', 'growth', 'map', 'projects-space'];
-        if (window.navigateTo) window.navigateTo('page-' + pages[currentPageIndex]);
-      } else if (deltaX < -threshold && currentPageIndex > 0) {
-        updateCharPosition(currentPageIndex - 1);
-        const pages = ['welcome', 'whoami', 'growth', 'map', 'projects-space'];
-        if (window.navigateTo) window.navigateTo('page-' + pages[currentPageIndex]);
+      if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
+        const nextIndex = currentDragIndex + 1;
+        updateDragPosition(nextIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+      } else if (deltaX < -threshold && currentDragIndex > 0) {
+        const prevIndex = currentDragIndex - 1;
+        updateDragPosition(prevIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
       } else {
-        updateCharPosition(currentPageIndex);
+        updateDragPosition(currentDragIndex);
       }
     });
 
+    // Sync drag position with page navigation
     const originalGoTo = (window as any).navigateTo;
     (window as any).navigateTo = function(pageId: string) {
       if (originalGoTo) originalGoTo(pageId);
-      const pageNames = ['welcome', 'whoami', 'growth', 'map', 'projects-space'];
-      const index = pageNames.findIndex(name => pageId.includes(name));
-      if (index !== -1) setTimeout(() => updateCharPosition(index), 400);
+      const pageIndex = ALL_NAV_PAGES.indexOf(pageId);
+      if (pageIndex !== -1) {
+        setTimeout(() => updateDragPosition(pageIndex, true), 400);
+      }
     };
   </script>
 </body>

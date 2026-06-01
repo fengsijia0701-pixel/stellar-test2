@@ -1,0 +1,114 @@
+<h2>视觉优化方案预览 - 原汁原味星露谷风格</h2>
+<p class="subtitle">红色 = 问题区域 | 绿色 = 改进方案</p>
+
+<div class="mockup">
+  <div class="mockup-header">🔥 当前问题 vs ✅ 优化方案</div>
+  <div class="mockup-body">
+
+    <!-- Problem 1: Drag Navigation z-index -->
+    <div class="section" style="margin-bottom: 24px;">
+      <h3>问题1：拖动导航栏遮挡内容</h3>
+      <div class="split">
+        <div class="mockup" style="background: #fee;">
+          <div class="mockup-header" style="color: #c00;">❌ 当前问题</div>
+          <div class="mockup-body">
+            <div style="position: relative; height: 120px; border: 2px dashed #999; background: #fff;">
+              <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1000; background: #8B4513; color: white; padding: 8px 16px; border-radius: 20px;">
+                👩‍🌾 拖动我 |◀ ▶|
+              </div>
+              <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 60px; background: #f5e6c8; padding: 12px; border-radius: 8px; opacity: 0.7;">
+                <p style="color: #333; font-size: 12px;">其他内容区域<br/>（被导航栏遮挡）</p>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: #c00; margin-top: 8px;">z-index: 1000 在最顶层，会挡住底部交互</p>
+          </div>
+        </div>
+        <div class="mockup" style="background: #efe;">
+          <div class="mockup-header" style="color: #080;">✅ 优化方案</div>
+          <div class="mockup-body">
+            <div style="position: relative; height: 120px; border: 2px dashed #999; background: #fff;">
+              <div style="position: absolute; bottom: -55px; left: 50%; transform: translateX(-50%); z-index: 100; background: #8B4513; color: white; padding: 8px 16px; border-radius: 20px; box-shadow: 0 -2px 8px rgba(0,0,0,0.2);">
+                👩‍🌾 拖动我 |◀ ▶|
+              </div>
+              <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; background: #f5e6c8; padding: 12px; border-radius: 8px;">
+                <p style="color: #333; font-size: 12px;">其他内容区域<br/>（不再被遮挡）</p>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: #080; margin-top: 8px;">固定在底部，不遮挡上方内容</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 2: Navigation not working -->
+    <div class="section" style="margin-bottom: 24px;">
+      <h3>问题2：拖动无法切换前后页</h3>
+      <div class="split">
+        <div class="mockup" style="background: #fee;">
+          <div class="mockup-header" style="color: #c00;">❌ 当前代码问题</div>
+          <div class="mockup-body">
+            <pre style="font-size: 10px; background: #fff; padding: 8px; overflow: auto; color: #c00;">
+// 问题：只映射了5个主页
+const pages = ['welcome', 'whoami',
+'growth', 'map', 'projects-space'];
+
+// 但实际有10个页面！
+// page-experience, page-projects-experience,
+// page-competitions, page-skills, page-contact
+
+// 拖动超出5个会找不到对应页面
+            </pre>
+          </div>
+        </div>
+        <div class="mockup" style="background: #efe;">
+          <div class="mockup-header" style="color: #080;">✅ 优化方案</div>
+          <div class="mockup-body">
+            <pre style="font-size: 10px; background: #fff; padding: 8px; overflow: auto; color: #080;">
+// 方案1：扩展映射 + 智能循环
+const mainPages = ['welcome', 'whoami',
+'growth', 'map', 'projects-space'];
+const subPages = ['projects-experience',
+'competitions', 'skills', 'contact'];
+
+// 方案2：全部10个页面都纳入拖动
+const ALL_PAGES = [
+  'welcome', 'whoami', 'growth', 'experience',
+  'map', 'projects-space', 'projects-experience',
+  'competitions', 'skills', 'contact'
+];
+
+// 拖动距离决定跳转到哪个页面
+// &lt; 0.3 显示上一页, &gt; 0.7 显示下一页
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<h3>选择你的偏好</h3>
+<div class="options">
+  <div class="option" data-choice="fix-only" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>只修复问题</h3>
+      <p>只修复拖动导航问题，保持其他不变</p>
+    </div>
+  </div>
+  <div class="option" data-choice="full-redesign" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>完整视觉升级</h3>
+      <p>修复问题 + 字体优化 + UI细节提升 + 动效增强</p>
+    </div>
+  </div>
+  <div class="option" data-choice="full-plus-animations" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>完整升级 + 数字跳动动画</h3>
+      <p>包含全部优化 + 数据数字进入动画 + 页面转场特效</p>
+    </div>
+  </div>
+</div>

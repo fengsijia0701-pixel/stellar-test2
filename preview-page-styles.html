@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面视觉方案选择器 - v3.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #0f0f23;
+      min-height: 100vh;
+      color: #fff;
+      padding: 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    h1 {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #00ff88;
+      margin-bottom: 6px;
+      text-shadow: 0 0 20px rgba(0,255,136,0.5);
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.6rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* Page selector */
+    .page-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 24px;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+    }
+    .page-tab {
+      padding: 8px 16px;
+      background: #1a1a2e;
+      border: 2px solid #333;
+      border-radius: 6px;
+      color: #888;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+    }
+    .page-tab:hover { border-color: #00ff88; color: #00ff88; }
+    .page-tab.active {
+      background: linear-gradient(135deg, #ff00ff, #cc00cc);
+      border-color: #ff00ff;
+      color: #fff;
+    }
+
+    /* Options grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .option-card {
+      background: linear-gradient(135deg, #1e1e3f, #252550);
+      border: 3px solid #333;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .option-card:hover {
+      border-color: #00ff88;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,255,136,0.2);
+    }
+    .option-card.selected {
+      border-color: #FFD700;
+      box-shadow: 0 0 30px rgba(255,215,0,0.3);
+    }
+    .option-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      background: #FFD700;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .option-letter {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    /* Mock page preview */
+    .mock-page {
+      height: 160px;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .mock-content {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      position: relative;
+      z-index: 2;
+    }
+    .mock-deco {
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0.2;
+      right: 10px;
+      bottom: 10px;
+    }
+
+    /* Style 1: 霓虹赛博朋克 */
+    .style-cyber .mock-page {
+      background: linear-gradient(135deg, #0f0f23, #1a0a2e);
+    }
+    .style-cyber .mock-title {
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
+    }
+    .style-cyber .mock-content { color: #00ffff; }
+
+    /* Style 2: 经典星露谷 */
+    .style-stardew .mock-page {
+      background: linear-gradient(135deg, #87CEEB, #7CB342);
+    }
+    .style-stardew .mock-title { color: #5D3A1A; }
+    .style-stardew .mock-content { color: #8B4513; }
+
+    /* Style 3: 像素复古 */
+    .style-pixel .mock-page {
+      background: linear-gradient(135deg, #2d5a27, #1a3a1a);
+    }
+    .style-pixel .mock-title {
+      color: #00ff88;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      text-shadow: 2px 2px 0 #000;
+    }
+    .style-pixel .mock-content {
+      color: #90EE90;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+    }
+
+    /* Style 4: 梦幻马卡龙 */
+    .style-macaron .mock-page {
+      background: linear-gradient(135deg, #FFB6C1, #E6E6FA, #B0E0E6);
+    }
+    .style-macaron .mock-title { color: #9370DB; }
+    .style-macaron .mock-content { color: #6A5ACD; }
+
+    .option-name {
+      font-size: 0.8rem;
+      color: #fff;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .option-desc {
+      font-size: 0.65rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* Confirm button */
+    .confirm-section {
+      margin-top: 40px;
+      text-align: center;
+      padding: 20px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+    }
+    .confirm-btn {
+      padding: 14px 48px;
+      background: linear-gradient(180deg, #00ff88, #00cc6a);
+      border: none;
+      border-radius: 8px;
+      color: #0f0f23;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #009950, 0 0 20px rgba(0,255,136,0.3);
+      transition: all 0.15s;
+    }
+    .confirm-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #009950, 0 0 30px rgba(0,255,136,0.5);
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(0,255,136,0.1);
+      border: 2px solid #00ff88;
+      border-radius: 8px;
+      display: none;
+    }
+    .result-box.show { display: block; }
+    .result-text {
+      font-size: 0.7rem;
+      color: #00ff88;
+      line-height: 1.8;
+    }
+    .result-text span { color: #FFD700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 页面视觉方案选择器</h1>
+    <p class="subtitle">每个页面选择 1 种风格 · 共 10 个页面</p>
+
+    <!-- Page Tabs -->
+    <div class="page-tabs" id="pageTabs">
+      <div class="page-tab active" data-page="welcome" onclick="switchPage('welcome')">1. 欢迎页</div>
+      <div class="page-tab" data-page="whoami" onclick="switchPage('whoami')">2. 我是谁</div>
+      <div class="page-tab" data-page="growth" onclick="switchPage('growth')">3. 成长轨迹</div>
+      <div class="page-tab" data-page="map" onclick="switchPage('map')">4. RPG地图</div>
+      <div class="page-tab" data-page="projects" onclick="switchPage('projects')">5. 项目空间</div>
+      <div class="page-tab" data-page="experience" onclick="switchPage('experience')">6. 项目经历</div>
+      <div class="page-tab" data-page="competitions" onclick="switchPage('competitions')">7. 竞赛经历</div>
+      <div class="page-tab" data-page="skills" onclick="switchPage('skills')">8. 技能大陆</div>
+      <div class="page-tab" data-page="contact" onclick="switchPage('contact')">9. 联系中心</div>
+    </div>
+
+    <!-- Options for each page -->
+    <div class="options-grid" id="optionsContainer">
+
+      <!-- WELCOME PAGE -->
+      <div class="page-options" id="opts-welcome">
+        <div class="option-card style-cyber" data-style="cyber" data-page="welcome" onclick="selectOption(this)">
+          <div class="option-letter">A1</div>
+          <div class="mock-page">
+            <div class="mock-title">🌟 欢迎来到我的世界</div>
+            <div class="mock-content">你好，我是冯思佳</div>
+            <div class="mock-deco">👩‍🌾</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光，紫红青色调，科技感强</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="welcome" onclick="selectOption(this)">
+          <div class="option-letter">A2</div>
+          <div class="mock-page">
+            <div class="mock-title">🌻 欢迎来到我的世界</div>
+            <div class="mock-content">你好，我是冯思佳</div>
+            <div class="mock-deco">👩‍🌾</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿，温暖田园风格，原汁原味</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="welcome" onclick="selectOption(this)">
+          <div class="option-letter">A3</div>
+          <div class="mock-page">
+            <div class="mock-title">WELCOME</div>
+            <div class="mock-content">FENG SIJIA</div>
+            <div class="mock-deco">🎮</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">深绿背景 + 像素字体，经典8-bit游戏感</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="welcome" onclick="selectOption(this)">
+          <div class="option-letter">A4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 欢迎来到我的世界</div>
+            <div class="mock-content">你好，我是冯思佳</div>
+            <div class="mock-deco">🦋</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变，甜美梦幻，少女心</div>
+        </div>
+      </div>
+
+      <!-- WHOAMI PAGE -->
+      <div class="page-options" id="opts-whoami" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="whoami" onclick="selectOption(this)">
+          <div class="option-letter">B1</div>
+          <div class="mock-page">
+            <div class="mock-title">👤 WHO AM I</div>
+            <div class="mock-content">港大市场营销硕士<br>字节/小红书/美团/哈啰</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="whoami" onclick="selectOption(this)">
+          <div class="option-letter">B2</div>
+          <div class="mock-page">
+            <div class="mock-title">🌻 我是谁</div>
+            <div class="mock-content">港大市场营销硕士<br>字节/小红书/美团/哈啰</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="whoami" onclick="selectOption(this)">
+          <div class="option-letter">B3</div>
+          <div class="mock-page">
+            <div class="mock-title">WHO AMI</div>
+            <div class="mock-content">HKU MKT<br>BYTEDANCE</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="whoami" onclick="selectOption(this)">
+          <div class="option-letter">B4</div>
+          <div class="mock-page">
+            <div class="mock-title">💫 我是谁</div>
+            <div class="mock-content">港大市场营销硕士<br>字节/小红书/美团/哈啰</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- GROWTH PAGE -->
+      <div class="page-options" id="opts-growth" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="growth" onclick="selectOption(this)">
+          <div class="option-letter">C1</div>
+          <div class="mock-page">
+            <div class="mock-title">📈 GROWTH TRACK</div>
+            <div class="mock-content">技能树 · 成长路径<br>互联网 → 医疗 → 金融</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="growth" onclick="selectOption(this)">
+          <div class="option-letter">C2</div>
+          <div class="mock-page">
+            <div class="mock-title">🌱 成长轨迹</div>
+            <div class="mock-content">技能树 · 成长路径<br>互联网 → 医疗 → 金融</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="growth" onclick="selectOption(this)">
+          <div class="option-letter">C3</div>
+          <div class="mock-page">
+            <div class="mock-title">SKILL TREE</div>
+            <div class="mock-content">LV.1 → LV.99<br>EXP ++++</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="growth" onclick="selectOption(this)">
+          <div class="option-letter">C4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 成长轨迹</div>
+            <div class="mock-content">技能树 · 成长路径<br>互联网 → 医疗 → 金融</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- MAP PAGE -->
+      <div class="page-options" id="opts-map" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="map" onclick="selectOption(this)">
+          <div class="option-letter">D1</div>
+          <div class="mock-page">
+            <div class="mock-title">🗺️ RPG MAP</div>
+            <div class="mock-content">中央角色<br>5个地点入口</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="map" onclick="selectOption(this)">
+          <div class="option-letter">D2</div>
+          <div class="mock-page">
+            <div class="mock-title">🗺️ 游戏地图</div>
+            <div class="mock-content">中央角色<br>5个地点入口</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="map" onclick="selectOption(this)">
+          <div class="option-letter">D3</div>
+          <div class="mock-page">
+            <div class="mock-title">WORLD MAP</div>
+            <div class="mock-content">PLAYER CENTER<br>5 LOCATIONS</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="map" onclick="selectOption(this)">
+          <div class="option-letter">D4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 冒险地图</div>
+            <div class="mock-content">中央角色<br>5个地点入口</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- PROJECTS PAGE -->
+      <div class="page-options" id="opts-projects" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="projects" onclick="selectOption(this)">
+          <div class="option-letter">E1</div>
+          <div class="mock-page">
+            <div class="mock-title">🚀 PROJECTS</div>
+            <div class="mock-content">项目展示卡片网格<br>荐丰丰 · Pathway</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="projects" onclick="selectOption(this)">
+          <div class="option-letter">E2</div>
+          <div class="mock-page">
+            <div class="mock-title">🚀 项目空间</div>
+            <div class="mock-content">项目展示卡片网格<br>荐丰丰 · Pathway</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="projects" onclick="selectOption(this)">
+          <div class="option-letter">E3</div>
+          <div class="mock-page">
+            <div class="mock-title">MY WORKS</div>
+            <div class="mock-content">PROJECT GRID<br>2024-2026</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="projects" onclick="selectOption(this)">
+          <div class="option-letter">E4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 项目空间</div>
+            <div class="mock-content">项目展示卡片网格<br>荐丰丰 · Pathway</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE PAGE -->
+      <div class="page-options" id="opts-experience" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="experience" onclick="selectOption(this)">
+          <div class="option-letter">F1</div>
+          <div class="mock-page">
+            <div class="mock-title">💼 EXPERIENCE</div>
+            <div class="mock-content">项目详情<br>背景/挑战/方案/成果</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="experience" onclick="selectOption(this)">
+          <div class="option-letter">F2</div>
+          <div class="mock-page">
+            <div class="mock-title">💼 项目经历</div>
+            <div class="mock-content">项目详情<br>背景/挑战/方案/成果</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="experience" onclick="selectOption(this)">
+          <div class="option-letter">F3</div>
+          <div class="mock-page">
+            <div class="mock-title">JOB REPORT</div>
+            <div class="mock-content">PROJECT DETAIL<br>2024-2026</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="experience" onclick="selectOption(this)">
+          <div class="option-letter">F4</div>
+          <div class="mock-page">
+            <div class="mock-title">💫 项目经历</div>
+            <div class="mock-content">项目详情<br>背景/挑战/方案/成果</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- COMPETITIONS PAGE -->
+      <div class="page-options" id="opts-competitions" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="competitions" onclick="selectOption(this)">
+          <div class="option-letter">G1</div>
+          <div class="mock-page">
+            <div class="mock-title">🏆 COMPETITIONS</div>
+            <div class="mock-content">竞赛时间线<br>奥纬/经贸论文/上海证券杯</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="competitions" onclick="selectOption(this)">
+          <div class="option-letter">G2</div>
+          <div class="mock-page">
+            <div class="mock-title">🏆 竞赛经历</div>
+            <div class="mock-content">竞赛时间线<br>奥纬/经贸论文/上海证券杯</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="competitions" onclick="selectOption(this)">
+          <div class="option-letter">G3</div>
+          <div class="mock-page">
+            <div class="mock-title">BATTLE</div>
+            <div class="mock-content">COMPETITION<br>2023-2024</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="competitions" onclick="selectOption(this)">
+          <div class="option-letter">G4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 竞赛经历</div>
+            <div class="mock-content">竞赛时间线<br>奥纬/经贸论文/上海证券杯</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- SKILLS PAGE -->
+      <div class="page-options" id="opts-skills" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="skills" onclick="selectOption(this)">
+          <div class="option-letter">H1</div>
+          <div class="mock-page">
+            <div class="mock-title">⚡ SKILLS</div>
+            <div class="mock-content">技能进度条<br>数据分析/电商运营/AI产品</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="skills" onclick="selectOption(this)">
+          <div class="option-letter">H2</div>
+          <div class="mock-page">
+            <div class="mock-title">⚡ 技能大陆</div>
+            <div class="mock-content">技能进度条<br>数据分析/电商运营/AI产品</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="skills" onclick="selectOption(this)">
+          <div class="option-letter">H3</div>
+          <div class="mock-page">
+            <div class="mock-title">SKILL SET</div>
+            <div class="mock-content">LV.85 DATA<br>LV.92 E-COM</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="skills" onclick="selectOption(this)">
+          <div class="option-letter">H4</div>
+          <div class="mock-page">
+            <div class="mock-title">✨ 技能大陆</div>
+            <div class="mock-content">技能进度条<br>数据分析/电商运营/AI产品</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+      <!-- CONTACT PAGE -->
+      <div class="page-options" id="opts-contact" style="display:none;">
+        <div class="option-card style-cyber" data-style="cyber" data-page="contact" onclick="selectOption(this)">
+          <div class="option-letter">I1</div>
+          <div class="mock-page">
+            <div class="mock-title">📧 CONTACT</div>
+            <div class="mock-content">联系方式<br>邮箱/电话/微信</div>
+          </div>
+          <div class="option-name">A. 霓虹赛博朋克</div>
+          <div class="option-desc">深色背景 + 霓虹发光</div>
+        </div>
+
+        <div class="option-card style-stardew" data-style="stardew" data-page="contact" onclick="selectOption(this)">
+          <div class="option-letter">I2</div>
+          <div class="mock-page">
+            <div class="mock-title">📧 联系中心</div>
+            <div class="mock-content">联系方式<br>邮箱/电话/微信</div>
+          </div>
+          <div class="option-name">B. 经典星露谷</div>
+          <div class="option-desc">天空蓝 + 草地绿</div>
+        </div>
+
+        <div class="option-card style-pixel" data-style="pixel" data-page="contact" onclick="selectOption(this)">
+          <div class="option-letter">I3</div>
+          <div class="mock-page">
+            <div class="mock-title">MESSAGE</div>
+            <div class="mock-content">CONTACT ME<br>NOW</div>
+          </div>
+          <div class="option-name">C. 像素复古</div>
+          <div class="option-desc">像素字体 + 深绿背景</div>
+        </div>
+
+        <div class="option-card style-macaron" data-style="macaron" data-page="contact" onclick="selectOption(this)">
+          <div class="option-letter">I4</div>
+          <div class="mock-page">
+            <div class="mock-title">💌 联系中心</div>
+            <div class="mock-content">联系方式<br>邮箱/电话/微信</div>
+          </div>
+          <div class="option-name">D. 梦幻马卡龙</div>
+          <div class="option-desc">粉紫蓝柔和渐变</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress indicator -->
+    <div style="margin-top: 30px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
+      <p style="font-size: 0.7rem; color: #00ff88; margin-bottom: 10px;">📊 已选择: <span id="selectedCount">0</span> / 9 个页面</p>
+      <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;" id="selectionDots">
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+        <span style="width: 12px; height: 12px; background: #333; border-radius: 50%;"></span>
+      </div>
+    </div>
+
+    <!-- Confirm Section -->
+    <div class="confirm-section">
+      <button class="confirm-btn" onclick="confirmAll()">[ 确认全部选择 ]</button>
+      <div class="result-box" id="resultBox">
+        <div class="result-text" id="resultText"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const selections = {};
+    let currentPage = 'welcome';
+
+    function switchPage(page) {
+      currentPage = page;
+      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.page-tab[data-page="${page}"]`).classList.add('active');
+
+      document.querySelectorAll('.page-options').forEach(p => p.style.display = 'none');
+      document.getElementById(`opts-${page}`).style.display = 'grid';
+    }
+
+    function selectOption(card) {
+      const page = card.dataset.page;
+      const style = card.dataset.style;
+
+      // Deselect siblings
+      document.querySelectorAll(`[data-page="${page}"]`).forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+
+      selections[page] = style;
+      updateProgress();
+      console.log('Selections:', selections);
+    }
+
+    function updateProgress() {
+      const count = Object.keys(selections).length;
+      document.getElementById('selectedCount').textContent = count;
+
+      const dots = document.querySelectorAll('#selectionDots span');
+      const pages = ['welcome', 'whoami', 'growth', 'map', 'projects', 'experience', 'competitions', 'skills', 'contact'];
+
+      dots.forEach((dot, i) => {
+        const page = pages[i];
+        if (selections[page]) {
+          dot.style.background = '#00ff88';
+          dot.style.boxShadow = '0 0 10px #00ff88';
+        } else {
+          dot.style.background = '#333';
+          dot.style.boxShadow = 'none';
+        }
+      });
+    }
+
+    function confirmAll() {
+      const pages = ['welcome', 'whoami', 'growth', 'map', 'projects', 'experience', 'competitions', 'skills', 'contact'];
+      const styleNames = {
+        cyber: '霓虹赛博朋克',
+        stardew: '经典星露谷',
+        pixel: '像素复古',
+        macaron: '梦幻马卡龙'
+      };
+
+      let html = '✅ 已确认选择:<br><br>';
+      pages.forEach((page, i) => {
+        const style = selections[page] || '未选择';
+        const pageNames = ['欢迎页', '我是谁', '成长轨迹', 'RPG地图', '项目空间', '项目经历', '竞赛经历', '技能大陆', '联系中心'];
+        const displayStyle = styleNames[style] || style;
+        html += `<span style="color:#888">${i+1}.</span> <span style="color:#ff00ff">${pageNames[i]}</span>: <span style="color:#FFD700">${displayStyle}</span><br>`;
+      });
+
+      document.getElementById('resultText').innerHTML = html;
+      document.getElementById('resultBox').classList.add('show');
+    }
+
+    // Initialize
+    switchPage('welcome');
+  </script>
+</body>
+</html>

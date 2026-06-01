@@ -1,0 +1,336 @@
+<h2>🎮 星露谷视觉设计系统 v3.0</h2>
+<p class="subtitle">UI 总监框架 · 完整设计规范</p>
+
+<!-- 1. 字体系统 -->
+<div class="section">
+  <h3>1️⃣ 字体系统 Typography</h3>
+  <div style="background: #f5e6c8; padding: 20px; border-radius: 8px; border: 3px solid #8B4513;">
+    <div style="margin-bottom: 16px;">
+      <p class="label">标题字体 ZCOOL QingKe HuangYou</p>
+      <p style="font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 28px; color: #5D3A1A;">港大市场营销硕士 · 产品/运营</p>
+    </div>
+    <div style="margin-bottom: 16px;">
+      <p class="label">正文字体 Press Start 2P (像素风)</p>
+      <p style="font-family: 'Press Start 2P', cursive; font-size: 11px; color: #5D3A1A; line-height: 1.8;">STARDEW VALLEY STYLE<br/>DATA DRIVEN GROWTH</p>
+    </div>
+    <div>
+      <p class="label">备用字体 Gaegu (手写风)</p>
+      <p style="font-family: 'Gaegu', cursive; font-size: 20px; color: #5D3A1A;">相信好的产品力 + 运营力 + 数据力</p>
+    </div>
+  </div>
+  <p class="subtitle" style="margin-top: 8px;">层级：ZCOOL(标题) > Gaegu(正文) > Press Start 2P(数据/标签)</p>
+</div>
+
+<!-- 2. 色彩系统 -->
+<div class="section">
+  <h3>2️⃣ 色彩系统 Color Palette</h3>
+  <div class="cards">
+    <div class="card" style="background: linear-gradient(135deg, #8B4513, #6B3E26); color: white;">
+      <h4 style="color: #FFD700;">木棕 Wood</h4>
+      <p style="color: #F5E6C8;">#8B5A2B 主色调</p>
+      <p style="font-size: 10px; opacity: 0.8;">用于边框/按钮/框架</p>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #7CB342, #558B2F); color: white;">
+      <h4 style="color: white;">草地绿 Grass</h4>
+      <p style="color: #E8F5E9;">#7CB342 强调色</p>
+      <p style="font-size: 10px; opacity: 0.8;">用于进度条/成功状态</p>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #64B5F6, #1976D2); color: white;">
+      <h4 style="color: white;">天空蓝 Sky</h4>
+      <p style="color: #E3F2FD;">#64B5F6 点缀色</p>
+      <p style="font-size: 10px; opacity: 0.8;">用于互联网行业分支</p>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #FFD700, #FFA000); color: #5D3A1A;">
+      <h4>麦金 Gold</h4>
+      <p style="color: #5D3A1A;">#FFD700 高亮</p>
+      <p style="font-size: 10px; opacity: 0.8;">用于金币/数据/当前页</p>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #F5E6C8, #E8DCC8); color: #5D3A1A;">
+      <h4>羊皮纸 Parchment</h4>
+      <p style="color: #8B4513;">#F5E6C8 背景色</p>
+      <p style="font-size: 10px;">用于内容面板背景</p>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #F48FB1, #CE93D8); color: white;">
+      <h4 style="color: white;">暮紫 Dusk Purple</h4>
+      <p style="color: #FCE4EC;">#9C27B0 装饰色</p>
+      <p style="font-size: 10px; opacity: 0.8;">用于爱好/个人特色</p>
+    </div>
+  </div>
+</div>
+
+<!-- 3. UI组件 -->
+<div class="section">
+  <h3>3️⃣ UI组件库 Components</h3>
+
+  <div style="margin-bottom: 20px;">
+    <p class="label">木质按钮 Wood Button</p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <button class="mock-stardew-btn">继续 ▶</button>
+      <button class="mock-stardew-btn hover">悬停效果</button>
+      <button class="mock-stardew-btn active">按压效果</button>
+      <button class="mock-stardew-btn disabled" disabled>禁用状态</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <p class="label">数据卡片 Data Card</p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <div class="mock-data-card">
+        <div class="number">52<span>%</span></div>
+        <div class="label">GMV增长</div>
+      </div>
+      <div class="mock-data-card highlight">
+        <div class="number">176<span>%</span></div>
+        <div class="label">ROI提升</div>
+      </div>
+      <div class="mock-data-card">
+        <div class="number">85<span>%</span></div>
+        <div class="label">活动增长</div>
+      </div>
+      <div class="mock-data-card">
+        <div class="number">35<span>万</span></div>
+        <div class="label">DAU</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <p class="label">木框面板 Wood Panel</p>
+    <div style="background: linear-gradient(135deg, #8B4513, #A0522D, #6B3E26); border-radius: 8px; padding: 8px; display: inline-block;">
+      <div style="background: linear-gradient(180deg, #F5E6C8, #E8DCC8); border-radius: 4px; padding: 16px 24px;">
+        <p style="font-family: 'ZCOOL QingKe HuangYou', cursive; color: #5D3A1A;">羊皮纸内容区域</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 动效系统 -->
+<div class="section">
+  <h3>4️⃣ 动效系统 Animation System</h3>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div style="background: #fff; border-radius: 8px; padding: 16px; border: 2px solid #8B4513;">
+      <p class="label">页面转场 Page Transition</p>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <div class="mock-animation slide-left">
+          <span>滑入</span>
+        </div>
+        <div class="mock-animation fade-in">
+          <span>淡入</span>
+        </div>
+        <div class="mock-animation scale-in">
+          <span>缩放</span>
+        </div>
+      </div>
+      <p style="font-size: 10px; color: #666; margin-top: 8px;">推荐：滑动 + 轻微缩放组合</p>
+    </div>
+
+    <div style="background: #fff; border-radius: 8px; padding: 16px; border: 2px solid #8B4513;">
+      <p class="label">数字跳动 Count-up Animation</p>
+      <div class="mock-number" id="demo-number">0</div>
+      <button onclick="animateNumber()" style="margin-top: 8px; font-size: 10px; padding: 4px 8px; cursor: pointer;">▶ 预览动画</button>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; background: #fff; border-radius: 8px; padding: 16px; border: 2px solid #8B4513;">
+    <p class="label">涟漪/按压效果 Ripple Effect</p>
+    <div style="display: flex; gap: 16px;">
+      <button class="mock-btn-ripple">点击我</button>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div class="mock-progress"><div class="mock-progress-bar" style="width: 30%"></div></div>
+        <div class="mock-progress"><div class="mock-progress-bar" style="width: 60%"></div></div>
+        <div class="mock-progress"><div class="mock-progress-bar" style="width: 90%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. 拖动导航设计 -->
+<div class="section">
+  <h3>5️⃣ 拖动导航设计 Drag Navigation v2</h3>
+
+  <div style="background: #fff; border-radius: 8px; padding: 20px; border: 2px solid #8B4513;">
+    <p class="label">当前问题 vs 优化方案</p>
+    <div class="split" style="margin-top: 12px;">
+      <div style="text-align: center;">
+        <p style="color: #c00; font-size: 11px; margin-bottom: 8px;">❌ 问题：遮挡内容</p>
+        <div style="position: relative; height: 80px; background: #f5e6c8; border-radius: 8px; overflow: hidden;">
+          <div style="position: absolute; top: 5px; left: 10px; right: 10px; height: 50px; background: #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">被遮挡的内容</div>
+          <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background: #8B4513; padding: 6px 12px; border-radius: 16px; color: white; font-size: 10px; z-index: 1000;">👩‍🌾 拖动</div>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <p style="color: #080; font-size: 11px; margin-bottom: 8px;">✅ 方案：底部固定条</p>
+        <div style="position: relative; height: 80px; background: #f5e6c8; border-radius: 8px; overflow: hidden;">
+          <div style="position: absolute; top: 10px; left: 10px; right: 10px; height: 55px; background: #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">内容区域 (不被遮挡)</div>
+          <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: #8B4513; padding: 4px 10px; border-radius: 12px; color: white; font-size: 9px; z-index: 100;">👩‍🌾 拖动导航条</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; padding: 12px; background: #f9f9f9; border-radius: 8px;">
+      <p class="label">导航条设计</p>
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+        <span style="font-size: 12px;">◀</span>
+        <div style="flex: 1; height: 8px; background: #8B4513; border-radius: 4px; position: relative;">
+          <div style="position: absolute; top: -4px; left: 20%; width: 16px; height: 16px; background: #FFD700; border-radius: 50%; border: 2px solid #8B4513;"></div>
+        </div>
+        <span style="font-size: 12px;">▶</span>
+        <span style="font-size: 10px; color: #666;">拖动小人切换页面</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.mock-stardew-btn {
+  background: linear-gradient(180deg, #A67C52, #8B5A2B);
+  border: 3px solid #5D4037;
+  border-radius: 8px;
+  color: #FFF8E7;
+  padding: 10px 20px;
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #5D4037, 0 6px 8px rgba(0,0,0,0.3);
+  transition: all 0.15s;
+}
+.mock-stardew-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #B8860B, #8B5A2B);
+}
+.mock-stardew-btn.active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #5D4037;
+}
+.mock-stardew-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mock-data-card {
+  background: linear-gradient(135deg, #8B4513, #6B3E26);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 80px;
+}
+.mock-data-card.highlight {
+  background: linear-gradient(135deg, #FFD700, #FFA000);
+}
+.mock-data-card .number {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 18px;
+  color: #FFD700;
+}
+.mock-data-card.highlight .number {
+  color: #5D3A1A;
+}
+.mock-data-card .label {
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  font-size: 11px;
+  color: #F5E6C8;
+  margin-top: 4px;
+}
+
+.mock-animation {
+  width: 60px;
+  height: 40px;
+  background: #64B5F6;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+}
+.mock-animation.slide-left {
+  animation: slideLeft 1s ease-in-out infinite;
+}
+.mock-animation.fade-in {
+  animation: fadeIn 1s ease-in-out infinite;
+}
+.mock-animation.scale-in {
+  animation: scaleIn 1s ease-in-out infinite;
+}
+@keyframes slideLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+@keyframes fadeIn {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes scaleIn {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+}
+
+.mock-number {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 24px;
+  color: #FFD700;
+  text-shadow: 2px 2px 0 #8B4513;
+}
+
+.mock-btn-ripple {
+  padding: 8px 16px;
+  background: #8B5A2B;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.mock-btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+.mock-btn-ripple:active::after {
+  width: 100px;
+  height: 100px;
+}
+
+.mock-progress {
+  width: 100px;
+  height: 8px;
+  background: #E0E0E0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.mock-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7CB342, #9CCC65);
+  border-radius: 4px;
+  animation: progressFill 2s ease-out forwards;
+}
+@keyframes progressFill {
+  from { width: 0; }
+}
+</style>
+
+<script>
+let demoValue = 0;
+function animateNumber() {
+  const el = document.getElementById('demo-number');
+  let target = 52;
+  let current = 0;
+  const interval = setInterval(() => {
+    current += 1;
+    if (current >= target) {
+      current = target;
+      clearInterval(interval);
+    }
+    el.textContent = current;
+  }, 30);
+}
+</script>

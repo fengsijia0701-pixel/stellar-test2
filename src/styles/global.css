@@ -67,3 +67,27 @@ h1, h2, h3, h4, h5, h6 {
 .tooltip.show {
   @apply opacity-100 pointer-events-auto;
 }
+
+/* Stardew Valley 风格叉耙/手型光标 */
+html {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="26" font-size="26">🌾</text></svg>') 4 28, auto;
+}
+
+/* 可点击元素的悬停效果 */
+a:hover,
+button:hover,
+[role="button"]:hover,
+.clickable:hover,
+.card-hover:hover,
+.project-card:hover,
+.experience-card:hover,
+.experience-card button:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="26" font-size="26">👆</text></svg>') 4 28, auto;
+}
+
+/* 输入框保持文本光标 */
+input,
+textarea,
+[contenteditable="true"] {
+  cursor: text;
+}

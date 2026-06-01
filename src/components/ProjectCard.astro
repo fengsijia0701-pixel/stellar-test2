@@ -6,9 +6,10 @@ interface Props {
   tags: string[];
   color: string;
   icon?: string;
+  features?: string[];
 }
 
-const { title, description, url, tags, color, icon = "🚀" } = Astro.props;
+const { title, description, url, tags, color, icon = "🚀", features = [] } = Astro.props;
 
 const colorClasses = {
   primary: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' },
@@ -27,6 +28,17 @@ const colorClasses = {
     </div>
   </div>
   <p class="text-dark/70 mt-2 text-sm leading-relaxed">{description}</p>
+
+  {features.length > 0 && (
+    <ul class="mt-4 space-y-2">
+      {features.map((feature) => (
+        <li class="flex items-center gap-2 text-sm text-dark/70">
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary" />
+          {feature}
+        </li>
+      ))}
+    </ul>
+  )}
 
   <div class="flex flex-wrap gap-2 mt-4">
     {tags.map((tag) => (

@@ -6,6 +6,12 @@
     "url": "https://pathway-to-career.nocode.host",
     "tags": ["AI", "nocode", "求职工具"],
     "color": "secondary",
-    "icon": "🎯"
+    "icon": "🎯",
+    "features": [
+      "AI 简历匹配度分析",
+      "申请进度追踪看板",
+      "面试时间智能提醒",
+      "1000+ 用户正在使用"
+    ]
   }
 ]

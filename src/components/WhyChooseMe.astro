@@ -1,0 +1,62 @@
+---
+const highlights = [
+  {
+    icon: '📊',
+    title: '数据驱动',
+    desc: '擅长大促策略与增长指标，TikTok 斋月 GMV +52%',
+    color: 'bg-accent/20',
+    border: 'border-accent/40',
+    iconBg: 'bg-accent/30',
+  },
+  {
+    icon: '🤖',
+    title: 'AI 赋能',
+    desc: '具备 AI 产品运营经验，小红书 AIGC 内测 ROI +176%',
+    color: 'bg-highlight/20',
+    border: 'border-highlight/40',
+    iconBg: 'bg-highlight/30',
+  },
+  {
+    icon: '🌐',
+    title: '跨界视野',
+    desc: '互联网 → 医疗 → 金融，多行业视角',
+    color: 'bg-sky/20',
+    border: 'border-sky/40',
+    iconBg: 'bg-sky/30',
+  },
+  {
+    icon: '⚡',
+    title: '执行力强',
+    desc: '7 段实习经历，从初阶到高级的打怪升级',
+    color: 'bg-secondary/20',
+    border: 'border-secondary/40',
+    iconBg: 'bg-secondary/30',
+  },
+];
+---
+
+<section id="why-choose-me" class="py-20 bg-bgLight">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="font-heading text-4xl font-bold text-dark text-center mb-12">
+      🌟 为什么选择我
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {highlights.map((item) => (
+        <div class={`${item.color} border-2 ${item.border} rounded-stardew p-6 hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1 flex gap-4`}>
+          <div class={`${item.iconBg} rounded-stardew w-14 h-14 flex items-center justify-center text-3xl flex-shrink-0`}>
+            {item.icon}
+          </div>
+          <div class="flex flex-col justify-center">
+            <h3 class="font-heading text-xl font-bold text-dark mb-1">
+              {item.title}
+            </h3>
+            <p class="text-dark/70 text-sm leading-relaxed">
+              {item.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

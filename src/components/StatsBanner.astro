@@ -1,0 +1,53 @@
+---
+const stats = [
+  {
+    value: '52%',
+    label: 'Fashion GMV 增长',
+    color: 'text-accent',
+    bgColor: 'bg-accent/20',
+    borderColor: 'border-accent/40',
+  },
+  {
+    value: '176%',
+    label: '3C 家电 ROI 提升',
+    color: 'text-highlight',
+    bgColor: 'bg-highlight/20',
+    borderColor: 'border-highlight/40',
+  },
+  {
+    value: '85%',
+    label: '活动 GTV 同比增长',
+    color: 'text-secondary',
+    bgColor: 'bg-secondary/20',
+    borderColor: 'border-secondary/40',
+  },
+  {
+    value: '35万',
+    label: '产品 DAU',
+    color: 'text-sky',
+    bgColor: 'bg-sky/20',
+    borderColor: 'border-sky/40',
+  },
+];
+---
+
+<section id="stats" class="py-20 bg-cream">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="font-heading text-3xl font-bold text-dark text-center mb-12">
+      关键数据
+    </h2>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {stats.map((stat) => (
+        <div class={`${stat.bgColor} border-2 ${stat.borderColor} rounded-stardew p-6 text-center hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-1`}>
+          <div class={`${stat.color} font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-3`}>
+            {stat.value}
+          </div>
+          <p class="text-dark/70 text-sm font-medium">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,122 @@
+---
+import timeline from '../data/timeline.json';
+
+const competitions = timeline.competitions;
+
+const colorMap = {
+  primary: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/30', glow: 'shadow-primary/20' },
+  secondary: { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40', glow: 'shadow-secondary/20' },
+  accent: { bg: 'bg-accent/20', text: 'text-accent', border: 'border-accent/40', glow: 'shadow-accent/20' },
+  highlight: { bg: 'bg-highlight/30', text: 'text-dark', border: 'border-highlight/50', glow: 'shadow-highlight/20' },
+  sky: { bg: 'bg-sky/20', text: 'text-sky', border: 'border-sky/40', glow: 'shadow-sky/20' },
+};
+
+const medals = ['🥇', '🥈', '🥉'];
+---
+
+<div class="min-h-screen bg-gradient-to-b from-bgLight to-white">
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b-2 border-secondary/20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-dark hover:text-primary transition-colors font-heading font-bold text-lg">
+        <span class="text-xl">⬅️</span>
+        <span>返回地图</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🏆</span>
+        <span class="font-heading text-dark">竞赛经历</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="pt-24 pb-12 text-center relative">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden -z-10 opacity-30">
+      <div class="absolute top-10 left-10 text-6xl animate-float">🏆</div>
+      <div class="absolute top-20 right-20 text-4xl animate-float" style="animation-delay: 0.5s">🎯</div>
+      <div class="absolute bottom-10 left-1/4 text-5xl animate-float" style="animation-delay: 1s">⭐</div>
+    </div>
+    <div class="inline-block bg-gradient-to-r from-accent/20 via-highlight/20 to-primary/20 rounded-full px-6 py-2 mb-4">
+      <span class="text-lg">⚔️</span>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-dark mb-4">
+      竞赛经历
+    </h1>
+    <p class="text-dark/60 text-lg max-w-xl mx-auto">
+      挑战自我，在学术与实战中斩获佳绩
+    </p>
+  </header>
+
+  <!-- Competitions Grid -->
+  <main class="max-w-5xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {competitions.map((comp, index) => {
+        const colors = colorMap[comp.color as keyof typeof colorMap] || colorMap.secondary;
+        const medal = medals[index] || '🏅';
+        return (
+          <div class={`group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-2 border-2 ${colors.border}`}>
+            {/* Medal Badge */}
+            <div class="absolute -top-3 -right-3 text-3xl">
+              {medal}
+            </div>
+
+            {/* Icon */}
+            <div class="mb-4">
+              <span class="text-5xl">{comp.icon}</span>
+            </div>
+
+            {/* Title & Role */}
+            <div class="mb-3">
+              <h3 class="font-heading text-lg font-bold text-dark mb-1">{comp.title}</h3>
+              <div class="flex items-center gap-2">
+                <span class={`px-3 py-1 rounded-full text-xs font-medium ${colors.bg} ${colors.text}`}>
+                  {comp.role}
+                </span>
+              </div>
+            </div>
+
+            {/* Subtitle */}
+            <p class="text-dark/60 text-sm mb-3">{comp.subtitle}</p>
+
+            {/* Description */}
+            <p class="text-dark/70 text-sm leading-relaxed mb-4">{comp.description}</p>
+
+            {/* Period */}
+            <div class="flex items-center gap-2 text-xs text-dark/40">
+              <span>📅</span>
+              <span>{comp.period}</span>
+            </div>
+
+            {/* Achievement Badge */}
+            <div class={`mt-4 pt-4 border-t border-secondary/20`}>
+              <div class={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${colors.bg} ${colors.text}`}>
+                <span>✨</span>
+                <span>竞赛成就</span>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Achievement Summary -->
+    <div class="mt-16 text-center">
+      <div class="inline-flex items-center gap-6 px-8 py-4 bg-gradient-to-r from-accent/10 via-highlight/10 to-primary/10 rounded-full">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🏆</span>
+          <span class="text-dark/70 text-sm">3项竞赛获奖</span>
+        </div>
+        <div class="w-px h-6 bg-secondary/30"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📝</span>
+          <span class="text-dark/70 text-sm">论文一等奖</span>
+        </div>
+        <div class="w-px h-6 bg-secondary/30"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🌏</span>
+          <span class="text-dark/70 text-sm">国际赛事</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,103 @@
+---
+import projects from '../data/projects.json';
+
+const colorMap = {
+  primary: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/30', button: 'bg-primary text-white' },
+  secondary: { bg: 'bg-secondary/20', text: 'text-secondary', border: 'border-secondary/40', button: 'bg-secondary text-white' },
+  accent: { bg: 'bg-accent/20', text: 'text-accent', border: 'border-accent/40', button: 'bg-accent text-white' },
+  highlight: { bg: 'bg-highlight/30', text: 'text-dark', border: 'border-highlight/50', button: 'bg-highlight text-white' },
+  sky: { bg: 'bg-sky/20', text: 'text-sky', border: 'border-sky/40', button: 'bg-sky text-white' },
+};
+---
+
+<div class="min-h-screen bg-gradient-to-b from-bgLight to-white">
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b-2 border-secondary/20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-dark hover:text-primary transition-colors font-heading font-bold text-lg">
+        <span class="text-xl">⬅️</span>
+        <span>返回地图</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🎮</span>
+        <span class="font-heading text-dark">项目空间</span>
+      </div>
+      <div class="w-24"></div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="pt-24 pb-12 text-center relative">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden -z-10 opacity-30">
+      <div class="absolute top-10 left-10 text-6xl animate-float">⭐</div>
+      <div class="absolute top-20 right-20 text-4xl animate-float" style="animation-delay: 0.5s">🌟</div>
+      <div class="absolute bottom-10 left-1/4 text-5xl animate-float" style="animation-delay: 1s">✨</div>
+    </div>
+    <div class="inline-block bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-full px-6 py-2 mb-4">
+      <span class="text-lg">📦</span>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-dark mb-4">
+      项目空间
+    </h1>
+    <p class="text-dark/60 text-lg max-w-xl mx-auto">
+      发现創意作品与实战项目，从 AI 求职工具到私域电商平台
+    </p>
+  </header>
+
+  <!-- Projects Grid -->
+  <main class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project) => {
+        const colors = colorMap[project.color as keyof typeof colorMap] || colorMap.secondary;
+        return (
+          <div class={`group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 hover:-translate-y-2 border-2 ${colors.border}`}>
+            <div class="flex items-start gap-3 mb-4">
+              <span class="text-4xl">{project.icon}</span>
+              <div class="flex-1">
+                <h3 class="font-heading text-xl font-bold text-dark">{project.title}</h3>
+                <p class={`text-sm ${colors.text} mt-1`}>{project.subtitle}</p>
+              </div>
+            </div>
+            <p class="text-dark/70 text-sm leading-relaxed mb-4">{project.description}</p>
+
+            {project.features && project.features.length > 0 && (
+              <ul class="space-y-2 mb-4">
+                {project.features.map((feature) => (
+                  <li class="flex items-center gap-2 text-sm text-dark/70">
+                    <span class="w-2 h-2 rounded-full bg-secondary" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag) => (
+                <span class={`px-3 py-1 rounded-full text-xs font-medium ${colors.bg} ${colors.text}`}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <a href={project.url} target="_blank" rel="noopener noreferrer"
+              class={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${colors.button} hover:opacity-90 hover:-translate-y-0.5`}>
+              <span>探索项目</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- RPG Decoration -->
+    <div class="mt-16 text-center">
+      <div class="inline-flex items-center gap-4 px-6 py-3 bg-secondary/10 rounded-full">
+        <span class="text-2xl">🏆</span>
+        <span class="text-dark/60 text-sm font-medium">完成所有项目探索，解锁更多成就</span>
+        <span class="text-2xl">🎯</span>
+      </div>
+    </div>
+  </main>
+</div>

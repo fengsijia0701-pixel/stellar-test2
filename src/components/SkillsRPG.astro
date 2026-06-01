@@ -1,0 +1,152 @@
+---
+import skills from '../data/skills.json';
+
+const categories = [
+  { key: 'product', ...skills.product },
+  { key: 'ecommerce', ...skills.ecommerce },
+  { key: 'commercial', ...skills.commercial },
+  { key: 'marketing', ...skills.marketing },
+];
+
+const levelColors = {
+  熟练: { bg: 'bg-secondary/20', text: 'text-secondary', bar: 'bg-secondary' },
+  掌握: { bg: 'bg-primary/20', text: 'text-primary', bar: 'bg-primary' },
+  了解: { bg: 'bg-accent/20', text: 'text-accent', bar: 'bg-accent' },
+};
+
+const categoryColors = {
+  product: { border: 'border-primary/30', icon: '📋' },
+  ecommerce: { border: 'border-highlight/40', icon: '🛒' },
+  commercial: { border: 'border-accent/40', icon: '💰' },
+  marketing: { border: 'border-secondary/40', icon: '📢' },
+};
+---
+
+<div class="min-h-screen bg-gradient-to-b from-bgLight to-white">
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b-2 border-secondary/20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-dark hover:text-primary transition-colors font-heading font-bold text-lg">
+        <span class="text-xl">⬅️</span>
+        <span>返回地图</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🎯</span>
+        <span class="font-heading text-dark">技能标签</span>
+      </div>
+      <div class="w-24"></div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="pt-24 pb-12 text-center relative">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden -z-10 opacity-30">
+      <div class="absolute top-10 left-10 text-6xl animate-float">📊</div>
+      <div class="absolute top-20 right-20 text-4xl animate-float" style="animation-delay: 0.5s">💡</div>
+      <div class="absolute bottom-10 left-1/4 text-5xl animate-float" style="animation-delay: 1s">⚡</div>
+    </div>
+    <div class="inline-block bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-full px-6 py-2 mb-4">
+      <span class="text-lg">🎮</span>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl font-bold text-dark mb-4">
+      技能标签
+    </h1>
+    <p class="text-dark/60 text-lg max-w-xl mx-auto">
+      解锁职场关键技能，成为更好的自己
+    </p>
+  </header>
+
+  <!-- Skills Grid -->
+  <main class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {categories.map((category) => {
+        const catColors = categoryColors[category.key as keyof typeof categoryColors];
+        return (
+          <div class={`group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 border-2 ${catColors.border}`}>
+            {/* Category Header */}
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-secondary/20">
+              <span class="text-4xl">{category.icon}</span>
+              <div>
+                <h3 class="font-heading text-xl font-bold text-dark">{category.label}</h3>
+                <span class="text-xs text-dark/40">{category.skills.length} 项技能</span>
+              </div>
+            </div>
+
+            {/* Skills List */}
+            <div class="space-y-4">
+              {category.skills.map((skill) => {
+                const levelStyle = levelColors[skill.level as keyof typeof levelColors] || levelColors.掌握;
+                const barWidth = skill.level === '熟练' ? 'w-[90%]' : skill.level === '掌握' ? 'w-[70%]' : 'w-[50%]';
+                return (
+                  <div class="skill-item">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-medium text-dark">{skill.name}</span>
+                      <span class={`px-2 py-0.5 rounded-full text-xs font-medium ${levelStyle.bg} ${levelStyle.text}`}>
+                        {skill.level}
+                      </span>
+                    </div>
+                    <div class="h-2 bg-secondary/10 rounded-full overflow-hidden">
+                      <div class={`h-full rounded-full ${levelStyle.bar} ${barWidth} transition-all duration-500`}></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* RPG Style Progress */}
+            <div class="mt-6 pt-4 border-t border-secondary/20">
+              <div class="flex items-center justify-between text-xs text-dark/50">
+                <span>技能进度</span>
+                <span class="font-medium text-secondary">
+                  {category.skills.filter(s => s.level === '熟练').length}/{category.skills.length} 已精通
+                </span>
+              </div>
+              <div class="mt-2 flex gap-1">
+                {category.skills.map((skill) => (
+                  <div class={`flex-1 h-1 rounded-full ${skill.level === '熟练' ? 'bg-secondary' : skill.level === '掌握' ? 'bg-primary' : 'bg-accent/30'}`}></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Overall Stats -->
+    <div class="mt-16 text-center">
+      <div class="inline-flex items-center gap-8 px-8 py-4 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-full">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📋</span>
+          <div class="text-left">
+            <div class="text-lg font-bold text-dark">{skills.product.skills.length}</div>
+            <div class="text-xs text-dark/50">产品经理</div>
+          </div>
+        </div>
+        <div class="w-px h-8 bg-secondary/30"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🛒</span>
+          <div class="text-left">
+            <div class="text-lg font-bold text-dark">{skills.ecommerce.skills.length}</div>
+            <div class="text-xs text-dark/50">电商运营</div>
+          </div>
+        </div>
+        <div class="w-px h-8 bg-secondary/30"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">💰</span>
+          <div class="text-left">
+            <div class="text-lg font-bold text-dark">{skills.commercial.skills.length}</div>
+            <div class="text-xs text-dark/50">商业化运营</div>
+          </div>
+        </div>
+        <div class="w-px h-8 bg-secondary/30"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📢</span>
+          <div class="text-left">
+            <div class="text-lg font-bold text-dark">{skills.marketing.skills.length}</div>
+            <div class="text-xs text-dark/50">市场营销</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

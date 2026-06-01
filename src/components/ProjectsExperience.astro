@@ -4,105 +4,111 @@ import timeline from '../data/timeline.json';
 const projects = timeline.projects;
 ---
 
-<section id="projects-experience" class="fullscreen-page stardew-page">
-  <div class="grass-sky-background"></div>
+<section class="page-section">
+  <div class="bg-sky"></div>
+  <div class="bg-grass"></div>
 
-  <div class="stardew-panel content-panel">
-    <h1 class="stardew-title">🛍️ 项目经历</h1>
+  <div class="wood-frame">
+    <div class="parchment">
+      <h1 class="title">🛍️ 项目经历</h1>
 
-    <div class="content-area">
-      <div class="project-list">
-        {projects.map((project, index) => (
+      <div class="content">
+        {projects.map((project) => (
           <div class="project-item">
             <div class="project-icon">{project.icon}</div>
             <div class="project-info">
-              <h3>{project.title}</h3>
-              <p class="project-subtitle">{project.subtitle}</p>
+              <h3 class="project-title">{project.title}</h3>
+              <p class="project-sub">{project.subtitle}</p>
               <p class="project-desc">{project.description}</p>
               <div class="project-stats">
-                {project.highlights.map((highlight) => (
-                  <span class="stat-tag">⭐ {highlight}</span>
+                {project.highlights?.map((h) => (
+                  <span class="stat-tag">⭐ {h}</span>
                 ))}
               </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
 
-    <div class="navigation-buttons">
-      <button id="backBtn" class="stardew-button" data-target="rpg-map">◀ 返回地图</button>
+      <div class="nav-bar">
+        <button class="wood-btn" data-action="goto" data-goto="page-map">◀ 返回地图</button>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .fullscreen-page {
-    min-height: 100vh;
+  .page-section {
+    width: 100%;
+    height: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
-  .stardew-page {
-    background: linear-gradient(to bottom,
-      #87CEEB 0%,
-      #87CEEB 40%,
-      #90EE90 40%,
-      #7CB342 100%
-    );
+  .bg-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
   }
 
-  .grass-sky-background {
+  .bg-grass {
     position: absolute;
-    inset: 0;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 20px,
-        rgba(124, 179, 66, 0.15) 20px,
-        rgba(124, 179, 66, 0.15) 40px
-      );
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
   }
 
-  .content-panel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 650px;
-    max-height: 85vh;
-    padding: 30px;
+  .wood-frame {
+    position: relative;
     z-index: 10;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 700px;
+    width: 90%;
   }
 
-  .stardew-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .content-area {
-    padding: 10px 0;
-    max-height: 55vh;
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+    border-radius: 4px;
+    padding: 24px;
+    max-height: 85vh;
     overflow-y: auto;
   }
 
-  .project-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .title {
+    font-family: 'Gaegu', cursive;
+    font-size: 2rem;
+    color: #5D3A1A;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .content {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 8px;
   }
 
   .project-item {
     background: rgba(255, 255, 255, 0.85);
-    border: 3px solid var(--color-wood);
+    border: 3px solid #8B4513;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 0 var(--color-wood-dark);
+    margin-bottom: 16px;
     display: flex;
     gap: 16px;
     align-items: flex-start;
+    box-shadow: 0 4px 0 #5D3A1A;
   }
 
   .project-icon {
@@ -114,106 +120,79 @@ const projects = timeline.projects;
     flex: 1;
   }
 
-  .project-info h3 {
+  .project-title {
     font-family: 'Gaegu', cursive;
-    font-size: 1.4rem;
-    color: var(--color-wood-dark);
+    font-size: 1.3rem;
+    color: #5D3A1A;
     margin-bottom: 4px;
   }
 
-  .project-subtitle {
+  .project-sub {
     font-family: 'Gaegu', cursive;
-    font-size: 1rem;
-    color: var(--color-wood);
+    font-size: 0.95rem;
+    color: #8B4513;
     margin-bottom: 8px;
   }
 
   .project-desc {
-    font-family: 'Noto Sans SC', sans-serif;
     font-size: 0.9rem;
-    color: var(--color-text);
-    margin-bottom: 12px;
+    color: #6B5344;
+    margin-bottom: 10px;
     line-height: 1.5;
   }
 
   .project-stats {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
 
   .stat-tag {
-    background: var(--color-grass);
-    color: var(--color-cream);
+    background: #7CB342;
+    color: #FFF8E7;
     padding: 4px 12px;
     border-radius: 15px;
     font-family: 'Gaegu', cursive;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
-  .navigation-buttons {
+  .nav-bar {
     text-align: center;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 2px dashed var(--color-wood-light);
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 2px dashed #A67C52;
   }
 
-  /* Scrollbar styling */
-  .content-area::-webkit-scrollbar {
-    width: 8px;
+  .wood-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E6;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #5D3A1A;
+    transition: all 0.15s ease;
   }
 
-  .content-area::-webkit-scrollbar-track {
-    background: var(--color-parchment);
-    border-radius: 4px;
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
   }
 
-  .content-area::-webkit-scrollbar-thumb {
-    background: var(--color-wood);
-    border-radius: 4px;
-  }
-
-  @media (max-width: 768px) {
-    .content-panel {
-      width: 95%;
-      padding: 20px;
-    }
-
+  @media (max-width: 500px) {
     .project-item {
       flex-direction: column;
-      align-items: center;
       text-align: center;
     }
 
-    .project-icon {
-      font-size: 2rem;
-    }
-
-    .project-info h3 {
-      font-size: 1.2rem;
+    .project-stats {
+      justify-content: center;
     }
   }
 </style>
-
-<script>
-  import { soundEffects } from '../scripts/sound';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        soundEffects.playClick();
-        const target = backBtn.getAttribute('data-target');
-        if (target) {
-          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    }
-
-    document.querySelectorAll('.stardew-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        soundEffects.playClick();
-      });
-    });
-  });
-</script>

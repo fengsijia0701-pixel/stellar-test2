@@ -1,228 +1,187 @@
 ---
-import timelineData from '../data/timeline.json';
-
-// Time order (earliest to latest)
-const chronologicalOrder = [
-  '安永',         // 2023.12 - Finance
-  '默克',         // 2024.05 - Medical
-  '美敦力',       // 2024.09 - Medical
-  '哈啰',         // 2025.02 - Internet
-  '美团',         // 2025.05 - Internet
-  '小红书',       // 2025.09 - Internet
-  '字节跳动'      // 2026.01 - Internet
-];
-
-// Company industry mapping
-const companyToIndustry: Record<string, 'internet' | 'medical' | 'finance'> = {
-  '字节跳动': 'internet',
-  '小红书': 'internet',
-  '美团': 'internet',
-  '哈啰': 'internet',
-  '美敦力': 'medical',
-  '默克': 'medical',
-  '安永': 'finance'
-};
-
-// Industry config
-const industryConfig = {
-  internet: {
-    name: '互联网',
-    icon: '🌐',
-    color: 'accent'
-  },
-  medical: {
-    name: '医疗健康',
-    icon: '🏥',
-    color: 'secondary'
-  },
-  finance: {
-    name: '金融/咨询',
-    icon: '💼',
-    color: 'sky'
-  }
-};
-
-// Build experience map
-const experienceMap = new Map(
-  timelineData.experience.map(exp => [exp.company, exp])
-);
-
-// Build skill tree structure
-const skillTree = chronologicalOrder.map((companyName, index) => {
-  const exp = experienceMap.get(companyName);
-  const industry = companyToIndustry[companyName];
-  const config = industryConfig[industry];
-  const isLast = index === chronologicalOrder.length - 1;
-
-  return {
-    company: companyName,
-    period: exp?.period || '',
-    role: exp?.subtitle || '',
-    icon: exp?.icon || '📦',
-    brief: exp?.brief || '',
-    projects: exp?.projects || [],
-    industry,
-    config,
-    index,
-    isLast,
-    status: isLast ? 'current' : 'completed'
-  };
-});
-
-// Group by industry for track display
-const tracks = {
-  finance: skillTree.filter(n => n.industry === 'finance'),
-  medical: skillTree.filter(n => n.industry === 'medical'),
-  internet: skillTree.filter(n => n.industry === 'internet')
-};
 ---
 
-<section id="growth" class="fullscreen-page stardew-page">
-  <div class="grass-sky-background"></div>
+<section class="growth-page">
+  <div class="bg-sky"></div>
+  <div class="bg-grass"></div>
 
-  <div class="stardew-panel content-panel">
-    <h1 class="stardew-title">🌱 成长轨迹</h1>
+  <div class="decorations">
+    <span class="deco" style="top: 8%; left: 5%;">🌲</span>
+    <span class="deco" style="top: 12%; right: 6%;">🌳</span>
+    <span class="deco" style="bottom: 30%; left: 8%;">🌿</span>
+    <span class="deco" style="bottom: 22%; right: 5%;">🍀</span>
+  </div>
 
-    <!-- Skill Tree Timeline -->
-    <div class="skill-tree">
-      <!-- Finance/Consulting Branch -->
-      <div class="tree-branch finance">
-        <div class="branch-label">💼 金融/咨询</div>
-        <div class="nodes-row">
-          {tracks.finance.map((node) => (
-            <div
-              class={`node ${node.status === 'current' ? 'current' : ''}`}
-              data-company={node.company}
-              data-period={node.period}
-              data-role={node.role}
-              data-icon={node.icon}
-              data-color={node.config.color}
-              data-brief={node.brief}
-              data-projects={JSON.stringify(node.projects)}
-            >
-              <div class="node-icon">{node.icon}</div>
-              <div class="node-content">
-                <div class="company">{node.company}</div>
-                <div class="period">{node.period.split(' - ')[0]}</div>
-              </div>
+  <div class="wood-frame">
+    <div class="parchment">
+      <h1 class="title">🌱 成长轨迹</h1>
+
+      <div class="skill-tree">
+        <!-- Finance Branch -->
+        <div class="branch">
+          <div class="branch-label">💼 金融/咨询</div>
+          <div class="nodes">
+            <div class="node">
+              <div class="node-icon">📊</div>
+              <div class="node-company">安永</div>
+              <div class="node-period">2023.12</div>
             </div>
-          ))}
+          </div>
+        </div>
+
+        <!-- Medical Branch -->
+        <div class="branch">
+          <div class="branch-label">🏥 医疗健康</div>
+          <div class="nodes">
+            <div class="node">
+              <div class="node-icon">💊</div>
+              <div class="node-company">默克</div>
+              <div class="node-period">2024.05</div>
+            </div>
+            <div class="node">
+              <div class="node-icon">🏥</div>
+              <div class="node-company">美敦力</div>
+              <div class="node-period">2024.09</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Internet Branch -->
+        <div class="branch">
+          <div class="branch-label">🌐 互联网</div>
+          <div class="path-line"></div>
+          <div class="nodes">
+            <div class="node">
+              <div class="node-icon">🚲</div>
+              <div class="node-company">哈啰</div>
+              <div class="node-period">2025.02</div>
+            </div>
+            <div class="node">
+              <div class="node-icon">🚴</div>
+              <div class="node-company">美团</div>
+              <div class="node-period">2025.05</div>
+            </div>
+            <div class="node">
+              <div class="node-icon">📕</div>
+              <div class="node-company">小红书</div>
+              <div class="node-period">2025.09</div>
+            </div>
+            <div class="node current">
+              <div class="node-icon">🌐</div>
+              <div class="node-company">字节跳动</div>
+              <div class="node-period">2026.01</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Medical Health Branch -->
-      <div class="tree-branch medical">
-        <div class="branch-label">🏥 医疗健康</div>
-        <div class="nodes-row">
-          {tracks.medical.map((node) => (
-            <div
-              class={`node ${node.status === 'current' ? 'current' : ''}`}
-              data-company={node.company}
-              data-period={node.period}
-              data-role={node.role}
-              data-icon={node.icon}
-              data-color={node.config.color}
-              data-brief={node.brief}
-              data-projects={JSON.stringify(node.projects)}
-            >
-              <div class="node-icon">{node.icon}</div>
-              <div class="node-content">
-                <div class="company">{node.company}</div>
-                <div class="period">{node.period.split(' - ')[0]}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div class="nav-buttons">
+        <button class="wood-btn" data-action="prev">◀ 上一步</button>
+        <button class="wood-btn" data-action="next">继续 ▶</button>
       </div>
-
-      <!-- Internet Branch -->
-      <div class="tree-branch internet">
-        <div class="branch-label">🌐 互联网</div>
-        <div class="path-line"></div>
-        <div class="nodes-row">
-          {tracks.internet.map((node) => (
-            <div
-              class={`node ${node.status === 'current' ? 'current' : ''}`}
-              data-company={node.company}
-              data-period={node.period}
-              data-role={node.role}
-              data-icon={node.icon}
-              data-color={node.config.color}
-              data-brief={node.brief}
-              data-projects={JSON.stringify(node.projects)}
-            >
-              <div class="node-icon">{node.icon}</div>
-              <div class="company">{node.company}</div>
-              <div class="period">{node.period.split(' - ')[0]}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <div class="navigation-buttons">
-      <button id="prevBtn" class="stardew-button">◀ 上一步</button>
-      <button id="nextBtn" class="stardew-button">继续 ▶</button>
     </div>
   </div>
 </section>
 
-<!-- Click-to-view Detail Modal -->
-<div id="growth-modal" class="fixed inset-0 z-50 hidden">
-  <div class="modal-backdrop absolute inset-0 bg-dark/60 backdrop-blur-sm"></div>
-  <div class="modal-drawer absolute right-0 top-0 bottom-0 w-full max-w-2xl bg-parchment transform translate-x-full transition-transform duration-500 overflow-y-auto">
-    <div class="p-8">
-      <div class="flex justify-between items-start mb-8">
-        <div>
-          <div class="flex items-center gap-3 mb-2">
-            <span id="modal-icon" class="text-3xl"></span>
-            <h3 id="modal-company" class="font-heading text-2xl font-bold text-wood-dark"></h3>
-          </div>
-          <p id="modal-role" class="text-wood/70"></p>
-          <p id="modal-period" class="text-sm text-wood/50 mt-1"></p>
-        </div>
-        <button id="modal-close" class="p-2 hover:bg-wood/10 rounded-full transition-colors">
-          <svg class="w-6 h-6 text-wood-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-
-      <div id="modal-brief" class="mb-6 p-4 bg-cream rounded-lg border-2 border-wood/20"></div>
-      <div id="modal-projects" class="space-y-6"></div>
-    </div>
-  </div>
-</div>
-
 <style>
+  .growth-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .bg-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
+  }
+
+  .bg-grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
+  }
+
+  .decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .deco {
+    position: absolute;
+    font-size: 2rem;
+    animation: sway 3s ease-in-out infinite;
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+
+  .wood-frame {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+    border-radius: 4px;
+    padding: 20px 30px;
+    max-width: 750px;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+
+  .title {
+    font-family: 'Gaegu', cursive;
+    font-size: 2rem;
+    color: #5D3A1A;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
   .skill-tree {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    padding: 20px;
+    gap: 14px;
   }
 
-  .tree-branch {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
-    padding: 16px;
+  .branch {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 12px;
   }
 
   .branch-label {
     font-family: 'Gaegu', cursive;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 12px;
-    padding: 4px 12px;
-    background: var(--color-wood);
-    color: var(--color-cream);
-    border-radius: 20px;
+    color: white;
+    background: #8B4513;
+    padding: 3px 12px;
+    border-radius: 15px;
     display: inline-block;
+    margin-bottom: 10px;
   }
 
-  .nodes-row {
+  .nodes {
     display: flex;
-    gap: 16px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -231,167 +190,83 @@ const tracks = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--color-parchment);
-    border: 3px solid var(--color-wood);
-    border-radius: 12px;
-    padding: 12px 16px;
-    min-width: 80px;
+    background: #F5E6C8;
+    border: 3px solid #8B4513;
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 68px;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 3px 0 var(--color-wood-dark);
+    box-shadow: 0 3px 0 #5D3A1A;
   }
 
   .node:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 0 var(--color-wood-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 #5D3A1A;
   }
 
   .node.current {
-    border-color: var(--color-gold);
+    border-color: #FFD700;
     background: #FFF8E7;
   }
 
   .node-icon {
-    font-size: 1.8rem;
-    margin-bottom: 4px;
+    font-size: 1.6rem;
+    margin-bottom: 2px;
   }
 
-  .node-content {
+  .node-company {
+    font-family: 'Gaegu', cursive;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5D3A1A;
     text-align: center;
   }
 
-  .company {
-    font-family: 'Gaegu', cursive;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--color-text);
-  }
-
-  .period {
-    font-size: 0.8rem;
-    color: var(--color-wood);
+  .node-period {
+    font-size: 0.7rem;
+    color: #8B4513;
   }
 
   .path-line {
     height: 4px;
-    background: var(--color-wood);
-    margin: 8px 0;
+    background: #8B4513;
+    margin: 6px 0;
     border-radius: 2px;
   }
 
-  .navigation-buttons {
+  .nav-buttons {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    gap: 16px;
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .wood-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E6;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #5D3A1A, 0 4px 8px rgba(0, 0, 0, 0.25);
+    transition: all 0.15s ease;
+  }
+
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
+    box-shadow: 0 5px 0 #5D3A1A, 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .wood-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 #5D3A1A, 0 3px 6px rgba(0, 0, 0, 0.2);
   }
 </style>
-
-<script>
-  // Modal functionality
-  const modal = document.getElementById('growth-modal');
-  const modalBackdrop = modal?.querySelector('.modal-backdrop');
-  const modalDrawer = modal?.querySelector('.modal-drawer');
-  const modalIcon = document.getElementById('modal-icon');
-  const modalCompany = document.getElementById('modal-company');
-  const modalRole = document.getElementById('modal-role');
-  const modalPeriod = document.getElementById('modal-period');
-  const modalBrief = document.getElementById('modal-brief');
-  const modalProjects = document.getElementById('modal-projects');
-  const modalClose = document.getElementById('modal-close');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-
-  // Color mapping
-  const colorMap: Record<string, { bg: string; border: string; text: string }> = {
-    accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
-    sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky' },
-    secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary' }
-  };
-
-  function openModal(card: Element) {
-    const data = card.getAttribute('data-projects');
-    const company = card.getAttribute('data-company');
-    const period = card.getAttribute('data-period');
-    const role = card.getAttribute('data-role');
-    const icon = card.getAttribute('data-icon');
-    const brief = card.getAttribute('data-brief');
-    const color = card.getAttribute('data-color');
-
-    if (!data || !company) return;
-
-    const projects = JSON.parse(data);
-
-    if (modalIcon) modalIcon.textContent = icon || '';
-    if (modalCompany) modalCompany.textContent = company;
-    if (modalRole) modalRole.textContent = role || '';
-    if (modalPeriod) modalPeriod.textContent = period || '';
-    if (modalBrief) modalBrief.textContent = brief || '';
-
-    if (modalProjects) {
-      const colors = colorMap[color || 'accent'] || colorMap.accent;
-      modalProjects.innerHTML = projects.map((p: any) => `
-        <div class="project-item border-l-4 ${colors.border} pl-6 py-4 bg-white/50 rounded-r-lg">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="text-2xl">📦</span>
-            <h4 class="font-heading text-xl font-bold text-wood-dark">${p.name}</h4>
-          </div>
-          <div class="space-y-3 text-sm">
-            <div class="flex gap-2">
-              <span class="font-medium text-wood/50 min-w-16">背景</span>
-              <span class="text-wood/70">${p.background}</span>
-            </div>
-            <div class="flex gap-2">
-              <span class="font-medium text-wood/50 min-w-16">挑战</span>
-              <span class="text-wood/70">${p.challenge}</span>
-            </div>
-            <div class="flex gap-2">
-              <span class="font-medium text-wood/50 min-w-16">方案</span>
-              <span class="text-wood/70">${p.solution}</span>
-            </div>
-            <div class="flex gap-2 items-start">
-              <span class="font-medium ${colors.text} min-w-16">成果</span>
-              <span class="${colors.text} font-medium">${p.result}</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    modal?.classList.remove('hidden');
-    setTimeout(() => {
-      modalDrawer?.classList.remove('translate-x-full');
-    }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modalDrawer?.classList.add('translate-x-full');
-    setTimeout(() => {
-      modal?.classList.add('hidden');
-    }, 500);
-    document.body.style.overflow = '';
-  }
-
-  // Navigation buttons
-  prevBtn?.addEventListener('click', () => {
-    window.location.href = '/#experience';
-  });
-
-  nextBtn?.addEventListener('click', () => {
-    window.location.href = '/#skills';
-  });
-
-  // Attach click events to nodes
-  document.querySelectorAll('.node').forEach(node => {
-    node.addEventListener('click', () => {
-      openModal(node);
-    });
-  });
-
-  modalClose?.addEventListener('click', closeModal);
-  modalBackdrop?.addEventListener('click', closeModal);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-</script>

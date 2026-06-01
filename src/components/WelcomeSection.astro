@@ -1,478 +1,400 @@
 ---
 ---
 
-<section id="welcome" class="welcome-section">
-  <!-- Grass Background -->
-  <div class="grass-background"></div>
+<section class="welcome-page">
+  <!-- Sky and Grass Background -->
+  <div class="sky-bg"></div>
+  <div class="grass-bg"></div>
+
+  <!-- Floating Decorations -->
+  <div class="decorations">
+    <span class="deco" style="top: 8%; left: 5%;">🌸</span>
+    <span class="deco" style="top: 15%; right: 8%;">🌼</span>
+    <span class="deco" style="top: 25%; left: 12%;">✨</span>
+    <span class="deco" style="bottom: 35%; left: 8%;">🍀</span>
+    <span class="deco" style="bottom: 28%; right: 10%;">🌻</span>
+    <span class="deco" style="top: 35%; right: 5%;">⭐</span>
+  </div>
 
   <!-- Wood Frame Panel -->
-  <div class="stardew-panel welcome-panel">
-    <!-- Parchment inner -->
-    <div class="parchment-bg">
-      <!-- Pixel Character (singing) -->
-      <div class="character-container">
-        <div class="pixel-girl">
-          <!-- Music Notes Floating -->
-          <div class="music-notes">
-            <span class="note">♪</span>
-            <span class="note">♫</span>
-            <span class="note">♪</span>
-            <span class="note">♫</span>
+  <div class="wood-frame">
+    <div class="parchment">
+      <!-- Pixel Character -->
+      <div class="character-wrapper">
+        <div class="pixel-character">
+          <!-- Hair -->
+          <div class="hair"></div>
+          <!-- Face -->
+          <div class="face">
+            <div class="glasses">
+              <div class="lens left"></div>
+              <div class="lens right"></div>
+              <div class="bridge"></div>
+            </div>
+            <div class="eyes">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+            </div>
+            <div class="mouth"></div>
           </div>
+          <!-- Body -->
+          <div class="body"></div>
+        </div>
+        <!-- Music Notes -->
+        <div class="notes">
+          <span class="note n1">♪</span>
+          <span class="note n2">♫</span>
+          <span class="note n3">♪</span>
         </div>
       </div>
 
       <!-- Title -->
-      <h1 class="stardew-title">你好，我是</h1>
-      <h2 class="stardew-title name">冯思佳</h2>
+      <h1 class="title-small">你好，我是</h1>
+      <h2 class="title-name">冯思佳</h2>
 
       <!-- Subtitle -->
       <p class="subtitle">产品 / 运营 / 市场营销</p>
 
-      <!-- Button -->
-      <button id="startBtn" class="stardew-button">
-        <span class="button-icon">🎵</span>
-        <span>开始探索</span>
+      <!-- Start Button -->
+      <button class="wood-btn" data-action="next">
+        <span>🎵</span> 开始探索
       </button>
     </div>
-  </div>
-
-  <!-- Decorations -->
-  <div class="decorations">
-    <span class="float-deco" style="top: 10%; left: 10%;">🌸</span>
-    <span class="float-deco" style="top: 20%; right: 15%;">🌼</span>
-    <span class="float-deco" style="bottom: 15%; left: 20%;">🍀</span>
-    <span class="float-deco" style="bottom: 25%; right: 10%;">🌻</span>
-    <span class="float-deco" style="top: 40%; left: 5%;">✨</span>
-    <span class="float-deco" style="top: 60%; right: 8%;">⭐</span>
   </div>
 </section>
 
 <style>
-  .welcome-section {
+  .welcome-page {
+    width: 100%;
+    height: 100%;
     position: relative;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(180deg, #87CEEB 0%, #E8F5E9 50%, #C8E6C9 100%);
+  }
+
+  /* Sky Background */
+  .sky-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
   }
 
   /* Grass Background */
-  .grass-background {
+  .grass-bg {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 30vh;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        #4CAF50 0px,
-        #4CAF50 2px,
-        transparent 2px,
-        transparent 16px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        #66BB6A 0px,
-        #66BB6A 2px,
-        transparent 2px,
-        transparent 16px
-      );
-    background-size: 16px 16px;
-    opacity: 0.6;
+    height: 35%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
   }
 
-  .grass-background::before {
+  .grass-bg::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: 0;
     left: 0;
     right: 0;
     height: 20px;
     background: repeating-linear-gradient(
       90deg,
       #81C784 0px,
-      #81C784 4px,
-      transparent 4px,
-      transparent 12px
-    );
-    clip-path: polygon(
-      0% 100%, 4% 60%, 8% 100%, 12% 50%, 16% 100%, 20% 70%, 24% 100%,
-      28% 40%, 32% 100%, 36% 60%, 40% 100%, 44% 50%, 48% 100%, 52% 70%,
-      56% 100%, 60% 40%, 64% 100%, 68% 60%, 72% 100%, 76% 50%, 80% 100%,
-      84% 70%, 88% 100%, 92% 40%, 96% 100%, 100% 100%
+      #81C784 8px,
+      transparent 8px,
+      transparent 20px
     );
   }
 
-  /* Stardew Panel - Wood Frame */
-  .stardew-panel {
+  /* Decorations */
+  .decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .deco {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Wood Frame Panel */
+  .wood-frame {
     position: relative;
+    z-index: 10;
     background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 2px 4px rgba(255, 255, 255, 0.2),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
   }
 
-  .stardew-panel::before {
+  .wood-frame::before {
     content: '';
     position: absolute;
     top: 4px;
     left: 4px;
     right: 4px;
     bottom: 4px;
-    border: 4px solid #5D3A1A;
+    border: 3px solid #5D3A1A;
     border-radius: 4px;
     pointer-events: none;
   }
 
-  /* Parchment Background */
-  .parchment-bg {
-    background:
-      linear-gradient(180deg, rgba(253, 245, 230, 0.95) 0%, rgba(245, 235, 210, 0.95) 100%);
+  /* Parchment */
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
     border-radius: 4px;
     padding: 40px 60px;
     text-align: center;
-    position: relative;
-    min-width: 400px;
-    box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.1);
+    min-width: 380px;
   }
 
-  .parchment-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    border-radius: 4px;
-  }
-
-  /* Character Container */
-  .character-container {
+  /* Character Wrapper */
+  .character-wrapper {
     position: relative;
     display: inline-block;
     margin-bottom: 20px;
   }
 
-  /* Pixel Girl - Complete character using box-shadow pixel art */
-  .pixel-girl {
+  /* Pixel Character - Complete body */
+  .pixel-character {
+    position: relative;
     width: 64px;
     height: 96px;
-    background: transparent;
-    position: relative;
-    box-shadow:
-      /* === HAIR (dark brown curly hair - top area) === */
-      /* Row 1 - hair top */
-      8px 0 0 #4a3728, 16px 0 0 #4a3728, 24px 0 0 #4a3728, 32px 0 0 #4a3728, 40px 0 0 #4a3728, 48px 0 0 #4a3728,
-      /* Row 2 */
-      0 8px 0 #4a3728, 8px 8px 0 #5c4033, 16px 8px 0 #5c4033, 24px 8px 0 #5c4033, 32px 8px 0 #5c4033, 40px 8px 0 #5c4033, 48px 8px 0 #5c4033, 56px 8px 0 #4a3728,
-      /* Row 3 - bangs area */
-      0 16px 0 #4a3728, 8px 16px 0 #5c4033, 16px 16px 0 #6b4c3a, 24px 16px 0 #6b4c3a, 32px 16px 0 #5c4033, 40px 16px 0 #5c4033, 48px 16px 0 #4a3728, 56px 16px 0 #4a3728,
-      /* Row 4 - side hair left */
-      0 24px 0 #4a3728, 8px 24px 0 #4a3728, 56px 24px 0 #4a3728,
-      /* Row 5 - side hair sides */
-      0 32px 0 #4a3728, 8px 32px 0 #4a3728, 56px 32px 0 #4a3728,
-      /* Row 6 */
-      0 40px 0 #4a3728, 56px 40px 0 #4a3728,
-
-      /* === FACE (skin tone #fdbf8f) === */
-      /* Row 4 - forehead + hair sides */
-      8px 24px 0 #fdbf8f, 16px 24px 0 #fdbf8f, 24px 24px 0 #fdbf8f, 32px 24px 0 #fdbf8f, 40px 24px 0 #fdbf8f, 48px 24px 0 #fdbf8f,
-      /* Row 5 - eyes row */
-      8px 32px 0 #fdbf8f, 16px 32px 0 #fdbf8f, 24px 32px 0 #fdbf8f, 32px 32px 0 #fdbf8f, 40px 32px 0 #fdbf8f, 48px 32px 0 #fdbf8f,
-      /* Row 6 - eyes + cheeks */
-      8px 40px 0 #fdbf8f, 16px 40px 0 #fdbf8f, 24px 40px 0 #fdbf8f, 32px 40px 0 #fdbf8f, 40px 40px 0 #fdbf8f, 48px 40px 0 #fdbf8f,
-      /* Row 7 - nose + mouth area */
-      8px 48px 0 #fdbf8f, 16px 48px 0 #fdbf8f, 24px 48px 0 #fdbf8f, 32px 48px 0 #fdbf8f, 40px 48px 0 #fdbf8f, 48px 48px 0 #fdbf8f,
-      /* Row 8 - chin */
-      16px 56px 0 #fdbf8f, 24px 56px 0 #fdbf8f, 32px 56px 0 #fdbf8f, 40px 56px 0 #fdbf8f,
-
-      /* === GLASSES (round frames #3d2914) === */
-      /* Left lens */
-      12px 28px 0 #3d2914, 20px 28px 0 #3d2914,
-      12px 36px 0 #3d2914, 20px 36px 0 #3d2914,
-      /* Right lens */
-      36px 28px 0 #3d2914, 44px 28px 0 #3d2914,
-      36px 36px 0 #3d2914, 44px 36px 0 #3d2914,
-      /* Bridge */
-      24px 32px 0 #3d2914, 32px 32px 0 #3d2914,
-
-      /* === EYES (dark dots behind glasses) === */
-      16px 32px 0 #1a1a1a,
-      40px 32px 0 #1a1a1a,
-
-      /* === BODY (pink shirt #e8a0a0) === */
-      /* Row 9 - shoulders */
-      8px 56px 0 #e8a0a0, 16px 56px 0 #e8a0a0, 24px 56px 0 #d88888, 32px 56px 0 #d88888, 40px 56px 0 #e8a0a0, 48px 56px 0 #e8a0a0,
-      /* Row 10 - shirt body */
-      8px 64px 0 #e8a0a0, 16px 64px 0 #e8a0a0, 24px 64px 0 #e8a0a0, 32px 64px 0 #e8a0a0, 40px 64px 0 #e8a0a0, 48px 64px 0 #e8a0a0,
-      /* Row 11 */
-      8px 72px 0 #e8a0a0, 16px 72px 0 #e8a0a0, 24px 72px 0 #f0b0b0, 32px 72px 0 #f0b0b0, 40px 72px 0 #e8a0a0, 48px 72px 0 #e8a0a0,
-      /* Row 12 - bottom of shirt */
-      8px 80px 0 #e8a0a0, 16px 80px 0 #e8a0a0, 24px 80px 0 #e8a0a0, 32px 80px 0 #e8a0a0, 40px 80px 0 #e8a0a0, 48px 80px 0 #e8a0a0,
-
-      /* === LEGS (brown pants #5c4033) === */
-      /* Row 13 - hips */
-      16px 88px 0 #5c4033, 24px 88px 0 #5c4033, 32px 88px 0 #5c4033, 40px 88px 0 #5c4033,
-      /* Row 14 - legs */
-      16px 96px 0 #5c4033, 24px 96px 0 #6b5344, 32px 96px 0 #6b5344, 40px 96px 0 #5c4033;
-    image-rendering: pixelated;
-    transform: scale(1.2);
-    transform-origin: top center;
+    margin: 0 auto;
   }
 
-  /* Singing Mouth Animation */
-  .pixel-girl::after {
-    content: '';
+  /* Hair - brown curly */
+  .hair {
     position: absolute;
-    bottom: 50px;
+    top: 0;
+    left: 4px;
+    width: 56px;
+    height: 40px;
+    background: transparent;
+    box-shadow:
+      /* Top row */
+      8px 0 0 #4a3728, 16px 0 0 #4a3728, 24px 0 0 #4a3728, 32px 0 0 #4a3728, 40px 0 0 #4a3728, 48px 0 0 #4a3728,
+      /* Row 2 */
+      0 8px 0 #4a3728, 56px 8px 0 #4a3728,
+      /* Row 3 */
+      0 16px 0 #4a3728, 8px 16px 0 #5c4033, 16px 16px 0 #5c4033, 24px 16px 0 #6b4c3a, 32px 16px 0 #5c4033, 40px 16px 0 #5c4033, 48px 16px 0 #4a3728, 56px 16px 0 #4a3728,
+      /* Row 4 - sides */
+      0 24px 0 #4a3728, 8px 24px 0 #4a3728, 48px 24px 0 #4a3728, 56px 24px 0 #4a3728,
+      /* Row 5 */
+      0 32px 0 #4a3728, 8px 32px 0 #4a3728, 48px 32px 0 #4a3728, 56px 32px 0 #4a3728;
+  }
+
+  /* Face - connected to hair */
+  .face {
+    position: absolute;
+    top: 24px;
+    left: 8px;
+    width: 48px;
+    height: 40px;
+    background: #fdbf8f;
+    box-shadow:
+      /* Eyes */
+      8px 8px 0 #3d2914, 32px 8px 0 #3d2914,
+      /* Cheeks */
+      4px 16px 0 #ffb6a3, 36px 16px 0 #ffb6a3;
+  }
+
+  /* Glasses */
+  .glasses {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 48px;
+    height: 12px;
+  }
+
+  .lens {
+    position: absolute;
+    top: 0;
+    width: 16px;
+    height: 12px;
+    border: 3px solid #3d2914;
+    border-radius: 3px;
+  }
+
+  .lens.left { left: 2px; }
+  .lens.right { right: 2px; }
+
+  .bridge {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 3px;
+    background: #3d2914;
+  }
+
+  /* Eyes */
+  .eyes {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    width: 48px;
+  }
+
+  .eye {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #1a1a1a;
+    border-radius: 50%;
+  }
+
+  .eye.left { left: 12px; }
+  .eye.right { right: 12px; }
+
+  /* Mouth - singing */
+  .mouth {
+    position: absolute;
+    bottom: 6px;
     left: 50%;
     transform: translateX(-50%);
     width: 8px;
     height: 6px;
     background: #3d2914;
     border-radius: 0 0 50% 50%;
-    animation: singMouth 0.4s ease-in-out infinite;
+    animation: sing 0.4s ease-in-out infinite;
   }
 
-  @keyframes singMouth {
-    0%, 100% {
-      height: 4px;
-      border-radius: 0 0 50% 50%;
-    }
-    50% {
-      height: 8px;
-      border-radius: 0 0 50% 50%;
-    }
+  @keyframes sing {
+    0%, 100% { height: 4px; }
+    50% { height: 8px; }
+  }
+
+  /* Body */
+  .body {
+    position: absolute;
+    top: 56px;
+    left: 8px;
+    width: 48px;
+    height: 40px;
+    background: #e8a0a0;
+    box-shadow:
+      /* Collar */
+      16px 0 0 #d88888, 24px 0 0 #d88888,
+      /* Shirt */
+      0 8px 0 #e8a0a0, 8px 8px 0 #e8a0a0, 16px 8px 0 #e8a0a0, 24px 8px 0 #f0b0b0, 32px 8px 0 #e8a0a0, 40px 8px 0 #e8a0a0,
+      0 16px 0 #e8a0a0, 8px 16px 0 #e8a0a0, 16px 16px 0 #e8a0a0, 24px 16px 0 #e8a0a0, 32px 16px 0 #e8a0a0, 40px 16px 0 #e8a0a0,
+      /* Pants */
+      8px 24px 0 #5c4033, 16px 24px 0 #5c4033, 24px 24px 0 #5c4033, 32px 24px 0 #5c4033,
+      8px 32px 0 #5c4033, 32px 32px 0 #5c4033;
   }
 
   /* Music Notes */
-  .music-notes {
+  .notes {
     position: absolute;
     top: 0;
-    left: 100%;
-    width: 80px;
-    height: 100px;
+    left: 70px;
+    width: 60px;
+    height: 80px;
   }
 
   .note {
     position: absolute;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     animation: floatNote 2s ease-out infinite;
     opacity: 0;
   }
 
-  .note:nth-child(1) {
-    left: 0px;
-    top: 40px;
-    animation-delay: 0s;
-    font-size: 1.2rem;
-  }
-
-  .note:nth-child(2) {
-    left: 20px;
-    top: 25px;
-    animation-delay: 0.4s;
-    font-size: 1.5rem;
-  }
-
-  .note:nth-child(3) {
-    left: 40px;
-    top: 35px;
-    animation-delay: 0.8s;
-    font-size: 1.3rem;
-  }
-
-  .note:nth-child(4) {
-    left: 55px;
-    top: 20px;
-    animation-delay: 1.2s;
-    font-size: 1.4rem;
-  }
+  .n1 { left: 0; top: 20px; animation-delay: 0s; }
+  .n2 { left: 25px; top: 10px; animation-delay: 0.5s; font-size: 1.2rem; }
+  .n3 { left: 45px; top: 25px; animation-delay: 1s; }
 
   @keyframes floatNote {
-    0% {
-      opacity: 0;
-      transform: translateY(0) translateX(0) scale(0.8);
-    }
-    20% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-40px) translateX(15px) scale(0.5);
-    }
+    0% { opacity: 0; transform: translateY(0) scale(0.8); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-30px) scale(0.5); }
   }
 
-  /* Title Styles */
-  .stardew-title {
-    font-family: 'Gaegu', 'Noto Sans SC', cursive;
+  /* Title */
+  .title-small {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.6rem;
     color: #5D3A1A;
-    margin: 0;
-    line-height: 1.2;
+    margin: 0 0 4px 0;
   }
 
-  .stardew-title:first-child {
-    font-size: 1.8rem;
-    font-weight: 400;
-  }
-
-  .stardew-title.name {
-    font-size: 3rem;
+  .title-name {
+    font-family: 'Gaegu', cursive;
+    font-size: 2.8rem;
     font-weight: 700;
     color: #8B4513;
+    margin: 0 0 12px 0;
     text-shadow: 2px 2px 0 rgba(139, 90, 43, 0.2);
-    margin-bottom: 8px;
   }
 
   .subtitle {
-    font-family: 'Noto Sans SC', sans-serif;
+    font-family: 'Gaegu', cursive;
     font-size: 1.1rem;
     color: #6B5344;
-    margin: 8px 0 24px 0;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    margin: 0 0 24px 0;
   }
 
-  /* Stardew Button */
-  .stardew-button {
+  /* Wood Button */
+  .wood-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    padding: 12px 32px;
+    padding: 14px 32px;
     background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
     color: #FDF5E6;
     border: none;
-    border-radius: 4px;
-    font-family: 'Noto Sans SC', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 4px 8px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.2s ease;
-  }
-
-  .stardew-button:hover {
-    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
-    transform: translateY(-2px);
-    box-shadow:
-      0 6px 12px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-
-  .stardew-button:active {
-    transform: translateY(0);
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .stardew-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-    pointer-events: none;
-  }
-
-  .button-icon {
+    border-radius: 6px;
+    font-family: 'Gaegu', cursive;
     font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+      0 4px 0 #5D3A1A,
+      0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.15s ease;
   }
 
-  /* Decorations */
-  .decorations {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 5;
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
+    box-shadow:
+      0 6px 0 #5D3A1A,
+      0 8px 16px rgba(0, 0, 0, 0.35);
   }
 
-  .float-deco {
-    position: absolute;
-    font-size: 2rem;
-    opacity: 0.7;
-    animation: floatDeco 4s ease-in-out infinite;
-  }
-
-  @keyframes floatDeco {
-    0%, 100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-15px) rotate(5deg);
-    }
+  .wood-btn:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 2px 0 #5D3A1A,
+      0 4px 8px rgba(0, 0, 0, 0.25);
   }
 
   /* Responsive */
   @media (max-width: 500px) {
-    .parchment-bg {
+    .parchment {
       min-width: auto;
       padding: 30px 40px;
     }
 
-    .stardew-title.name {
-      font-size: 2.5rem;
-    }
-
-    .pixel-girl {
-      transform: scale(1);
+    .title-name {
+      font-size: 2.2rem;
     }
   }
 </style>
-
-<script>
-  import { soundEffects, lockScroll, unlockScroll } from '../scripts/sound';
-
-  // Lock scroll when welcome section loads
-  lockScroll();
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const startBtn = document.getElementById('startBtn');
-    const welcomeSection = document.getElementById('welcome');
-
-    if (startBtn && welcomeSection) {
-      startBtn.addEventListener('click', () => {
-        soundEffects.playClick();
-
-        // Unlock scroll (remove page lock applied at welcome)
-        unlockScroll();
-
-        // Fade out welcome section
-        welcomeSection.style.transition = 'opacity 0.6s ease-out';
-        welcomeSection.style.opacity = '0';
-
-        setTimeout(() => {
-          welcomeSection.style.display = 'none';
-          soundEffects.playSuccess();
-
-          // Scroll to RPG map
-          const rpgMap = document.getElementById('rpg-map');
-          if (rpgMap) {
-            rpgMap.style.display = 'block';
-            rpgMap.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 600);
-      });
-    }
-  });
-</script>

@@ -1,67 +1,234 @@
 ---
 ---
 
-<section id="contact" class="py-20 bg-dark text-white">
-  <div class="max-w-4xl mx-auto px-4 text-center">
-    <h2 class="font-heading text-4xl font-bold text-white mb-4">
-      联系我
-    </h2>
-    <p class="text-white/60 mb-8 max-w-lg mx-auto">
-      对我的作品感兴趣？想聊聊产品/运营/AI 方向的机会？随时联系我~
-    </p>
+<section class="page-section">
+  <div class="bg-sky"></div>
+  <div class="bg-grass"></div>
 
-    <!-- Email -->
-    <div class="mb-8">
-      <button id="copy-email" class="group inline-flex items-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
-        <svg class="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-        <span class="text-white">2806427544@qq.com</span>
-        <span class="copy-hint text-sm text-white/50 opacity-0 group-hover:opacity-100 transition-opacity">
-          点击复制
-        </span>
-      </button>
-    </div>
+  <div class="wood-frame">
+    <div class="parchment">
+      <h1 class="title">📮 联系中心</h1>
 
-    <!-- Toast -->
-    <div id="copy-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-secondary text-white rounded-full text-sm opacity-0 pointer-events-none transition-opacity duration-300">
-      邮箱已复制到剪贴板 ✓
-    </div>
+      <p class="intro">
+        对我的作品感兴趣？想聊聊产品/运营/AI 方向的机会？
+      </p>
 
-    <!-- Social Links -->
-    <div class="flex justify-center gap-6">
-      <!-- LinkedIn -->
-      <a href="#" target="_blank" rel="noopener noreferrer" class="p-3 hover:bg-white/10 rounded-full transition-colors" aria-label="LinkedIn">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
-      </a>
-      <!-- 小红书 -->
-      <a href="#" target="_blank" rel="noopener noreferrer" class="p-3 hover:bg-white/10 rounded-full transition-colors" aria-label="小红书">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-        </svg>
-      </a>
+      <div class="email-box">
+        <button id="copy-email" class="email-btn">
+          <span class="email-icon">✉️</span>
+          <span class="email-address">2806427544@qq.com</span>
+          <span class="copy-hint">点击复制</span>
+        </button>
+      </div>
+
+      <div id="copy-toast" class="toast">邮箱已复制 ✓</div>
+
+      <div class="social-links">
+        <a href="#" class="social-link" target="_blank">
+          <span>🔗</span> LinkedIn
+        </a>
+        <a href="#" class="social-link" target="_blank">
+          <span>📕</span> 小红书
+        </a>
+      </div>
+
+      <div class="nav-bar">
+        <button class="wood-btn" data-action="goto" data-goto="page-map">◀ 返回地图</button>
+      </div>
     </div>
   </div>
 </section>
 
-<script>
-  const copyEmailBtn = document.getElementById('copy-email');
-  const copyToast = document.getElementById('copy-toast');
+<style>
+  .page-section {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-  copyEmailBtn?.addEventListener('click', async () => {
-    const email = '2806427544@qq.com';
+  .bg-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
+  }
+
+  .bg-grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
+  }
+
+  .wood-frame {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    width: 90%;
+  }
+
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+    border-radius: 4px;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .title {
+    font-family: 'Gaegu', cursive;
+    font-size: 2rem;
+    color: #5D3A1A;
+    margin-bottom: 16px;
+  }
+
+  .intro {
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    color: #6B5344;
+    margin-bottom: 20px;
+  }
+
+  .email-box {
+    margin-bottom: 12px;
+  }
+
+  .email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 3px solid #8B4513;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .email-btn:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .email-icon {
+    font-size: 1.4rem;
+  }
+
+  .email-address {
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    color: #5D3A1A;
+  }
+
+  .copy-hint {
+    font-size: 0.75rem;
+    color: #8B4513;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .email-btn:hover .copy-hint {
+    opacity: 1;
+  }
+
+  .toast {
+    font-family: 'Gaegu', cursive;
+    font-size: 0.9rem;
+    color: #FDF5E7;
+    background: #7CB342;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 16px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .toast.show {
+    opacity: 1;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    color: #5D3A1A;
+    font-family: 'Gaegu', cursive;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .social-link:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+  }
+
+  .nav-bar {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px dashed #A67C52;
+  }
+
+  .wood-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E7;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #5D3A1A;
+    transition: all 0.15s ease;
+  }
+
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
+    box-shadow: 0 5px 0 #5D3A1A;
+  }
+</style>
+
+<script>
+  const copyBtn = document.getElementById('copy-email');
+  const toast = document.getElementById('copy-toast');
+
+  copyBtn?.addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText(email);
-      copyToast?.classList.remove('opacity-0', 'pointer-events-none');
-      copyToast?.classList.add('opacity-100');
+      await navigator.clipboard.writeText('2806427544@qq.com');
+      toast?.classList.add('show');
       setTimeout(() => {
-        copyToast?.classList.add('opacity-0', 'pointer-events-none');
-        copyToast?.classList.remove('opacity-100');
+        toast?.classList.remove('show');
       }, 2000);
     } catch (err) {
-      console.error('Failed to copy email:', err);
+      console.error('Failed to copy:', err);
     }
   });
 </script>

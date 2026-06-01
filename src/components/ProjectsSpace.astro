@@ -2,197 +2,188 @@
 import projects from '../data/projects.json';
 ---
 
-<section id="projects-space" class="fullscreen-page stardew-page">
-  <div class="grass-sky-background"></div>
+<section class="page-section">
+  <div class="bg-sky"></div>
+  <div class="bg-grass"></div>
 
-  <div class="stardew-panel content-panel">
-    <h1 class="stardew-title">📦 项目空间</h1>
+  <div class="wood-frame">
+    <div class="parchment">
+      <h1 class="title">📦 项目空间</h1>
 
-    <div class="content-area">
-      {projects.map((project) => (
-        <div class="project-card">
-          <div class="project-icon">{project.icon}</div>
-          <h3>{project.title}</h3>
-          <p>{project.description}</p>
-          <div class="project-features">
-            {project.features.map((feature) => (
-              <span class="feature-tag">{feature}</span>
-            ))}
+      <div class="content">
+        {projects.map((project) => (
+          <div class="project-card">
+            <div class="project-icon">{project.icon}</div>
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-desc">{project.description}</p>
+            <div class="project-features">
+              {project.features?.map((feature) => (
+                <span class="feature-tag">{feature}</span>
+              ))}
+            </div>
+            <a href={project.url} target="_blank" class="wood-btn">
+              访问 →
+            </a>
           </div>
-          <a href={project.url} target="_blank" class="stardew-button">
-            访问 →
-          </a>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
 
-    <div class="navigation-buttons">
-      <button id="backBtn" class="stardew-button" data-target="rpg-map">◀ 返回地图</button>
+      <div class="nav-bar">
+        <button class="wood-btn" data-action="goto" data-goto="page-map">◀ 返回地图</button>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .fullscreen-page {
-    min-height: 100vh;
+  .page-section {
+    width: 100%;
+    height: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
-  .stardew-page {
-    background: linear-gradient(to bottom,
-      #87CEEB 0%,
-      #87CEEB 40%,
-      #90EE90 40%,
-      #7CB342 100%
-    );
+  .bg-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
   }
 
-  .grass-sky-background {
+  .bg-grass {
     position: absolute;
-    inset: 0;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 20px,
-        rgba(124, 179, 66, 0.15) 20px,
-        rgba(124, 179, 66, 0.15) 40px
-      );
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
   }
 
-  .content-panel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 600px;
-    max-height: 85vh;
-    padding: 30px;
+  .wood-frame {
+    position: relative;
     z-index: 10;
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 600px;
+    width: 90%;
   }
 
-  .stardew-title {
+  .parchment {
+    background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+    border-radius: 4px;
+    padding: 24px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .title {
+    font-family: 'Gaegu', cursive;
+    font-size: 2rem;
+    color: #5D3A1A;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  .content-area {
-    padding: 10px 0;
+  .content {
     max-height: 55vh;
     overflow-y: auto;
+    padding-right: 8px;
   }
 
   .project-card {
     background: rgba(255, 255, 255, 0.85);
-    border: 3px solid var(--color-wood);
+    border: 3px solid #8B4513;
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 16px;
-    box-shadow: 0 4px 0 var(--color-wood-dark);
     text-align: center;
+    box-shadow: 0 4px 0 #5D3A1A;
   }
 
   .project-icon {
     font-size: 3rem;
-    margin-bottom: 10px;
-  }
-
-  .project-card h3 {
-    font-family: 'Gaegu', cursive;
-    font-size: 1.5rem;
-    color: var(--color-wood-dark);
     margin-bottom: 8px;
   }
 
-  .project-card p {
-    font-family: 'Noto Sans SC', sans-serif;
-    color: var(--color-text);
+  .project-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.4rem;
+    color: #5D3A1A;
+    margin-bottom: 8px;
+  }
+
+  .project-desc {
     font-size: 0.95rem;
+    color: #6B5344;
     margin-bottom: 12px;
+    line-height: 1.5;
   }
 
   .project-features {
     display: flex;
     flex-wrap: wrap;
+    gap: 6px;
     justify-content: center;
-    gap: 8px;
     margin-bottom: 16px;
   }
 
   .feature-tag {
-    background: var(--color-wood);
-    color: var(--color-cream);
+    background: #8B4513;
+    color: #FFF8E7;
     padding: 4px 12px;
     border-radius: 15px;
     font-family: 'Gaegu', cursive;
     font-size: 0.85rem;
   }
 
-  .project-card .stardew-button {
-    font-size: 1rem;
+  .wood-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 10px 24px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E6;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #5D3A1A;
+    transition: all 0.15s ease;
   }
 
-  .navigation-buttons {
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
+  }
+
+  .nav-bar {
     text-align: center;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 2px dashed var(--color-wood-light);
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 2px dashed #A67C52;
   }
 
-  /* Scrollbar styling */
-  .content-area::-webkit-scrollbar {
-    width: 8px;
+  /* Scrollbar */
+  .content::-webkit-scrollbar {
+    width: 6px;
   }
 
-  .content-area::-webkit-scrollbar-track {
-    background: var(--color-parchment);
+  .content::-webkit-scrollbar-track {
+    background: #F5E6C8;
     border-radius: 4px;
   }
 
-  .content-area::-webkit-scrollbar-thumb {
-    background: var(--color-wood);
+  .content::-webkit-scrollbar-thumb {
+    background: #8B4513;
     border-radius: 4px;
-  }
-
-  @media (max-width: 768px) {
-    .content-panel {
-      width: 95%;
-      padding: 20px;
-    }
-
-    .project-icon {
-      font-size: 2.5rem;
-    }
-
-    .project-card h3 {
-      font-size: 1.3rem;
-    }
   }
 </style>
-
-<script>
-  import { soundEffects } from '../scripts/sound';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const backBtn = document.getElementById('backBtn');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        soundEffects.playClick();
-        const target = backBtn.getAttribute('data-target');
-        if (target) {
-          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    }
-
-    // Add click sound to all buttons
-    document.querySelectorAll('.stardew-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        soundEffects.playClick();
-      });
-    });
-  });
-</script>

@@ -42,6 +42,17 @@ timelineData.experience.forEach(exp => {
   }
 });
 
+// 按时间排序（从早到晚）
+Object.values(industries).forEach(industry => {
+  industry.companies.sort((a, b) => {
+    const parseYear = (period: string) => {
+      const start = period.split(' - ')[0];
+      return parseFloat(start);
+    };
+    return parseYear(a.period) - parseYear(b.period);
+  });
+});
+
 // 计算时长
 const calculateDuration = (period: string): string => {
   const [start, end] = period.split(' - ');

@@ -708,13 +708,14 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       const deltaY = Math.abs(currentY - touchCharStartY);
       console.log('[TOUCH MOVE] deltaX:', deltaX, 'deltaY:', deltaY);
       // Only horizontal drag moves the char
-      if (deltaY < 10) {
-        e.preventDefault();
-        const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
-        const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
-        pathChar.style.left = (8 + newOffset) + 'px';
-        progressFill.style.width = (newOffset / maxOffset * 100) + '%';
-      }
+      // Always prevent default for touchmove on char to avoid scrolling
+      e.preventDefault();
+      // Remove transition during drag for immediate response
+      pathChar.style.transition = 'none';
+      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
+      const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
+      pathChar.style.left = (8 + newOffset) + 'px';
+      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
     }, { passive: false });
 
     pathChar.addEventListener('touchend', (e) => {

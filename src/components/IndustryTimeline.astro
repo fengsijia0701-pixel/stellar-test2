@@ -149,8 +149,15 @@ const colorMap = {
                        style={`left: ${5 + idx * 30}%`} />
 
                   {/* 公司卡片 */}
-                  <div class={`mt-8 p-4 rounded-stardew border-2 ${colorMap[industry.color as keyof typeof colorMap].border} ${colorMap[industry.color as keyof typeof colorMap].bg} hover:shadow-stardew transition-all duration-300 hover:-translate-y-1`}
-                       data-company={company.company}>
+                  <button
+                    class={`mt-8 p-4 rounded-stardew border-2 ${colorMap[industry.color as keyof typeof colorMap].border} ${colorMap[industry.color as keyof typeof colorMap].bg} hover:shadow-stardew transition-all duration-300 hover:-translate-y-1 text-left w-full experience-card`}
+                    data-company={company.company}
+                    data-period={company.period}
+                    data-role={company.subtitle}
+                    data-icon={company.icon}
+                    data-color={industry.color}
+                    data-brief={company.brief}
+                    data-projects={JSON.stringify(company.projects || [])}>
                     <div class="flex items-center gap-2 mb-2">
                       <span class="text-2xl">{company.icon}</span>
                       <span class="font-heading font-bold text-dark text-sm">{company.company}</span>
@@ -165,7 +172,7 @@ const colorMap = {
                       </span>
                     </div>
                     <p class="text-dark/60 text-xs mt-2 line-clamp-2">{company.brief}</p>
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>
@@ -187,6 +194,27 @@ const colorMap = {
     </div>
   </div>
 </section>
+
+<!-- Click-to-expand Modal -->
+<div id="experience-modal" class="fixed inset-0 z-50 hidden">
+  <div class="modal-backdrop absolute inset-0 bg-dark/60 backdrop-blur-sm" />
+  <div class="modal-drawer absolute right-0 top-0 bottom-0 w-full max-w-2xl bg-cardBg transform translate-x-full transition-transform duration-500 overflow-y-auto">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h3 id="modal-company" class="font-heading text-2xl font-bold text-dark" />
+          <p id="modal-role" class="text-dark/60 mt-1" />
+        </div>
+        <button id="modal-close" class="p-2 hover:bg-dark/10 rounded-full transition-colors">
+          <svg class="w-6 h-6 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="modal-projects" class="space-y-8" />
+    </div>
+  </div>
+</div>
 
 <!-- Company Info Popup -->
 <div id="company-popup" class="fixed z-50 hidden pointer-events-none">
@@ -259,6 +287,7 @@ const colorMap = {
     }
   };
 
+  // ========== Hover Popup (Company Info) ==========
   const popup = document.getElementById('company-popup');
   const popupCompanyName = document.getElementById('popup-company-name');
   const popupDescription = document.getElementById('popup-description');
@@ -302,12 +331,106 @@ const colorMap = {
     }
   }
 
-  // Attach hover events to company cards
-  document.querySelectorAll('[data-company]').forEach(card => {
+  // ========== Click-to-expand Modal ==========
+  const modal = document.getElementById('experience-modal');
+  const modalBackdrop = modal?.querySelector('.modal-backdrop');
+  const modalDrawer = modal?.querySelector('.modal-drawer');
+  const modalCompany = document.getElementById('modal-company');
+  const modalRole = document.getElementById('modal-role');
+  const modalProjects = document.getElementById('modal-projects');
+  const modalClose = document.getElementById('modal-close');
+
+  function openExperienceModal(card: Element) {
+    const data = card.getAttribute('data-projects');
+    const company = card.getAttribute('data-company');
+    const period = card.getAttribute('data-period');
+    const role = card.getAttribute('data-role');
+    const color = card.getAttribute('data-color');
+
+    if (!data || !company || !role) return;
+
+    const projects = JSON.parse(data);
+
+    if (modalCompany) modalCompany.textContent = company;
+    if (modalRole) modalRole.textContent = `${role} · ${period}`;
+
+    if (modalProjects && projects.length > 0) {
+      renderProjects(projects, color || 'accent');
+    }
+
+    modal?.classList.remove('hidden');
+    setTimeout(() => {
+      modalDrawer?.classList.remove('translate-x-full');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modalDrawer?.classList.add('translate-x-full');
+    setTimeout(() => {
+      modal?.classList.add('hidden');
+    }, 500);
+    document.body.style.overflow = '';
+  }
+
+  function renderProjects(projects: any[], color: string) {
+    if (!modalProjects) return;
+
+    const colorMap: Record<string, { bg: string, border: string, text: string }> = {
+      accent: { bg: 'bg-accent/20', border: 'border-accent', text: 'text-accent' },
+      sky: { bg: 'bg-sky/20', border: 'border-sky', text: 'text-sky' },
+      secondary: { bg: 'bg-secondary/20', border: 'border-secondary', text: 'text-secondary' },
+      highlight: { bg: 'bg-highlight/30', border: 'border-highlight', text: 'text-dark' },
+    };
+    const colors = colorMap[color] || colorMap.accent;
+
+    modalProjects.innerHTML = projects.map((p) => `
+      <div class="project-item border-l-4 ${colors.border} pl-6 py-4 bg-white/50 rounded-r-stardew">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📦</span>
+          <h4 class="font-heading text-xl font-bold text-dark">${p.name}</h4>
+        </div>
+        <div class="space-y-4 text-sm">
+          <div class="flex gap-2">
+            <span class="font-medium text-dark/50 min-w-16">背景</span>
+            <span class="text-dark/70">${p.background}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="font-medium text-dark/50 min-w-16">挑战</span>
+            <span class="text-dark/70">${p.challenge}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="font-medium text-dark/50 min-w-16">方案</span>
+            <span class="text-dark/70">${p.solution}</span>
+          </div>
+          <div class="flex gap-2 items-start">
+            <span class="font-medium ${colors.text} min-w-16">成果</span>
+            <span class="${colors.text} font-medium">${p.result}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Attach click events to experience cards
+  document.querySelectorAll('.experience-card').forEach(card => {
+    // Click opens modal (not hover popup)
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openExperienceModal(card);
+    });
+
+    // Hover shows company info popup
     const companyName = card.getAttribute('data-company');
     if (companyName) {
       card.addEventListener('mouseenter', (e: MouseEvent) => showCompanyPopup(companyName, e));
       card.addEventListener('mouseleave', hideCompanyPopup);
     }
+  });
+
+  modalClose?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 </script>

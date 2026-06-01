@@ -1,13 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavBar from '../components/NavBar.astro';
-import HeroSection from '../components/HeroSection.astro';
+import WelcomeSection from '../components/WelcomeSection.astro';
+import RPGMapNavigation from '../components/RPGMapNavigation.astro';
 import AboutSection from '../components/AboutSection.astro';
 import IndustryTimeline from '../components/IndustryTimeline.astro';
 import StatsBanner from '../components/StatsBanner.astro';
 import WhyChooseMe from '../components/WhyChooseMe.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
 import SkillsSection from '../components/SkillsSection.astro';
+import WhoAmISection from '../components/WhoAmISection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
 ---
@@ -15,13 +17,15 @@ import Footer from '../components/Footer.astro';
 <BaseLayout title="冯思佳 | 产品/运营/市场营销">
   <NavBar />
   <main>
-    <HeroSection />
-    <AboutSection />
-    <IndustryTimeline />
+    <WelcomeSection />
+    <RPGMapNavigation />
+    <section id="about"><AboutSection /></section>
+    <section id="who-am-i"><WhoAmISection /></section>
+    <section id="experience"><IndustryTimeline /></section>
+    <section id="skills"><SkillsSection /></section>
     <StatsBanner />
     <WhyChooseMe />
-    <ProjectsSection />
-    <SkillsSection />
+    <section id="projects"><ProjectsSection /></section>
     <ContactSection />
   </main>
   <Footer />

@@ -21,7 +21,32 @@ const { title, description = '产品/运营/市场营销个人作品集' } = Ast
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col relative">
+    <!-- Page Transition Overlay -->
+    <div id="page-transition" class="page-transition" aria-hidden="true"></div>
+
     <slot />
+
+    <script>
+      // Page transition handling
+      document.addEventListener('DOMContentLoaded', () => {
+        const transition = document.getElementById('page-transition');
+        if (!transition) return;
+
+        // Handle internal link clicks for page transitions
+        document.querySelectorAll('a[href]').forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:')) {
+            link.addEventListener('click', (e) => {
+              e.preventDefault();
+              transition.classList.add('active');
+              setTimeout(() => {
+                window.location.href = href;
+              }, 400);
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

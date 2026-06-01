@@ -62,7 +62,7 @@ const categoryColors = {
       {categories.map((category) => {
         const catColors = categoryColors[category.key as keyof typeof categoryColors];
         return (
-          <div class={`group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 border-2 ${catColors.border}`}>
+          <div class={`group relative bg-cardBg rounded-stardew p-6 shadow-sm hover:shadow-stardew-lg transition-all duration-300 border-2 ${catColors.border} ripple`}>
             {/* Category Header */}
             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-secondary/20">
               <span class="text-4xl">{category.icon}</span>

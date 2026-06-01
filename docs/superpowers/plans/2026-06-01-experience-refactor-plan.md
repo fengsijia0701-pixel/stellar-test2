@@ -5,7 +5,7 @@
 **Goal:** 重构网站实习经历展示模块，简化 AboutSection、增强 IndustryTimeline、添加自定义光标
 
 **Architecture:** 
-- AboutSection 保留个人介绍 + 教育背景，删除7张实习卡片
+- AboutSection 保留个人介绍 + 教育背景，删除7张实习卡片 
 - IndustryTimeline 作为唯一实习展示模块，包含时间排序 + Hover弹窗 + 点击详情
 - 全局自定义叉耙光标增强 Stardew Valley 风格
 

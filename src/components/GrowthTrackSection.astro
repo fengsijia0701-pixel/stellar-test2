@@ -25,6 +25,7 @@
               <div class="node-icon">📊</div>
               <div class="node-company">安永</div>
               <div class="node-period">2023.12</div>
+              <div class="node-tooltip">紫光股份年审项目，参与16家子公司审计</div>
             </button>
           </div>
         </div>
@@ -37,11 +38,13 @@
               <div class="node-icon">💊</div>
               <div class="node-company">默克</div>
               <div class="node-period">2024.05</div>
+              <div class="node-tooltip">合规风险评估，节省$25,000成本</div>
             </button>
             <button class="node" data-action="goto" data-goto="page-experience" data-company="medtronic">
               <div class="node-icon">🏥</div>
               <div class="node-company">美敦力</div>
               <div class="node-period">2024.09</div>
+              <div class="node-tooltip">医疗器械行业研究，产出10+篇报告</div>
             </button>
           </div>
         </div>
@@ -55,21 +58,25 @@
               <div class="node-icon">🚲</div>
               <div class="node-company">哈啰</div>
               <div class="node-period">2025.02</div>
+              <div class="node-tooltip">游历中国DAU 35万，ARPPU 25→38元</div>
             </button>
             <button class="node" data-action="goto" data-goto="page-experience" data-company="meituan">
               <div class="node-icon">🚴</div>
               <div class="node-company">美团</div>
               <div class="node-period">2025.05</div>
+              <div class="node-tooltip">活动GTV +85%，达人曝光1.76亿</div>
             </button>
             <button class="node" data-action="goto" data-goto="page-experience" data-company="xiaohongshu">
               <div class="node-icon">📕</div>
               <div class="node-company">小红书</div>
               <div class="node-period">2025.09</div>
+              <div class="node-tooltip">AIGC笔记内测，ROI +176%</div>
             </button>
             <button class="node current" data-action="goto" data-goto="page-experience" data-company="bytedance">
               <div class="node-icon">🌐</div>
               <div class="node-company">字节跳动</div>
               <div class="node-period">2026.01</div>
+              <div class="node-tooltip">主导斋月大促，Fashion GMV +52%</div>
             </button>
           </div>
         </div>
@@ -226,6 +233,46 @@
   .node-period {
     font-size: 0.7rem;
     color: #8B4513;
+  }
+
+  /* Tooltip */
+  .node-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #5D3A1A;
+    color: #FDF5E6;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: 'VT323', monospace;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .node-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #5D3A1A;
+  }
+
+  .node:hover .node-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+  }
+
+  .node {
+    position: relative;
   }
 
   .path-line {

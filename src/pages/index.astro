@@ -383,26 +383,15 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
       next() {
         const currentIndex = this.pageOrder.indexOf(this.currentPage);
-        // Branch pages (after map) don't auto-next
-        if (currentIndex >= 3 && currentIndex < this.pageOrder.length - 1) {
-          const nextIndex = currentIndex + 1;
-          this.goTo(this.pageOrder[nextIndex]);
-        } else if (currentIndex < 3) {
-          const nextIndex = currentIndex + 1;
-          this.goTo(this.pageOrder[nextIndex]);
+        if (currentIndex < this.pageOrder.length - 1) {
+          this.goTo(this.pageOrder[currentIndex + 1]);
         }
       }
 
       prev() {
         const currentIndex = this.pageOrder.indexOf(this.currentPage);
         if (currentIndex > 0) {
-          const prevIndex = currentIndex - 1;
-          // If going back from a branch page, go to map
-          if (currentIndex > 3) {
-            this.goTo('page-map');
-          } else {
-            this.goTo(this.pageOrder[prevIndex]);
-          }
+          this.goTo(this.pageOrder[currentIndex - 1]);
         }
       }
     }
@@ -497,5 +486,19 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       to { opacity: 0; transform: translateX(-30px); }
     }
   </style>
+</body>
+
+  <!-- Path Navigation -->
+  <div id="path-nav">
+    <div class="path-trail">
+      <div class="path-step" data-page="page-welcome"></div>
+      <div class="path-step" data-page="page-whoami"></div>
+      <div class="path-step" data-page="page-growth"></div>
+      <div class="path-step" data-page="page-map"></div>
+      <div class="path-step" data-page="page-projects-space"></div>
+    </div>
+    <div class="char-on-path">👩‍🌾</div>
+    <div class="swipe-hint">← 滑动导航 →</div>
+  </div>
 </body>
 </html>

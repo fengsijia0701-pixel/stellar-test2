@@ -612,6 +612,67 @@ import ContactSection from '../components/ContactSection.astro';
 
     // Initial button state
     updateNavButtons();
+
+    // Company details data for growth track popup
+    const companyDetails = {
+      'bytedance': {
+        icon: '🌐',
+        name: '字节跳动 TikTok',
+        role: '印尼电商策略实习生',
+        period: '2026.01 - 2026.04',
+        brief: '主导斋月大促，Fashion GMV +52%',
+        projects: ['斋月大促策略', '精细预算优化', '头达撮合策略']
+      },
+      'xiaohongshu': {
+        icon: '📕',
+        name: '小红书',
+        role: '商业产品实习生',
+        period: '2025.09 - 2025.12',
+        brief: 'AIGC笔记内测，ROI +176%',
+        projects: ['AIGC笔记内测', '大促单品优化', '新商投放冷启']
+      },
+      'meituan': {
+        icon: '🚴',
+        name: '美团',
+        role: '运动健身品类产品运营',
+        period: '2025.05 - 2025.09',
+        brief: '活动GTV +85%，达人曝光1.76亿',
+        projects: ['新商冷启落地', '活动与品牌营销']
+      },
+      'hallo': {
+        icon: '🚲',
+        name: '哈啰',
+        role: '产品经理实习生',
+        period: '2025.02 - 2025.05',
+        brief: '游历中国DAU 35万，ARPPU 25→38元',
+        projects: ['游历中国']
+      },
+      'medtronic': {
+        icon: '🏥',
+        name: '美敦力 Medtronic',
+        role: '战略实习生',
+        period: '2024.09 - 2024.11',
+        brief: '医疗器械行业研究，产出10+篇报告',
+        projects: ['行业研究', '财报数据分析']
+      },
+      'merck': {
+        icon: '💊',
+        name: '默克集团 Merck',
+        role: '风险合规实习生',
+        period: '2024.05 - 2024.09',
+        brief: '合规风险评估，节省$25,000成本',
+        projects: ['合规风险评估工具', '关税豁免数据处理']
+      },
+      'ey': {
+        icon: '📊',
+        name: '安永华明 TCE 高科技组',
+        role: '审计实习生',
+        period: '2023.12 - 2024.03',
+        brief: '紫光股份年审项目，参与16家子公司审计',
+        projects: ['审计底稿编制', '数据抽样分析']
+      }
+    };
+    (window as any).companyDetails = companyDetails;
   </script>
 
   <style is:global>

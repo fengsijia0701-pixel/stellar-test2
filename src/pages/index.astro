@@ -289,14 +289,14 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
   </style>
 
-  <script lang="ts">
+  <script >
     // Sound Effects Class
     class SoundEffects {
-      private audioContext: any = null;
+      audioContext = null;
 
       init() {
         if (!this.audioContext) {
-          this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+          this.audioContext = new (window.AudioContext || (window).webkitAudioContext)();
         }
       }
 
@@ -349,7 +349,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     const sound = new SoundEffects();
-    (window as any).sound = sound;
+    (window).sound = sound;
 
     // Page Navigation
     class PageNavigator {
@@ -385,11 +385,16 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
         // Handle all button clicks with data-action
         document.addEventListener('click', (e) => {
+          console.log('[CLICK] Event captured at document level');
           const target = e.target as HTMLElement;
+          console.log('[CLICK] target:', target.tagName, 'class:', target.className);
           const button = target.closest('[data-action]') as HTMLElement;
+          console.log('[CLICK] button found:', button?.className, 'action:', button?.dataset.action);
           if (button) {
             const action = button.dataset.action;
+            console.log('[CLICK] action:', action);
             if (action === 'next') {
+              console.log('[CLICK] Calling this.next()');
               this.next();
             } else if (action === 'prev') {
               this.prev();
@@ -475,26 +480,26 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     // Initialize
-    const navigator = new PageNavigator();
-    (window as any).navigator = navigator;
-    (window as any).navigateTo = (pageId: string) => navigator.goTo(pageId);
+    const pageNavigator = new PageNavigator();
+    (window).navigator = navigator;
+    (window).navigateTo = (pageId: string) => pageNavigator.goTo(pageId);
 
     // Handle hash navigation
     if (window.location.hash) {
       const pageId = 'page-' + window.location.hash.substring(1);
-      setTimeout(() => navigator.goTo(pageId), 100);
+      setTimeout(() => pageNavigator.goTo(pageId), 100);
     }
 
     // Update path nav on page change
-    const originalGoTo = navigator.goTo.bind(navigator);
-    navigator.goTo = function(pageId: string) {
+    const originalGoTo = pageNavigator.goTo.bind(pageNavigator);
+    pageNavigator.goTo = function(pageId: string) {
       originalGoTo(pageId);
       updatePathNav(pageId);
     };
 
     function updatePathNav(pageId: string) {
       const steps = document.querySelectorAll('.path-step');
-      const currentIndex = navigator.pageOrder.indexOf(pageId);
+      const currentIndex = pageNavigator.pageOrder.indexOf(pageId);
       steps.forEach((step, i) => {
         step.classList.remove('current');
         if (i < currentIndex) {
@@ -539,10 +544,10 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
         if (deltaX < 0) {
           console.log('[SWIPE] Going to next page via swipe');
-          navigator.next();
+          pageNavigator.next();
         } else {
           console.log('[SWIPE] Going to previous page via swipe');
-          navigator.prev();
+          pageNavigator.prev();
         }
       }
     }, { passive: true });
@@ -569,13 +574,14 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     prevBtn?.addEventListener('click', () => {
+      console.log('[ARROW] Prev button clicked!');
       const currentId = getCurrentPageId();
       const currentIndex = pages.indexOf(currentId);
       console.log('[NAV] Prev clicked: currentId=', currentId, 'index=', currentIndex);
       if (currentIndex > 0) {
         const prevPageId = pages[currentIndex - 1];
         console.log('[NAV] Going to:', prevPageId);
-        navigator.goTo(prevPageId);
+        pageNavigator.goTo(prevPageId);
         updateNavButtons();
       }
     });
@@ -587,7 +593,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       if (currentIndex < pages.length - 1) {
         const nextPageId = pages[currentIndex + 1];
         console.log('[NAV] Going to:', nextPageId);
-        navigator.goTo(nextPageId);
+        pageNavigator.goTo(nextPageId);
         updateNavButtons();
       }
     });
@@ -682,347 +688,31 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
   </div>
 
   <script>
-    // Drag Navigation
-    // All 10 pages for drag navigation
-    const ALL_NAV_PAGES = [
-      'page-welcome',              // 0
-      'page-whoami',               // 1
-      'page-growth',               // 2
-      'page-experience',           // 3
-      'page-map',                  // 4
-      'page-projects-space',       // 5
-      'page-projects-experience',  // 6
-      'page-competitions',         // 7
-      'page-skills',               // 8
-      'page-contact'              // 9
-    ];
+    // Simple arrow button navigation
+    const prevBtn = document.getElementById("nav-prev-btn");
+    const nextBtn = document.getElementById("nav-next-btn");
+    const pages = ["page-welcome","page-whoami","page-growth","page-experience","page-map","page-projects-space","page-projects-experience","page-competitions","page-skills","page-contact"];
 
-    const pathChar = document.getElementById('path-char');
-    const progressFill = document.getElementById('nav-progress-fill');
-    const navTrack = document.querySelector('.nav-progress-track') as HTMLElement;
-    const totalNavPages = ALL_NAV_PAGES.length; // 10 pages
-    let currentDragIndex = 0;
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    // Get actual track width dynamically
-    let maxOffset = 200;
-    let trackWidth = 200;
-
-    function updateDragPosition(pageIndex, animate = true) {
-      currentDragIndex = pageIndex;
-      const offset = (pageIndex / (totalNavPages - 1)) * maxOffset;
-      pathChar.style.transition = animate ? 'left 0.3s ease-out' : 'none';
-      pathChar.style.left = (8 + offset) + 'px';
-      progressFill.style.width = (pageIndex / (totalNavPages - 1) * 100) + '%';
+    function getCurrentPageId() {
+      const active = document.querySelector(".page.active");
+      return active?.id || "page-welcome";
     }
 
-    // Initialize - get actual track width
-    function initTrackWidth() {
-      if (navTrack) {
-        trackWidth = navTrack.offsetWidth;
-        maxOffset = trackWidth;
-        console.log('[INIT] Track width:', trackWidth, 'maxOffset:', maxOffset);
-      } else {
-        console.log('[INIT] navTrack not found!');
-      }
-      updateDragPosition(0, false);
-    }
-
-    // Initialize drag position
-    initTrackWidth();
-
-    // Update track width on window resize
-    window.addEventListener('resize', () => {
-      if (navTrack) {
-        trackWidth = navTrack.offsetWidth;
-        maxOffset = trackWidth;
-        console.log('[RESIZE] Track width updated:', trackWidth);
+    prevBtn?.addEventListener("click", () => {
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      if (currentIndex > 0) {
+        pageNavigator.goTo(pages[currentIndex - 1]);
       }
     });
 
-    pathChar.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      pathChar.classList.add('dragging');
-      console.log('[MOUSE DOWN] startX:', startX);
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      currentX = e.clientX;
-      const deltaX = currentX - startX;
-      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
-      const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
-      pathChar.style.left = (8 + newOffset) + 'px';
-      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      pathChar.classList.remove('dragging');
-
-      const deltaX = currentX - startX;
-      const threshold = 30;
-
-      if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
-        // Next page
-        const nextIndex = currentDragIndex + 1;
-        updateDragPosition(nextIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-      } else if (deltaX < -threshold && currentDragIndex > 0) {
-        // Previous page
-        const prevIndex = currentDragIndex - 1;
-        updateDragPosition(prevIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
-      } else {
-        // Snap back
-        updateDragPosition(currentDragIndex);
+    nextBtn?.addEventListener("click", () => {
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      if (currentIndex < pages.length - 1) {
+        pageNavigator.goTo(pages[currentIndex + 1]);
       }
     });
-
-    // Touch events - attach to character directly
-    let touchCharStartX = 0;
-    let touchCharStartY = 0;
-    let touchStartCharLeft = 0;
-
-    pathChar.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      touchCharStartX = e.touches[0].clientX;
-      touchCharStartY = e.touches[0].clientY;
-      startX = e.touches[0].clientX;
-      // Get current left position of the character
-      touchStartCharLeft = parseInt(pathChar.style.left) || 8;
-      console.log('[TOUCH START] x:', e.touches[0].clientX, 'y:', e.touches[0].clientY, 'charLeft:', touchStartCharLeft);
-      pathChar.classList.add('dragging');
-      e.preventDefault();
-    }, { passive: false });
-
-    pathChar.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      currentX = e.touches[0].clientX;
-      currentY = e.touches[0].clientY;
-      const deltaX = currentX - startX;
-      const deltaY = Math.abs(currentY - touchCharStartY);
-      console.log('[TOUCH MOVE] deltaX:', deltaX, 'deltaY:', deltaY);
-
-      // Always prevent default to avoid browser scrolling
-      e.preventDefault();
-      // Remove transition during drag for immediate response
-      pathChar.style.transition = 'none';
-      const currentOffset = (currentDragIndex / (totalNavPages - 1)) * maxOffset;
-      const newOffset = Math.max(0, Math.min(maxOffset, currentOffset + deltaX));
-      pathChar.style.left = (8 + newOffset) + 'px';
-      progressFill.style.width = (newOffset / maxOffset * 100) + '%';
-    }, { passive: false });
-
-    // Confirmation popup for edge navigation
-    let pendingNavCallback: (() => void) | null = null;
-
-    function showNavConfirm(direction: 'next' | 'prev') {
-      const popup = document.createElement('div');
-      popup.id = 'nav-confirm-popup';
-      popup.innerHTML = `
-        <div class="nav-confirm-box">
-          <div class="nav-confirm-text">${direction === 'next' ? '▶ 下一页?' : '◀ 上一页?'}</div>
-          <div class="nav-confirm-buttons">
-            <button class="nav-confirm-btn confirm-yes" data-action="${direction}">✓ 确定</button>
-            <button class="nav-confirm-btn confirm-no">✗ 取消</button>
-          </div>
-        </div>
-      `;
-
-      // Styles
-      popup.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-      `;
-
-      const box = popup.querySelector('.nav-confirm-box') as HTMLElement;
-      box.style.cssText = `
-        background: linear-gradient(135deg, #1a2f1a, #0f1f0f);
-        border: 3px solid #00ff88;
-        border-radius: 12px;
-        padding: 30px 40px;
-        text-align: center;
-        box-shadow: 0 0 30px rgba(0,255,136,0.3);
-      `;
-
-      const text = popup.querySelector('.nav-confirm-text') as HTMLElement;
-      text.style.cssText = `
-        font-family: var(--font-game);
-        font-size: 1.5rem;
-        color: #00ff88;
-        margin-bottom: 20px;
-        text-shadow: 0 0 10px rgba(0,255,136,0.5);
-      `;
-
-      const buttons = popup.querySelector('.nav-confirm-buttons') as HTMLElement;
-      buttons.style.cssText = `
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-      `;
-
-      document.body.appendChild(popup);
-
-      // Button handlers
-      popup.querySelector('.confirm-yes')?.addEventListener('click', () => {
-        popup.remove();
-        if (pendingNavCallback) {
-          pendingNavCallback();
-          pendingNavCallback = null;
-        }
-      });
-
-      popup.querySelector('.confirm-no')?.addEventListener('click', () => {
-        popup.remove();
-        pendingNavCallback = null;
-        // Snap back
-        updateDragPosition(currentDragIndex);
-      });
-    }
-
-    pathChar.addEventListener('touchend', (e) => {
-      console.log('[TOUCH END] isDragging:', isDragging, 'currentX:', currentX, 'startX:', startX);
-
-      if (!isDragging) {
-        console.log('[TOUCH END] Returning early - isDragging is false');
-        return;
-      }
-      isDragging = false;
-      pathChar.classList.remove('dragging');
-
-      const deltaX = currentX - startX;
-      const charLeft = parseFloat(pathChar.style.left) || 8;
-
-      // Calculate position thresholds based on actual track width
-      const rightEdge = 8 + maxOffset;
-      const leftEdge = 8;
-
-      console.log('[TOUCH END] deltaX:', deltaX);
-      console.log('[TOUCH END] charLeft:', charLeft, '| rightEdge:', rightEdge, '| leftEdge:', leftEdge);
-      console.log('[TOUCH END] maxOffset:', maxOffset, '| trackWidth:', trackWidth);
-      console.log('[TOUCH END] currentDragIndex:', currentDragIndex, '| totalNavPages:', totalNavPages);
-
-      // Primary: Check if at edges first (regardless of deltaX)
-      if (charLeft >= rightEdge - 10 && currentDragIndex < totalNavPages - 1) {
-        // At rightmost position → show confirm popup for next page
-        console.log('[TOUCH END] At RIGHT edge - showing confirm popup');
-        pendingNavCallback = () => {
-          const nextIndex = currentDragIndex + 1;
-          updateDragPosition(nextIndex);
-          if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-        };
-        showNavConfirm('next');
-      } else if (charLeft <= leftEdge + 10 && currentDragIndex > 0) {
-        // At leftmost position → show confirm popup for previous page
-        console.log('[TOUCH END] At LEFT edge - showing confirm popup');
-        pendingNavCallback = () => {
-          const prevIndex = currentDragIndex - 1;
-          updateDragPosition(prevIndex);
-          if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
-        };
-        showNavConfirm('prev');
-      } else if (deltaX > 30 && currentDragIndex < totalNavPages - 1) {
-        // Dragged right enough → next page
-        console.log('[TOUCH END] DeltaX positive, going to next page');
-        const nextIndex = currentDragIndex + 1;
-        updateDragPosition(nextIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-      } else if (deltaX < -30 && currentDragIndex > 0) {
-        // Dragged left enough → previous page
-        console.log('[TOUCH END] DeltaX negative, going to previous page');
-        const prevIndex = currentDragIndex - 1;
-        updateDragPosition(prevIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
-      } else {
-        // Snap back
-        console.log('[TOUCH END] Snapping back - no condition matched');
-        console.log('[TOUCH END] Conditions:');
-        console.log('  charLeft >= rightEdge - 10:', charLeft >= rightEdge - 10);
-        console.log('  currentDragIndex < totalNavPages - 1:', currentDragIndex < totalNavPages - 1);
-        console.log('  charLeft <= leftEdge + 10:', charLeft <= leftEdge + 10);
-        console.log('  currentDragIndex > 0:', currentDragIndex > 0);
-        console.log('  deltaX > 30:', deltaX > 30);
-        console.log('  deltaX < -30:', deltaX < -30);
-        updateDragPosition(currentDragIndex);
-      }
-
-      e.preventDefault();
-    }, { passive: false });
-
-    pathChar.addEventListener('touchcancel', () => {
-      isDragging = false;
-      pathChar.classList.remove('dragging');
-      updateDragPosition(currentDragIndex);
-    });
-
-    // Full-screen swipe gesture to change pages (not on drag character)
-    let swipeStartX = 0;
-    let swipeStartY = 0;
-
-    document.addEventListener('touchstart', (e) => {
-      if (!e.target.closest('#path-char')) {
-        swipeStartX = e.touches[0].clientX;
-        swipeStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    document.addEventListener('touchend', (e) => {
-      // Skip if path-char was being dragged - let path-char touchend handle it
-      if (e.target.closest('#path-char')) return;
-      // Also skip if isDragging is true (might be a delayed event)
-      if (isDragging) return;
-      const swipeEndX = e.changedTouches[0].clientX;
-      const swipeEndY = e.changedTouches[0].clientY;
-      const deltaX = swipeEndX - swipeStartX;
-      const deltaY = Math.abs(swipeEndY - swipeStartY);
-      console.log('[SWIPE END] deltaX:', deltaX, 'deltaY:', deltaY, 'threshold check:', Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY);
-
-      if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
-        if (deltaX < 0) {
-          console.log('[SWIPE END] Going to next page via swipe');
-          navigator.next();
-        } else {
-          console.log('[SWIPE END] Going to previous page via swipe');
-          navigator.prev();
-        }
-      }
-    }, { passive: true });
-
-    // Sync drag position with page navigation
-    // Override navigateTo to sync drag position when pages change
-    const originalNavigateTo = (window as any).navigateTo;
-    (window as any).navigateTo = function(pageId: string) {
-      console.log('[DEBUG] navigateTo called with:', pageId);
-      if (originalNavigateTo) {
-        originalNavigateTo(pageId);
-      } else {
-        console.log('[DEBUG] originalNavigateTo is undefined, calling navigator.goTo directly');
-        navigator.goTo(pageId);
-      }
-      const pageIndex = ALL_NAV_PAGES.indexOf(pageId);
-      console.log('[DEBUG] pageIndex:', pageIndex);
-      if (pageIndex !== -1) {
-        setTimeout(() => {
-          console.log('[DEBUG] Updating drag position to:', pageIndex);
-          updateDragPosition(pageIndex, true);
-        }, 400);
-      }
-    };
   </script>
 </body>
 </html>

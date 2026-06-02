@@ -9,7 +9,6 @@ import ProjectsExperience from '../components/ProjectsExperience.astro';
 import CompetitionsSection from '../components/CompetitionsSection.astro';
 import SkillsSection from '../components/SkillsSection.astro';
 import ContactSection from '../components/ContactSection.astro';
-import ExperienceDetail from '../components/ExperienceDetail.astro';
 ---
 
 <!DOCTYPE html>
@@ -64,11 +63,6 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     <section id="page-contact" class="page" data-lock-scroll="true">
       <ContactSection />
-    </section>
-
-    <!-- Experience Detail Page -->
-    <section id="page-experience" class="page" data-lock-scroll="true">
-      <ExperienceDetail />
     </section>
   </div>
 
@@ -358,7 +352,6 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
         'page-welcome',
         'page-whoami',
         'page-growth',
-        'page-experience',
         'page-map',
         'page-projects-space',
         'page-projects-experience',
@@ -501,7 +494,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     };
 
     function updateNavButtonsFromPageId() {
-      const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
+      const pages = ['page-welcome','page-whoami','page-growth','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
       const prevBtn = document.getElementById('nav-prev-btn');
       const nextBtn = document.getElementById('nav-next-btn');
       const currentId = getCurrentPageId();
@@ -572,7 +565,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     // Arrow button navigation - direct page switching
     const prevBtn = document.getElementById('nav-prev-btn');
     const nextBtn = document.getElementById('nav-next-btn');
-    const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
+    const pages = ['page-welcome','page-whoami','page-growth','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
 
     function getCurrentPageId() {
       const active = document.querySelector('.page.active');
@@ -705,7 +698,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     // Simple arrow button navigation
     const prevBtn = document.getElementById("nav-prev-btn");
     const nextBtn = document.getElementById("nav-next-btn");
-    const pages = ["page-welcome","page-whoami","page-growth","page-experience","page-map","page-projects-space","page-projects-experience","page-competitions","page-skills","page-contact"];
+    const pages = ["page-welcome","page-whoami","page-growth","page-map","page-projects-space","page-projects-experience","page-competitions","page-skills","page-contact"];
 
     function getCurrentPageId() {
       const active = document.querySelector(".page.active");

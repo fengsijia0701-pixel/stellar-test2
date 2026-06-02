@@ -501,6 +501,11 @@ import ContactSection from '../components/ContactSection.astro';
       const currentIndex = pages.indexOf(currentId);
       if (prevBtn) prevBtn.disabled = currentIndex <= 0;
       if (nextBtn) nextBtn.disabled = currentIndex >= pages.length - 1;
+      // Hide right arrow on map page
+      const rightArrow = document.querySelector('.nav-arrow-btn.right');
+      if (rightArrow) {
+        rightArrow.style.display = currentId === 'page-map' ? 'none' : 'flex';
+      }
       console.log('[NAV] updateNavButtonsFromPageId: currentId=', currentId, 'index=', currentIndex);
     }
 

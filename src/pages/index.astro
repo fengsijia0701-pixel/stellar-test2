@@ -481,7 +481,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     // Initialize
     const pageNavigator = new PageNavigator();
-    (window).navigator = navigator;
+    (window as any).pageNavigator = pageNavigator;
     (window).navigateTo = (pageId: string) => pageNavigator.goTo(pageId);
 
     // Handle hash navigation

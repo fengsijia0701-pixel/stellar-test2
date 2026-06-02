@@ -193,10 +193,37 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       gap: 10px;
     }
 
-    .arrow-hint {
+    .nav-arrow-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2d5a27, #1a2f1a);
+      border: 2px solid #00ff88;
+      color: #00ff88;
       font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      box-shadow: 0 0 10px rgba(0,255,136,0.3);
+    }
+
+    .nav-arrow-btn:hover {
+      transform: scale(1.1);
+      border-color: #ffff00;
       color: #ffff00;
-      text-shadow: 0 0 5px #ffff00;
+      box-shadow: 0 0 15px rgba(255,255,0,0.4);
+    }
+
+    .nav-arrow-btn:active {
+      transform: scale(0.95);
+    }
+
+    .nav-arrow-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .path-trail {
@@ -248,7 +275,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       filter: drop-shadow(0 0 15px rgba(255,255,0,1));
     }
 
-    .swipe-hint {
+    .nav-hint {
       font-family: var(--font-game);
       font-size: 0.7rem;
       color: #90EE90;
@@ -516,6 +543,29 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     // Initialize path nav
     updatePathNav('page-welcome');
+
+    // Arrow button navigation
+    const prevBtn = document.getElementById('nav-prev-btn');
+    const nextBtn = document.getElementById('nav-next-btn');
+
+    prevBtn?.addEventListener('click', () => {
+      console.log('[NAV] Previous button clicked');
+      sound.playClick();
+      navigator.prev();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      console.log('[NAV] Next button clicked');
+      sound.playClick();
+      navigator.next();
+    });
+
+    // Update button states based on current page
+    function updateNavButtons() {
+      const currentIndex = navigator.pageOrder.indexOf(navigator.currentPage);
+      if (prevBtn) prevBtn.disabled = currentIndex === 0;
+      if (nextBtn) nextBtn.disabled = currentIndex === navigator.pageOrder.length - 1;
+    }
   </script>
 
   <style is:global>
@@ -592,16 +642,15 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
   <!-- Path Navigation - Fixed at bottom -->
   <div id="path-nav">
     <div class="path-container">
-      <div class="arrow-hint left">◀</div>
+      <button class="nav-arrow-btn left" id="nav-prev-btn" aria-label="上一页">◀</button>
       <div class="path-trail">
         <div class="nav-progress-track">
           <div class="nav-progress-fill" id="nav-progress-fill"></div>
         </div>
       </div>
-      <div class="arrow-hint right">▶</div>
-      <div class="char-on-path" id="path-char">👩‍🌾</div>
+      <button class="nav-arrow-btn right" id="nav-next-btn" aria-label="下一页">▶</button>
     </div>
-    <div class="swipe-hint">拖动 ▶ 切换</div>
+    <div class="nav-hint">点击箭头切换</div>
   </div>
 
   <script>

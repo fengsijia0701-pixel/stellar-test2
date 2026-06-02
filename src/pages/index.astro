@@ -648,6 +648,8 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
         trackWidth = navTrack.offsetWidth;
         maxOffset = trackWidth;
         console.log('[INIT] Track width:', trackWidth, 'maxOffset:', maxOffset);
+      } else {
+        console.log('[INIT] navTrack not found!');
       }
       updateDragPosition(0, false);
     }
@@ -668,6 +670,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       isDragging = true;
       startX = e.clientX;
       pathChar.classList.add('dragging');
+      console.log('[MOUSE DOWN] startX:', startX);
       e.preventDefault();
     });
 
@@ -729,8 +732,8 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       const deltaX = currentX - startX;
       const deltaY = Math.abs(currentY - touchCharStartY);
       console.log('[TOUCH MOVE] deltaX:', deltaX, 'deltaY:', deltaY);
-      // Only horizontal drag moves the char
-      // Always prevent default for touchmove on char to avoid scrolling
+
+      // Always prevent default to avoid browser scrolling
       e.preventDefault();
       // Remove transition during drag for immediate response
       pathChar.style.transition = 'none';
@@ -816,9 +819,12 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     pathChar.addEventListener('touchend', (e) => {
-      console.log('[TOUCH END] isDragging:', isDragging);
+      console.log('[TOUCH END] isDragging:', isDragging, 'currentX:', currentX, 'startX:', startX);
 
-      if (!isDragging) return;
+      if (!isDragging) {
+        console.log('[TOUCH END] Returning early - isDragging is false');
+        return;
+      }
       isDragging = false;
       pathChar.classList.remove('dragging');
 
@@ -829,10 +835,15 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       const rightEdge = 8 + maxOffset;
       const leftEdge = 8;
 
+      console.log('[TOUCH END] deltaX:', deltaX);
+      console.log('[TOUCH END] charLeft:', charLeft, '| rightEdge:', rightEdge, '| leftEdge:', leftEdge);
+      console.log('[TOUCH END] maxOffset:', maxOffset, '| trackWidth:', trackWidth);
+      console.log('[TOUCH END] currentDragIndex:', currentDragIndex, '| totalNavPages:', totalNavPages);
+
       // Primary: Check if at edges first (regardless of deltaX)
       if (charLeft >= rightEdge - 10 && currentDragIndex < totalNavPages - 1) {
         // At rightmost position → show confirm popup for next page
-        console.log('[TOUCH END] At RIGHT edge, asking confirmation for next page');
+        console.log('[TOUCH END] At RIGHT edge - showing confirm popup');
         pendingNavCallback = () => {
           const nextIndex = currentDragIndex + 1;
           updateDragPosition(nextIndex);
@@ -841,7 +852,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
         showNavConfirm('next');
       } else if (charLeft <= leftEdge + 10 && currentDragIndex > 0) {
         // At leftmost position → show confirm popup for previous page
-        console.log('[TOUCH END] At LEFT edge, asking confirmation for previous page');
+        console.log('[TOUCH END] At LEFT edge - showing confirm popup');
         pendingNavCallback = () => {
           const prevIndex = currentDragIndex - 1;
           updateDragPosition(prevIndex);
@@ -862,7 +873,14 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
       } else {
         // Snap back
-        console.log('[TOUCH END] Snapping back');
+        console.log('[TOUCH END] Snapping back - no condition matched');
+        console.log('[TOUCH END] Conditions:');
+        console.log('  charLeft >= rightEdge - 10:', charLeft >= rightEdge - 10);
+        console.log('  currentDragIndex < totalNavPages - 1:', currentDragIndex < totalNavPages - 1);
+        console.log('  charLeft <= leftEdge + 10:', charLeft <= leftEdge + 10);
+        console.log('  currentDragIndex > 0:', currentDragIndex > 0);
+        console.log('  deltaX > 30:', deltaX > 30);
+        console.log('  deltaX < -30:', deltaX < -30);
         updateDragPosition(currentDragIndex);
       }
 

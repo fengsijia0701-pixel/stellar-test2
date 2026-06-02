@@ -186,38 +186,44 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     .path-container {
       position: relative;
-      width: 260px;
-      height: 40px;
+      width: 320px;
+      height: 50px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
     }
 
     .nav-arrow-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2d5a27, #1a2f1a);
-      border: 2px solid #00ff88;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2d5a27, #1a3a1a);
+      border: 3px solid #00ff88;
       color: #00ff88;
-      font-size: 1rem;
+      font-size: 1.4rem;
+      font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.15s ease;
-      box-shadow: 0 0 10px rgba(0,255,136,0.3);
+      box-shadow: 0 0 15px rgba(0,255,136,0.4), 0 4px 0 #1a2f1a;
+      text-shadow: 0 0 10px #00ff88;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .nav-arrow-btn:hover {
-      transform: scale(1.1);
+      transform: translateY(-2px);
       border-color: #ffff00;
       color: #ffff00;
-      box-shadow: 0 0 15px rgba(255,255,0,0.4);
+      box-shadow: 0 0 20px rgba(255,255,0,0.5), 0 6px 0 #1a2f1a;
+      text-shadow: 0 0 10px #ffff00;
     }
 
     .nav-arrow-btn:active {
-      transform: scale(0.95);
+      transform: translateY(2px);
+      box-shadow: 0 0 10px rgba(0,255,136,0.3), 0 2px 0 #1a2f1a;
     }
 
     .nav-arrow-btn:disabled {
@@ -544,54 +550,50 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     // Initialize path nav
     updatePathNav('page-welcome');
 
-    // Arrow button navigation
+    // Arrow button navigation - direct page switching
     const prevBtn = document.getElementById('nav-prev-btn');
     const nextBtn = document.getElementById('nav-next-btn');
+    const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
+
+    function getCurrentPageId() {
+      const active = document.querySelector('.page.active');
+      return active?.id || 'page-welcome';
+    }
+
+    function updateNavButtons() {
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+      if (nextBtn) nextBtn.disabled = currentIndex >= pages.length - 1;
+      console.log('[NAV] updateNavButtons: currentId=', currentId, 'index=', currentIndex);
+    }
 
     prevBtn?.addEventListener('click', () => {
-      console.log('[NAV] Previous button clicked');
-      sound.playClick();
-      // Get current page directly
-      const currentPageEl = document.querySelector('.page.active');
-      const currentPageId = currentPageEl?.id || 'page-welcome';
-      const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
-      const currentIndex = pages.indexOf(currentPageId);
-      console.log('[NAV] Current page:', currentPageId, 'index:', currentIndex);
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      console.log('[NAV] Prev clicked: currentId=', currentId, 'index=', currentIndex);
       if (currentIndex > 0) {
-        const prevPage = pages[currentIndex - 1];
-        console.log('[NAV] Going to prev:', prevPage);
-        navigator.goTo(prevPage);
-        updateNavButtons(prevPage);
+        const prevPageId = pages[currentIndex - 1];
+        console.log('[NAV] Going to:', prevPageId);
+        navigator.goTo(prevPageId);
+        updateNavButtons();
       }
     });
 
     nextBtn?.addEventListener('click', () => {
-      console.log('[NAV] Next button clicked');
-      sound.playClick();
-      // Get current page directly
-      const currentPageEl = document.querySelector('.page.active');
-      const currentPageId = currentPageEl?.id || 'page-welcome';
-      const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
-      const currentIndex = pages.indexOf(currentPageId);
-      console.log('[NAV] Current page:', currentPageId, 'index:', currentIndex);
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      console.log('[NAV] Next clicked: currentId=', currentId, 'index=', currentIndex);
       if (currentIndex < pages.length - 1) {
-        const nextPage = pages[currentIndex + 1];
-        console.log('[NAV] Going to next:', nextPage);
-        navigator.goTo(nextPage);
-        updateNavButtons(nextPage);
+        const nextPageId = pages[currentIndex + 1];
+        console.log('[NAV] Going to:', nextPageId);
+        navigator.goTo(nextPageId);
+        updateNavButtons();
       }
     });
 
-    // Update button states based on current page
-    function updateNavButtons(currentPageId: string) {
-      const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
-      const currentIndex = pages.indexOf(currentPageId);
-      if (prevBtn) prevBtn.disabled = currentIndex === 0;
-      if (nextBtn) nextBtn.disabled = currentIndex === pages.length - 1;
-    }
-
     // Initial button state
-    updateNavButtons('page-welcome');
+    updateNavButtons();
 
   <style is:global>
     .page-enter {

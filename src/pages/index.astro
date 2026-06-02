@@ -480,9 +480,9 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }
 
     // Initialize
-    const pageNavigator = new PageNavigator();
+        const pageNavigator = new PageNavigator();
     (window as any).pageNavigator = pageNavigator;
-    (window).navigateTo = (pageId: string) => pageNavigator.goTo(pageId);
+    (window as any).navigateTo = (pageId: string) => pageNavigator.goTo(pageId);
 
     // Handle hash navigation
     if (window.location.hash) {

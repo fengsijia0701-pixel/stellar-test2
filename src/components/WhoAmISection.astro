@@ -134,29 +134,33 @@
   .parchment {
     background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
     border-radius: 4px;
-    padding: 24px 36px;
-    max-width: 780px;
+    padding: 32px 48px;
+    max-width: 900px;
     max-height: 88vh;
     overflow-y: auto;
   }
 
   .title {
     font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 2rem;
+    font-size: 2.8rem;
     color: #5D3A1A;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .columns {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 32px;
+    align-items: center;
   }
 
-  @media (max-width: 650px) {
+  @media (max-width: 768px) {
     .columns {
       grid-template-columns: 1fr;
+    }
+    .title {
+      font-size: 2rem;
     }
   }
 
@@ -168,25 +172,25 @@
 
   .intro-text {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: #5D3A1A;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    line-height: 1.6;
+    margin-bottom: 16px;
   }
 
   .divider {
-    width: 50px;
-    height: 3px;
+    width: 60px;
+    height: 4px;
     background: #8B4513;
     border-radius: 2px;
-    margin: 12px 0;
+    margin: 16px 0;
   }
 
   .intro-desc {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #6B5344;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .bubble-col {
@@ -203,7 +207,7 @@
 
   .group-label {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #8B4513;
     font-weight: 700;
   }
@@ -211,7 +215,7 @@
   .bubble-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
   }
 
   .bubble {
@@ -222,7 +226,7 @@
     font-family: 'Ma Shan Zheng', cursive;
     font-weight: 700;
     color: white;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
     transition: transform 0.2s;
   }
 
@@ -234,30 +238,30 @@
     background: linear-gradient(135deg, #64B5F6, #42A5F5);
   }
 
-  .company.lg { width: 85px; height: 85px; font-size: 0.9rem; }
-  .company.md { width: 70px; height: 70px; font-size: 0.8rem; }
-  .company.sm { width: 58px; height: 58px; font-size: 0.7rem; }
+  .company.lg { width: 100px; height: 100px; font-size: 1.1rem; }
+  .company.md { width: 80px; height: 80px; font-size: 1rem; }
+  .company.sm { width: 68px; height: 68px; font-size: 0.9rem; }
 
   .cert {
     background: linear-gradient(135deg, #FFD700, #FFC107);
     color: #5D3A1A;
-    width: 65px;
-    height: 65px;
-    font-size: 0.75rem;
+    width: 80px;
+    height: 80px;
+    font-size: 0.9rem;
   }
 
   .skill {
     background: linear-gradient(135deg, #81C784, #66BB6A);
-    padding: 6px 14px;
+    padding: 8px 18px;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 
   .hobby {
     background: linear-gradient(135deg, #F48FB1, #F06292);
-    padding: 6px 14px;
+    padding: 8px 18px;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 
   .nav-buttons {

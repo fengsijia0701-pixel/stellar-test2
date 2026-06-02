@@ -720,42 +720,52 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     pathChar.addEventListener('touchend', (e) => {
       console.log('[TOUCH END] isDragging:', isDragging);
-      if (!isDragging) return;
+      console.log('[TOUCH END] currentX:', currentX, 'startX:', startX);
+
+      if (!isDragging) {
+        console.log('[TOUCH END] Early return - isDragging is false');
+        return;
+      }
       isDragging = false;
       pathChar.classList.remove('dragging');
 
       const deltaX = currentX - startX;
-      const threshold = 30;
-      console.log('[TOUCH] deltaX:', deltaX, 'threshold:', threshold, 'currentDragIndex:', currentDragIndex, 'totalNavPages:', totalNavPages);
-
-      // Check if dragged to the rightmost position
       const charLeft = parseInt(pathChar.style.left) || 8;
-      console.log('[TOUCH] charLeft:', charLeft, 'maxOffset:', maxOffset, 'isAtEnd:', charLeft >= (8 + maxOffset - 5));
+      console.log('[TOUCH END] deltaX:', deltaX, 'charLeft:', charLeft, 'currentDragIndex:', currentDragIndex);
 
-      if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
-        console.log('[TOUCH] Going to next page');
+      // Calculate position thresholds
+      const rightEdge = 8 + maxOffset; // 208
+      const leftEdge = 8; // 8
+      const threshold = 30;
+
+      // Primary: Check if at edges first (regardless of deltaX)
+      if (charLeft >= rightEdge - 5 && currentDragIndex < totalNavPages - 1) {
+        // At rightmost position → go to next page
+        console.log('[TOUCH END] At RIGHT edge, going to next page');
+        const nextIndex = currentDragIndex + 1;
+        updateDragPosition(nextIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+      } else if (charLeft <= leftEdge + 5 && currentDragIndex > 0) {
+        // At leftmost position → go to previous page
+        console.log('[TOUCH END] At LEFT edge, going to previous page');
+        const prevIndex = currentDragIndex - 1;
+        updateDragPosition(prevIndex);
+        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
+      } else if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
+        // Dragged right enough → next page
+        console.log('[TOUCH END] DeltaX positive, going to next page');
         const nextIndex = currentDragIndex + 1;
         updateDragPosition(nextIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
       } else if (deltaX < -threshold && currentDragIndex > 0) {
-        console.log('[TOUCH] Going to previous page');
-        const prevIndex = currentDragIndex - 1;
-        updateDragPosition(prevIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
-      } else if (charLeft >= (8 + maxOffset - 5) && currentDragIndex < totalNavPages - 1) {
-        // Special case: if at rightmost position, go to next page regardless of deltaX
-        console.log('[TOUCH] At right edge, going to next page');
-        const nextIndex = currentDragIndex + 1;
-        updateDragPosition(nextIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-      } else if (charLeft <= 10 && currentDragIndex > 0) {
-        // Special case: if at leftmost position, go to previous page
-        console.log('[TOUCH] At left edge, going to previous page');
+        // Dragged left enough → previous page
+        console.log('[TOUCH END] DeltaX negative, going to previous page');
         const prevIndex = currentDragIndex - 1;
         updateDragPosition(prevIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
       } else {
-        console.log('[TOUCH] Snapping back');
+        // Snap back
+        console.log('[TOUCH END] Snapping back');
         updateDragPosition(currentDragIndex);
       }
 
@@ -780,16 +790,22 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
+      // Skip if path-char was being dragged - let path-char touchend handle it
       if (e.target.closest('#path-char')) return;
+      // Also skip if isDragging is true (might be a delayed event)
+      if (isDragging) return;
       const swipeEndX = e.changedTouches[0].clientX;
       const swipeEndY = e.changedTouches[0].clientY;
       const deltaX = swipeEndX - swipeStartX;
       const deltaY = Math.abs(swipeEndY - swipeStartY);
+      console.log('[SWIPE END] deltaX:', deltaX, 'deltaY:', deltaY, 'threshold check:', Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY);
 
       if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
         if (deltaX < 0) {
+          console.log('[SWIPE END] Going to next page via swipe');
           navigator.next();
         } else {
+          console.log('[SWIPE END] Going to previous page via swipe');
           navigator.prev();
         }
       }

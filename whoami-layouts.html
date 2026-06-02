@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星露谷风格布局选择</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(180deg, #1a2f1a 0%, #0f1f0f 100%);
+      min-height: 100vh;
+      padding: 30px;
+      font-family: 'Ma Shan Zheng', cursive;
+      color: #E8DCC8;
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      color: #00ff88;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px #00ff88;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    .option-card {
+      background: linear-gradient(135deg, #1a2f1a 0%, #0f1f0f 100%);
+      border: 3px solid #2d5a27;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .option-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ff88;
+    }
+    .option-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #FFD700;
+      padding: 15px;
+      background: #0a150a;
+      text-align: center;
+    }
+    .preview {
+      padding: 20px;
+      min-height: 450px;
+    }
+
+    /* ========== 选项A: RPG角色档案卡 ========== */
+    .scheme-a {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .scheme-a-inner {
+      background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+      border-radius: 4px;
+      padding: 20px;
+      color: #5D3A1A;
+      position: relative;
+    }
+    .scheme-a-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #8B4513;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .scheme-a-header span:first-child {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.3rem;
+    }
+    .scheme-a-header span:last-child {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #8B4513;
+    }
+    .scheme-a-name {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    .scheme-a-title {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1rem;
+      color: #6B5344;
+      margin-bottom: 12px;
+    }
+    .scheme-a-quote {
+      background: #5D3A1A;
+      color: #F5E6C8;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .scheme-a-section-title {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    .skill-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.85rem;
+    }
+    .skill-bar-label {
+      width: 70px;
+    }
+    .skill-bar-track {
+      flex: 1;
+      height: 12px;
+      background: #c9b896;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2d5a27, #00ff88);
+    }
+    .skill-bar-percent {
+      width: 30px;
+      text-align: right;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+    }
+    .certs {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.9rem;
+    }
+    .cert-badge {
+      background: linear-gradient(135deg, #FFD700, #FFC107);
+      color: #5D3A1A;
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    /* ========== 选项B: 农场地图 ========== */
+    .scheme-b {
+      position: relative;
+      height: 420px;
+      background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 60%, #7CB342 60%, #558B2F 100%);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .scheme-b-title {
+      text-align: center;
+      padding: 15px;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.5rem;
+      color: #5D3A1A;
+      background: rgba(245, 230, 200, 0.9);
+    }
+    .scheme-b-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+      padding: 15px;
+      height: calc(100% - 60px);
+    }
+    .farm-zone {
+      background: rgba(245, 230, 200, 0.9);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .farm-zone-title {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 0.8rem;
+      color: #5D3A1A;
+      border-bottom: 1px dashed #8B4513;
+      padding-bottom: 3px;
+    }
+    .farm-zone-item {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.85rem;
+      color: #6B5344;
+    }
+    .farm-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #8B4513 0%, #6B3E26 100%);
+      color: #F5E6C8;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    /* ========== 选项C: 简历档案袋 ========== */
+    .scheme-c {
+      background: linear-gradient(135deg, #d4c4a8 0%, #c9b896 100%);
+      border-radius: 8px;
+      padding: 15px;
+      color: #5D3A1A;
+    }
+    .folder-tab {
+      background: #8B4513;
+      color: #F5E6C8;
+      padding: 8px 20px;
+      display: inline-block;
+      border-radius: 4px 4px 0 0;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1rem;
+      margin-bottom: -5px;
+    }
+    .folder-content {
+      background: #F5E6C8;
+      border-radius: 4px;
+      padding: 20px;
+    }
+    .resume-section {
+      margin-bottom: 15px;
+    }
+    .resume-label {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 0.9rem;
+      color: #8B4513;
+      border-left: 3px solid #8B4513;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+    .resume-quote {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1rem;
+      background: #E8DCC8;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .resume-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .resume-dot {
+      width: 8px;
+      height: 8px;
+      background: #8B4513;
+      border-radius: 50%;
+    }
+    .resume-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* ========== 选项D: RPG游戏菜单 ========== */
+    .scheme-d {
+      background: linear-gradient(180deg, #1a2f1a 0%, #0f1f0f 100%);
+      border: 4px solid #00ff88;
+      border-radius: 8px;
+      padding: 20px;
+      color: #E8DCC8;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    .game-menu-header {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      color: #00ff88;
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #00ff88;
+    }
+    .game-info-box {
+      border: 2px solid #00ff88;
+      padding: 12px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .game-info-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    .game-info-label {
+      color: #90EE90;
+    }
+    .game-divider {
+      border-top: 1px dashed #2d5a27;
+      margin: 10px 0;
+    }
+    .game-section-title {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 0.9rem;
+      color: #FFD700;
+      margin-bottom: 10px;
+    }
+    .game-skill-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    .game-skill-name {
+      width: 70px;
+    }
+    .game-skill-bar {
+      flex: 1;
+      height: 16px;
+      background: #0a150a;
+      border: 1px solid #2d5a27;
+    }
+    .game-skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff88, #00cc6a);
+    }
+    .game-skill-val {
+      width: 25px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      color: #00ff88;
+    }
+    .game-certs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .game-cert {
+      background: linear-gradient(135deg, #2d5a27, #1a3a1a);
+      border: 1px solid #00ff88;
+      padding: 5px 10px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.85rem;
+      color: #90EE90;
+    }
+    .game-hobbies {
+      display: flex;
+      gap: 10px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 我是谁页面布局选择</h1>
+
+  <div class="options-grid">
+    <!-- 选项A: RPG角色档案卡 -->
+    <div class="option-card">
+      <div class="option-title">方案A：RPG角色档案卡</div>
+      <div class="preview">
+        <div class="scheme-a">
+          <div class="scheme-a-inner">
+            <div class="scheme-a-header">
+              <span>👤 角色档案</span>
+              <span>LV.28</span>
+            </div>
+            <div class="scheme-a-name">冯思佳</div>
+            <div class="scheme-a-title">港大市场营销硕士 @ 字节跳动 TikTok</div>
+            <div class="scheme-a-quote">"产品力 + 运营力 + 数据力 = 增长飞轮"</div>
+            <div class="scheme-a-section-title">【属性】</div>
+            <div class="skill-bar">
+              <span class="skill-bar-label">数据分析</span>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 85%"></div></div>
+              <span class="skill-bar-percent">85</span>
+            </div>
+            <div class="skill-bar">
+              <span class="skill-bar-label">电商运营</span>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 92%"></div></div>
+              <span class="skill-bar-percent">92</span>
+            </div>
+            <div class="skill-bar">
+              <span class="skill-bar-label">AI产品</span>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 78%"></div></div>
+              <span class="skill-bar-percent">78</span>
+            </div>
+            <div class="skill-bar">
+              <span class="skill-bar-label">大促策略</span>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 70%"></div></div>
+              <span class="skill-bar-percent">70</span>
+            </div>
+            <div class="scheme-a-section-title" style="margin-top: 15px;">【装备】</div>
+            <div class="certs">
+              <span class="cert-badge">🎓 港大硕士</span>
+              <span class="cert-badge">📝 IELTS 7.5</span>
+              <span class="cert-badge">📋 ACCA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 选项B: 农场地图 -->
+    <div class="option-card">
+      <div class="option-title">方案B：星露谷农场地图</div>
+      <div class="preview">
+        <div class="scheme-b">
+          <div class="scheme-b-title">🌻 我是谁</div>
+          <div class="scheme-b-grid">
+            <div class="farm-zone">
+              <div class="farm-zone-title">🌾 学历农场</div>
+              <div class="farm-zone-item">🎓 港大硕士</div>
+            </div>
+            <div class="farm-zone">
+              <div class="farm-zone-title">🟊 实习牧场</div>
+              <div class="farm-zone-item">字节跳动</div>
+              <div class="farm-zone-item">小红书</div>
+              <div class="farm-zone-item">美团</div>
+            </div>
+            <div class="farm-zone">
+              <div class="farm-zone-title">🌲 技能森林</div>
+              <div class="farm-zone-item">数据分析</div>
+              <div class="farm-zone-item">AI产品</div>
+            </div>
+            <div class="farm-zone">
+              <div class="farm-zone-title">🎵 爱好湖泊</div>
+              <div class="farm-zone-item">唱歌</div>
+              <div class="farm-zone-item">听音乐</div>
+            </div>
+          </div>
+          <div class="farm-center">增长飞轮<br>创造者</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 选项C: 简历档案袋 -->
+    <div class="option-card">
+      <div class="option-title">方案C：简历档案袋</div>
+      <div class="preview">
+        <div class="scheme-c">
+          <div class="folder-tab">📁 个人档案</div>
+          <div class="folder-content">
+            <div class="resume-section">
+              <div class="resume-label">核心优势</div>
+              <div class="resume-quote">"相信好的产品力 + 运营力 + 数据力，能够创造可持续的增长飞轮"</div>
+            </div>
+            <div class="resume-section">
+              <div class="resume-label">工作经历</div>
+              <div class="resume-item"><span class="resume-dot"></span>🌟 字节跳动 - 印尼电商策略实习生</div>
+              <div class="resume-item"><span class="resume-dot"></span>📕 小红书 - 商业产品实习生</div>
+              <div class="resume-item"><span class="resume-dot"></span>🔴 美团 - 实习生</div>
+            </div>
+            <div class="resume-two-col">
+              <div class="resume-section">
+                <div class="resume-label">核心技能</div>
+                <div class="resume-item"><span class="resume-dot"></span>数据分析</div>
+                <div class="resume-item"><span class="resume-dot"></span>电商运营</div>
+                <div class="resume-item"><span class="resume-dot"></span>AI产品</div>
+              </div>
+              <div class="resume-section">
+                <div class="resume-label">证书</div>
+                <div class="resume-item"><span class="resume-dot"></span>🎓 港大硕士</div>
+                <div class="resume-item"><span class="resume-dot"></span>📝 IELTS 7.5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 选项D: RPG游戏菜单 -->
+    <div class="option-card">
+      <div class="option-title">方案D：像素RPG游戏菜单</div>
+      <div class="preview">
+        <div class="scheme-d">
+          <div class="game-menu-header">🎮 我是谁 - 角色信息 🎮</div>
+          <div class="game-info-box">
+            <div class="game-info-row">
+              <span class="game-info-label">姓名：</span>
+              <span>冯思佳</span>
+            </div>
+            <div class="game-info-row">
+              <span class="game-info-label">职业：</span>
+              <span>增长黑客 & AI运营er</span>
+            </div>
+          </div>
+          <div class="game-section-title">─────── 能力值 ───────</div>
+          <div class="game-skill-row">
+            <span class="game-skill-name">数据分析</span>
+            <div class="game-skill-bar"><div class="game-skill-fill" style="width: 85%"></div></div>
+            <span class="game-skill-val">85</span>
+          </div>
+          <div class="game-skill-row">
+            <span class="game-skill-name">电商运营</span>
+            <div class="game-skill-bar"><div class="game-skill-fill" style="width: 92%"></div></div>
+            <span class="game-skill-val">92</span>
+          </div>
+          <div class="game-skill-row">
+            <span class="game-skill-name">AI产品</span>
+            <div class="game-skill-bar"><div class="game-skill-fill" style="width: 78%"></div></div>
+            <span class="game-skill-val">78</span>
+          </div>
+          <div class="game-skill-row">
+            <span class="game-skill-name">大促策略</span>
+            <div class="game-skill-bar"><div class="game-skill-fill" style="width: 70%"></div></div>
+            <span class="game-skill-val">70</span>
+          </div>
+          <div class="game-divider"></div>
+          <div class="game-section-title">─────── 已获证书 ───────</div>
+          <div class="game-certs">
+            <span class="game-cert">🎓 港大硕士</span>
+            <span class="game-cert">📝 IELTS 7.5</span>
+            <span class="game-cert">📋 ACCA</span>
+          </div>
+          <div class="game-divider"></div>
+          <div class="game-section-title">─────── 兴趣爱好 ───────</div>
+          <div class="game-hobbies">
+            <span>🎤 唱歌</span>
+            <span>🎧 听音乐</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,78 +2,102 @@
 ---
 
 <section class="whoami-page">
-  <div class="bg-sky"></div>
-  <div class="bg-grass"></div>
-
-  <div class="decorations">
-    <span class="deco" style="top: 10%; left: 5%;">🌸</span>
-    <span class="deco" style="top: 20%; right: 10%;">🌼</span>
-    <span class="deco" style="bottom: 25%; left: 8%;">🍀</span>
-    <span class="deco" style="bottom: 18%; right: 5%;">🌻</span>
-  </div>
-
   <div class="wood-frame">
-    <div class="parchment">
-      <h1 class="title">🌻 我是谁</h1>
+    <div class="folder-tab">📁 ABOUT ME</div>
+    <div class="folder-inner">
+      <div class="main-title">
+        <div class="main-title-zh">🌻 我是谁</div>
+        <span class="main-title-en">ABOUT ME</span>
+      </div>
 
-      <div class="columns">
-        <div class="intro-col">
-          <p class="intro-text">
-            港大市场营销硕士，擅长数据驱动增长与 AI 产品运营
-          </p>
-          <div class="divider"></div>
-          <p class="intro-desc">
-            相信好的产品力 + 运营力 + 数据力，能够创造可持续的增长飞轮。
-          </p>
+      <div class="quote-section">
+        <div class="quote-text">相信好的产品力 + 运营力 + 数据力，能够创造可持续的增长飞轮。</div>
+      </div>
+
+      <div class="resume-section">
+        <div class="resume-label-en">// EDUCATION</div>
+        <div class="edu-item">
+          <span>🎓</span>
+          <span>香港大学 市场营销硕士</span>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <div class="resume-label-en">// INTERNSHIP EXPERIENCE</div>
+        <div class="exp-list">
+          <div class="exp-item">
+            <span class="exp-icon">🟊</span>
+            <span>字节跳动 TikTok — 印尼电商策略实习生</span>
+          </div>
+          <div class="exp-item">
+            <span class="exp-icon">📕</span>
+            <span>小红书 — 商业产品实习生</span>
+          </div>
+          <div class="exp-item">
+            <span class="exp-icon">🔴</span>
+            <span>美团 / 哈啰 / 美敦力 / 默克 / 安永</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="resume-section">
+          <div class="resume-label-en">// SKILLS</div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span class="skill-tag tech"><span class="en-text">AI Coding</span></span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-tag tech"><span class="en-text">Python</span></span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-tag tech"><span class="en-text">MySQL</span></span>
+            </div>
+          </div>
         </div>
 
-        <div class="bubble-col">
-          <div class="bubble-group">
-            <span class="group-label">🏢 实习经历</span>
-            <div class="bubble-row">
-              <div class="bubble company lg">字节跳动</div>
-              <div class="bubble company md">小红书</div>
-              <div class="bubble company md">美团</div>
+        <div class="resume-section">
+          <div class="resume-label-en">// CERTIFICATIONS</div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span class="skill-tag cert"><span class="en-text">IELTS 7.5</span></span>
             </div>
-            <div class="bubble-row">
-              <div class="bubble company sm">哈啰</div>
-              <div class="bubble company sm">美敦力</div>
-              <div class="bubble company sm">默克</div>
-              <div class="bubble company sm">安永</div>
-            </div>
-          </div>
-
-          <div class="bubble-group">
-            <span class="group-label">📜 证书</span>
-            <div class="bubble-row">
-              <div class="bubble cert">港大硕士</div>
-              <div class="bubble cert">IELTS 7.5</div>
-              <div class="bubble cert">ACCA</div>
-            </div>
-          </div>
-
-          <div class="bubble-group">
-            <span class="group-label">💼 能力</span>
-            <div class="bubble-row">
-              <div class="bubble skill">数据分析</div>
-              <div class="bubble skill">电商运营</div>
-              <div class="bubble skill">AI产品</div>
-              <div class="bubble skill">大促策略</div>
-            </div>
-          </div>
-
-          <div class="bubble-group">
-            <span class="group-label">🎵 爱好</span>
-            <div class="bubble-row">
-              <div class="bubble hobby">🎤 唱歌</div>
-              <div class="bubble hobby">🎧 听音乐</div>
+            <div class="skill-item">
+              <span class="skill-tag cert"><span class="en-text">ACCA</span></span>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="resume-section">
+        <div class="resume-label-en">// HOBBIES</div>
+        <div class="hobby-list">
+          <span class="hobby-tag">🎵 R&B爱好者</span>
+          <span class="hobby-tag">📚 史穿研究ing</span>
+          <span class="hobby-tag">🎮 戴夫抓鱼者</span>
+          <span class="hobby-tag">🌟 内娱一点通</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrows">
+    <button class="nav-arrow left" id="whoami-nav-prev" aria-label="上一页">◀</button>
+    <button class="nav-arrow right" id="whoami-nav-next" aria-label="下一页">▶</button>
+  </div>
 </section>
+
+<script>
+  document.getElementById('whoami-nav-prev')?.addEventListener('click', () => {
+    (window as any).playSound?.('transition');
+    (window as any).navigateTo?.('page-welcome');
+  });
+  document.getElementById('whoami-nav-next')?.addEventListener('click', () => {
+    (window as any).playSound?.('transition');
+    (window as any).navigateTo?.('page-growth');
+  });
+</script>
 
 <style>
   .whoami-page {
@@ -84,218 +108,227 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
-
-  .bg-sky {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 65%;
-    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
-  }
-
-  .bg-grass {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40%;
-    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
-  }
-
-  .decorations {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  .deco {
-    position: absolute;
-    font-size: 2rem;
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    background: var(--color-bg-dark);
   }
 
   .wood-frame {
-    position: relative;
-    z-index: 10;
     background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+    width: 90%;
   }
 
-  .parchment {
+  .folder-tab {
+    background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+    color: #F5E6C8;
+    padding: 10px 24px;
+    display: inline-block;
+    border-radius: 6px 6px 0 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    letter-spacing: 1px;
+    margin-bottom: -4px;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2);
+  }
+
+  .folder-inner {
     background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
     border-radius: 4px;
-    padding: 32px 48px;
-    max-width: 900px;
-    max-height: 88vh;
+    padding: 24px 28px;
+    color: #5D3A1A;
+    min-height: 500px;
+    max-height: 85vh;
     overflow-y: auto;
   }
 
-  .title {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 2.8rem;
-    color: #5D3A1A;
+  .main-title {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 32px;
-    align-items: center;
-  }
-
-  @media (max-width: 768px) {
-    .columns {
-      grid-template-columns: 1fr;
-    }
-    .title {
-      font-size: 2rem;
-    }
-  }
-
-  .intro-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .intro-text {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.6rem;
+  .main-title-zh {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 1.8rem;
     color: #5D3A1A;
-    line-height: 1.6;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
   }
 
-  .divider {
-    width: 60px;
-    height: 4px;
-    background: #8B4513;
-    border-radius: 2px;
-    margin: 16px 0;
-  }
-
-  .intro-desc {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.2rem;
-    color: #6B5344;
-    line-height: 1.6;
-  }
-
-  .bubble-col {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .bubble-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .group-label {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1rem;
+  .main-title-en {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
     color: #8B4513;
-    font-weight: 700;
+    letter-spacing: 2px;
   }
 
-  .bubble-row {
+  .quote-section {
+    background: linear-gradient(135deg, #5D4037 0%, #4E342E 100%);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .quote-text {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.15rem;
+    color: #F5E6C8;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .resume-section {
+    margin-bottom: 18px;
+  }
+
+  .resume-label-en {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.45rem;
+    color: #8B4513;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #8B4513;
+  }
+
+  .exp-list {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 8px;
   }
 
-  .bubble {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+  .exp-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     font-family: 'Ma Shan Zheng', cursive;
-    font-weight: 700;
+    font-size: 1.05rem;
+    color: #5D3A1A;
+    line-height: 1.4;
+  }
+
+  .exp-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .en-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.45rem;
+    letter-spacing: 0.5px;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .skill-tag.tech {
+    background: linear-gradient(135deg, #9575CD, #7E57C2);
     color: white;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-    transition: transform 0.2s;
   }
 
-  .bubble:hover {
-    transform: scale(1.08) translateY(-2px);
-  }
-
-  .company {
-    background: linear-gradient(135deg, #64B5F6, #42A5F5);
-  }
-
-  .company.lg { width: 100px; height: 100px; font-size: 1.1rem; }
-  .company.md { width: 80px; height: 80px; font-size: 1rem; }
-  .company.sm { width: 68px; height: 68px; font-size: 0.9rem; }
-
-  .cert {
+  .skill-tag.cert {
     background: linear-gradient(135deg, #FFD700, #FFC107);
     color: #5D3A1A;
-    width: 80px;
-    height: 80px;
-    font-size: 0.9rem;
   }
 
-  .skill {
-    background: linear-gradient(135deg, #81C784, #66BB6A);
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-size: 1rem;
-  }
-
-  .hobby {
-    background: linear-gradient(135deg, #F48FB1, #F06292);
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-size: 1rem;
-  }
-
-  .nav-buttons {
+  .hobby-list {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
     gap: 12px;
+    flex-wrap: wrap;
   }
 
-  .wood-btn {
+  .hobby-tag {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 10px 20px;
-    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
-    color: #FDF5E6;
-    border: none;
-    border-radius: 6px;
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    background: linear-gradient(135deg, #F48FB1, #F06292);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Ma Shan Zheng', cursive;
     font-size: 1rem;
-    font-weight: 700;
+  }
+
+  .edu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.05rem;
+    color: #5D3A1A;
+    background: rgba(139, 69, 19, 0.1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #8B4513;
+  }
+
+  /* Navigation Arrows */
+  .nav-arrows {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .nav-arrow {
+    pointer-events: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8B4513 0%, #6B3E26 100%);
+    border: 3px solid var(--color-neon-green);
+    color: var(--color-neon-green);
+    font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 3px 0 #5D3A1A, 0 4px 8px rgba(0, 0, 0, 0.25);
-    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s;
   }
 
-  .wood-btn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
-    box-shadow: 0 5px 0 #5D3A1A, 0 6px 12px rgba(0, 0, 0, 0.3);
+  .nav-arrow:hover {
+    transform: scale(1.1);
+    border-color: var(--color-neon-yellow);
+    color: var(--color-neon-yellow);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
   }
 
-  .wood-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 0 #5D3A1A, 0 3px 6px rgba(0, 0, 0, 0.2);
+  .nav-arrow:active {
+    transform: scale(0.95);
   }
 </style>

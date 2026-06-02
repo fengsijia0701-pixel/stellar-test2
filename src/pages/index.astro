@@ -452,6 +452,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
             target.classList.remove('page-enter');
           }, 400);
 
+          // Only update currentPage AFTER animation completes
           this.currentPage = pageId;
 
           // Lock scroll if page has lock flag
@@ -490,12 +491,25 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       setTimeout(() => pageNavigator.goTo(pageId), 100);
     }
 
-    // Update path nav on page change
+    // Update path nav on page change - also update arrow buttons
     const originalGoTo = pageNavigator.goTo.bind(pageNavigator);
     pageNavigator.goTo = function(pageId: string) {
       originalGoTo(pageId);
       updatePathNav(pageId);
+      // Update arrow buttons after page transition
+      setTimeout(updateNavButtonsFromPageId, 350);
     };
+
+    function updateNavButtonsFromPageId() {
+      const pages = ['page-welcome','page-whoami','page-growth','page-experience','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
+      const prevBtn = document.getElementById('nav-prev-btn');
+      const nextBtn = document.getElementById('nav-next-btn');
+      const currentId = getCurrentPageId();
+      const currentIndex = pages.indexOf(currentId);
+      if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+      if (nextBtn) nextBtn.disabled = currentIndex >= pages.length - 1;
+      console.log('[NAV] updateNavButtonsFromPageId: currentId=', currentId, 'index=', currentIndex);
+    }
 
     function updatePathNav(pageId: string) {
       const steps = document.querySelectorAll('.path-step');

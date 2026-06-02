@@ -2,86 +2,73 @@
 ---
 
 <section class="growth-page">
-  <div class="bg-sky"></div>
-  <div class="bg-grass"></div>
-
-  <div class="decorations">
-    <span class="deco" style="top: 8%; left: 5%;">🌲</span>
-    <span class="deco" style="top: 12%; right: 6%;">🌳</span>
-    <span class="deco" style="bottom: 30%; left: 8%;">🌿</span>
-    <span class="deco" style="bottom: 22%; right: 5%;">🍀</span>
-  </div>
-
   <div class="wood-frame">
-    <div class="parchment">
-      <h1 class="title">🌱 成长轨迹</h1>
+    <div class="folder-tab">📁 GROWTH TRACK</div>
+    <div class="folder-inner">
+      <h1 class="growth-title">🌱 成长轨迹</h1>
 
-      <div class="skill-tree">
-        <!-- Finance Branch -->
-        <div class="branch">
-          <div class="branch-label">💼 金融/咨询</div>
-          <div class="nodes">
-            <button class="node" data-company="ey">
-              <div class="node-icon">📊</div>
-              <div class="node-company">安永</div>
-              <div class="node-period">2023.12</div>
-              <div class="node-tooltip">全球四大会计师事务所之一，专注审计与咨询</div>
-            </button>
+      <!-- 互联网 -->
+      <div class="timeline-section">
+        <div class="section-label-en">// INTERNET 🌐</div>
+        <div class="timeline">
+          <div class="timeline-item current" data-company="bytedance">
+            <div class="timeline-date-en">2026.01 — NOW</div>
+            <div class="timeline-company"><span class="timeline-dot-label">🌐</span>字节跳动 TikTok — 印尼电商策略实习生<span class="current-badge">NOW</span></div>
+            <div class="node-tooltip">全球最大独角兽，TikTok母公司，估值超2000亿美元</div>
+          </div>
+          <div class="timeline-item" data-company="xiaohongshu">
+            <div class="timeline-date-en">2025.09 — 2025.12</div>
+            <div class="timeline-company"><span class="timeline-dot-label">📕</span>小红书 — 商业产品实习生</div>
+            <div class="node-tooltip">中国最大种草社区，2亿月活，专注生活方式分享</div>
+          </div>
+          <div class="timeline-item" data-company="meituan">
+            <div class="timeline-date-en">2025.05 — 2025.08</div>
+            <div class="timeline-company"><span class="timeline-dot-label">🚴</span>美团 — 到店餐饮实习生</div>
+            <div class="node-tooltip">中国最大本地生活服务平台，年活跃用户6亿+</div>
+          </div>
+          <div class="timeline-item" data-company="hallo">
+            <div class="timeline-date-en">2025.02 — 2025.04</div>
+            <div class="timeline-company"><span class="timeline-dot-label">🚲</span>哈啰 — 策略运营实习生</div>
+            <div class="node-tooltip">阿里旗下智能出行平台，国内最大共享单车服务商</div>
           </div>
         </div>
+      </div>
 
-        <!-- Medical Branch -->
-        <div class="branch">
-          <div class="branch-label">🏥 医疗健康</div>
-          <div class="nodes">
-            <button class="node" data-company="merck">
-              <div class="node-icon">💊</div>
-              <div class="node-company">默克</div>
-              <div class="node-period">2024.05</div>
-              <div class="node-tooltip">全球TOP3制药公司，350年历史，专注医药健康</div>
-            </button>
-            <button class="node" data-company="medtronic">
-              <div class="node-icon">🏥</div>
-              <div class="node-company">美敦力</div>
-              <div class="node-period">2024.09</div>
-              <div class="node-tooltip">全球最大医疗器械公司，总部爱尔兰，专注高端医疗设备</div>
-            </button>
+      <!-- 医疗健康 -->
+      <div class="timeline-section">
+        <div class="section-label-en">// MEDICAL 🏥</div>
+        <div class="timeline">
+          <div class="timeline-item" data-company="medtronic">
+            <div class="timeline-date-en">2024.09 — 2025.01</div>
+            <div class="timeline-company"><span class="timeline-dot-label">🏥</span>美敦力 — 战略市场部实习生</div>
+            <div class="node-tooltip">全球最大医疗器械公司，总部爱尔兰，专注高端医疗设备</div>
+          </div>
+          <div class="timeline-item" data-company="merck">
+            <div class="timeline-date-en">2024.05 — 2024.08</div>
+            <div class="timeline-company"><span class="timeline-dot-label">💊</span>默克 — 市场部实习生</div>
+            <div class="node-tooltip">全球TOP3制药公司，350年历史，专注医药健康</div>
           </div>
         </div>
+      </div>
 
-        <!-- Internet Branch -->
-        <div class="branch">
-          <div class="branch-label">🌐 互联网</div>
-          <div class="path-line"></div>
-          <div class="nodes">
-            <button class="node" data-company="hallo">
-              <div class="node-icon">🚲</div>
-              <div class="node-company">哈啰</div>
-              <div class="node-period">2025.02</div>
-              <div class="node-tooltip">阿里旗下智能出行平台，国内最大共享单车服务商</div>
-            </button>
-            <button class="node" data-company="meituan">
-              <div class="node-icon">🚴</div>
-              <div class="node-company">美团</div>
-              <div class="node-period">2025.05</div>
-              <div class="node-tooltip">中国最大本地生活服务平台，年活跃用户6亿+</div>
-            </button>
-            <button class="node" data-company="xiaohongshu">
-              <div class="node-icon">📕</div>
-              <div class="node-company">小红书</div>
-              <div class="node-period">2025.09</div>
-              <div class="node-tooltip">中国最大种草社区，2亿月活，专注生活方式分享</div>
-            </button>
-            <button class="node current" data-company="bytedance">
-              <div class="node-icon">🌐</div>
-              <div class="node-company">字节跳动</div>
-              <div class="node-period">2026.01</div>
-              <div class="node-tooltip">全球最大独角兽，TikTok母公司，估值超2000亿美元</div>
-            </button>
+      <!-- 金融咨询 -->
+      <div class="timeline-section">
+        <div class="section-label-en">// FINANCE 💼</div>
+        <div class="timeline">
+          <div class="timeline-item" data-company="ey">
+            <div class="timeline-date-en">2023.12 — 2024.04</div>
+            <div class="timeline-company"><span class="timeline-dot-label">📊</span>安永 — 审计部实习生</div>
+            <div class="node-tooltip">全球四大会计师事务所之一，专注审计与咨询</div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrows">
+    <button class="nav-arrow left" id="growth-nav-prev" aria-label="上一页">◀</button>
+    <button class="nav-arrow right" id="growth-nav-next" aria-label="下一页">▶</button>
   </div>
 
   <!-- Company Detail Popup -->
@@ -106,9 +93,8 @@
 </section>
 
 <script>
-  // Company popup functionality - wait for companyDetails to be available
   function initPopup() {
-    const nodes = document.querySelectorAll('.node[data-company]');
+    const items = document.querySelectorAll('.timeline-item[data-company]');
     const overlay = document.getElementById('company-popup-overlay');
     const popup = document.getElementById('company-popup');
 
@@ -116,12 +102,10 @@
 
     const closeBtn = popup.querySelector('.popup-close');
 
-    nodes.forEach(node => {
-      node.addEventListener('click', () => {
-        const companyId = node.dataset.company;
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const companyId = item.dataset.company;
         const data = (window as any).companyDetails?.[companyId];
-        console.log('[POPUP] companyId:', companyId, 'data:', data);
-        console.log('[POPUP] window.playSound exists:', typeof (window as any).playSound);
         if (data) {
           popup.querySelector('.popup-icon').textContent = data.icon || '';
           popup.querySelector('.popup-company').textContent = data.name || '';
@@ -131,7 +115,6 @@
 
           const projectList = popup.querySelector('.project-list');
           if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
-            // Check if new format with objects or old format with strings
             if (typeof data.projects[0] === 'object') {
               projectList.innerHTML = data.projects.map((p: any, idx: number) => `
                 <li class="project-item" data-index="${idx}">
@@ -147,10 +130,9 @@
                 </li>
               `).join('');
 
-              // Add click handlers for expand/collapse
               projectList.querySelectorAll('.project-summary').forEach(summary => {
                 summary.addEventListener('click', (e) => {
-                  e.stopPropagation(); // Prevent closing popup
+                  e.stopPropagation();
                   const li = summary.closest('.project-item');
                   const detail = li?.querySelector('.project-detail');
                   const arrow = summary.querySelector('.project-arrow');
@@ -158,7 +140,6 @@
                     const isHidden = detail.style.display === 'none';
                     detail.style.display = isHidden ? 'block' : 'none';
                     arrow.textContent = isHidden ? '▼' : '▶';
-                    // Play expand/collapse sound
                     if (isHidden) {
                       (window as any).playSound?.('expand');
                     }
@@ -166,14 +147,12 @@
                 });
               });
             } else {
-              // Legacy string format
               projectList.innerHTML = data.projects.map((p: string) => `<li>${p}</li>`).join('');
             }
           } else {
             projectList.innerHTML = '<li>暂无项目详情</li>';
           }
 
-          // Play popup open sound
           (window as any).playSound?.('popup');
           overlay.style.display = 'flex';
         }
@@ -184,7 +163,6 @@
       overlay.style.display = 'none';
     });
 
-    // Prevent clicks inside popup card from closing the popup
     popup.addEventListener('click', (e) => {
       e.stopPropagation();
     });
@@ -196,7 +174,16 @@
     });
   }
 
-  // Try to init immediately, or wait for DOMContentLoaded
+  // Navigation
+  document.getElementById('growth-nav-prev')?.addEventListener('click', () => {
+    (window as any).playSound?.('transition');
+    (window as any).navigateTo?.('page-whoami');
+  });
+  document.getElementById('growth-nav-next')?.addEventListener('click', () => {
+    (window as any).playSound?.('transition');
+    (window as any).navigateTo?.('page-map');
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPopup);
   } else {
@@ -213,144 +200,135 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
-
-  .bg-sky {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60%;
-    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
-  }
-
-  .bg-grass {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 45%;
-    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
-  }
-
-  .decorations {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .deco {
-    position: absolute;
-    font-size: 2rem;
-    animation: sway 3s ease-in-out infinite;
-  }
-
-  @keyframes sway {
-    0%, 100% { transform: rotate(-2deg); }
-    50% { transform: rotate(2deg); }
+    background: var(--color-bg-dark);
   }
 
   .wood-frame {
-    position: relative;
-    z-index: 10;
     background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    max-width: 460px;
+    width: 90%;
   }
 
-  .parchment {
+  .folder-tab {
+    background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+    color: #FDF5E6;
+    padding: 8px 18px;
+    display: inline-block;
+    border-radius: 5px 5px 0 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.45rem;
+    letter-spacing: 1px;
+    margin-bottom: -3px;
+  }
+
+  .folder-inner {
     background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
     border-radius: 4px;
-    padding: 20px 30px;
-    max-width: 750px;
-    max-height: 88vh;
+    padding: 18px;
+    color: #5D3A1A;
+    max-height: 85vh;
     overflow-y: auto;
   }
 
-  .title {
+  .growth-title {
     font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 2rem;
-    color: #5D3A1A;
+    font-size: 1.4rem;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 15px;
   }
 
-  .skill-tree {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .branch {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-    padding: 12px;
-  }
-
-  .branch-label {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6rem;
-    font-weight: 700;
-    color: white;
-    background: #8B4513;
-    padding: 5px 10px;
-    border-radius: 15px;
-    display: inline-block;
-    margin-bottom: 10px;
-  }
-
-  .nodes {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #F5E6C8;
-    border: 3px solid #8B4513;
-    border-radius: 10px;
-    padding: 10px 14px;
-    min-width: 68px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 3px 0 #5D3A1A;
-    position: relative;
-  }
-
-  .node:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 0 #5D3A1A;
-  }
-
-  .node.current {
-    border-color: #FFD700;
-    background: #FFF8E7;
-  }
-
-  .node-icon {
-    font-size: 1.6rem;
-    margin-bottom: 2px;
-  }
-
-  .node-company {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.55rem;
-    font-weight: 700;
-    color: #5D3A1A;
-    text-align: center;
-    line-height: 1.4;
-  }
-
-  .node-period {
+  .section-label-en {
     font-family: 'Press Start 2P', cursive;
     font-size: 0.5rem;
     color: #8B4513;
-    margin-top: 4px;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #8B4513;
+  }
+
+  .timeline-section {
+    margin-bottom: 15px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 18px;
+    margin-top: 8px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #c9b896;
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .timeline-item:hover {
+    transform: translateX(4px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #8B4513;
+  }
+
+  .timeline-item.internet::before { background: #64B5F6; }
+  .timeline-item.medical::before { background: #81C784; }
+  .timeline-item.finance::before { background: #FFD700; }
+  .timeline-item.current::before {
+    background: #FFD700;
+    box-shadow: 0 0 8px rgba(255,215,0,0.6);
+  }
+
+  .timeline-date-en {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    color: #8B4513;
+    margin-bottom: 2px;
+  }
+
+  .timeline-company {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.05rem;
+    color: #5D3A1A;
+  }
+
+  .timeline-dot-label {
+    font-size: 0.9rem;
+    margin-right: 4px;
+  }
+
+  .current-badge {
+    display: inline-block;
+    background: #FFD700;
+    color: #5D3A1A;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.4rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
   }
 
   /* Tooltip */
@@ -363,8 +341,8 @@
     color: #FDF5E6;
     padding: 8px 14px;
     border-radius: 8px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.5rem;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 0.9rem;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -383,61 +361,50 @@
     border-top-color: #5D3A1A;
   }
 
-  .node:hover .node-tooltip {
+  .timeline-item:hover .node-tooltip {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(-4px);
   }
 
-  .node-period {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.85rem;
-    color: #8B4513;
-  }
-
-  .path-line {
-    height: 4px;
-    background: #8B4513;
-    margin: 6px 0;
-    border-radius: 2px;
-  }
-
-  .nav-buttons {
+  /* Navigation Arrows */
+  .nav-arrows {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
-    margin-top: 16px;
-    gap: 12px;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 100;
   }
 
-  .wood-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 20px;
-    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
-    color: #FDF5E6;
-    border: none;
-    border-radius: 6px;
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
-    font-size: 1rem;
-    font-weight: 700;
+  .nav-arrow {
+    pointer-events: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8B4513 0%, #6B3E26 100%);
+    border: 3px solid var(--color-neon-green);
+    color: var(--color-neon-green);
+    font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 3px 0 #5D3A1A, 0 4px 8px rgba(0, 0, 0, 0.25);
-    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s;
   }
 
-  .wood-btn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(180deg, #A0522D 0%, #8B4513 100%);
-    box-shadow: 0 5px 0 #5D3A1A, 0 6px 12px rgba(0, 0, 0, 0.3);
+  .nav-arrow:hover {
+    transform: scale(1.1);
+    border-color: var(--color-neon-yellow);
+    color: var(--color-neon-yellow);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
   }
 
-  .wood-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 0 #5D3A1A, 0 3px 6px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Company Popup Styles */
+  /* Popup Styles */
   .popup-overlay {
     position: fixed;
     top: 0;
@@ -540,15 +507,6 @@
     margin: 0;
   }
 
-  .project-list li {
-    font-family: var(--font-game);
-    font-size: 0.85rem;
-    color: var(--color-parchment);
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(139, 90, 43, 0.3);
-    line-height: 1.45;
-  }
-
   .project-item {
     padding: 0;
     border-bottom: 1px solid rgba(139, 90, 43, 0.3);
@@ -613,16 +571,5 @@
     font-size: 0.8rem;
     color: var(--color-parchment);
     line-height: 1.6;
-  }
-
-  .project-highlight {
-    font-family: var(--font-pixel);
-    font-size: 0.55rem;
-    color: var(--color-neon-yellow);
-    background: rgba(0, 0, 0, 0.3);
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    word-break: break-word;
   }
 </style>

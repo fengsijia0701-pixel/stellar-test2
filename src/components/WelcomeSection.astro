@@ -2,45 +2,27 @@
 ---
 
 <section class="welcome-page">
-  <!-- Sky and Grass Background -->
-  <div class="sky-bg"></div>
-  <div class="grass-bg"></div>
-
-  <!-- Floating Decorations -->
-  <div class="decorations">
-    <span class="deco" style="top: 8%; left: 5%;">🌸</span>
-    <span class="deco" style="top: 15%; right: 8%;">🌼</span>
-    <span class="deco" style="top: 25%; left: 12%;">✨</span>
-    <span class="deco" style="bottom: 35%; left: 8%;">🍀</span>
-    <span class="deco" style="bottom: 28%; right: 10%;">🌻</span>
-    <span class="deco" style="top: 35%; right: 5%;">⭐</span>
-  </div>
-
-  <!-- Wood Frame Panel -->
   <div class="wood-frame">
-    <div class="parchment">
-      <!-- Pixel Character -->
-      <div class="character-wrapper">
-        <div class="pixel-character">
-          <!-- Hair -->
-          <div class="hair"></div>
-          <!-- Face -->
-          <div class="face">
-            <div class="glasses">
-              <div class="lens left"></div>
-              <div class="lens right"></div>
-              <div class="bridge"></div>
-            </div>
-            <div class="eyes">
-              <div class="eye left"></div>
-              <div class="eye right"></div>
-            </div>
-            <div class="mouth"></div>
+    <div class="folder-tab">📁 WELCOME</div>
+    <div class="folder-inner">
+      <!-- 像素女孩 -->
+      <div class="pixel-girl">
+        <div class="hair"></div>
+        <div class="face">
+          <div class="glasses">
+            <div class="lens left"></div>
+            <div class="lens right"></div>
+            <div class="bridge"></div>
           </div>
-          <!-- Body -->
-          <div class="body"></div>
+          <div class="eyes">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+          </div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="mouth"></div>
         </div>
-        <!-- Music Notes -->
+        <div class="body"></div>
         <div class="notes">
           <span class="note n1">♪</span>
           <span class="note n2">♫</span>
@@ -48,14 +30,11 @@
         </div>
       </div>
 
-      <!-- Title -->
-      <h1 class="title-small">你好，我是</h1>
-      <h2 class="title-name">冯思佳</h2>
-
-      <!-- Subtitle -->
-      <p class="subtitle">产品 / 运营 / 市场营销</p>
-
-      <!-- Start Button -->
+      <div class="welcome-title-zh">你好，我是</div>
+      <div class="welcome-title-en">ABOUT ME</div>
+      <div class="welcome-name">冯思佳</div>
+      <div class="welcome-divider"></div>
+      <div class="welcome-subtitle">PRODUCT / OPS / MARKETING</div>
       <button class="wood-btn" data-action="next">
         <span>🎵</span> 开始探索
       </button>
@@ -72,113 +51,109 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background: var(--color-bg-dark);
   }
 
-  /* Sky Background */
-  .sky-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70%;
-    background: linear-gradient(180deg, #87CEEB 0%, #B4E7CE 100%);
-  }
-
-  /* Grass Background */
-  .grass-bg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35%;
-    background: linear-gradient(180deg, #7CB342 0%, #558B2F 100%);
-  }
-
-  .grass-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background: repeating-linear-gradient(
-      90deg,
-      #81C784 0px,
-      #81C784 8px,
-      transparent 8px,
-      transparent 20px
-    );
-  }
-
-  /* Decorations */
-  .decorations {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .deco {
-    position: absolute;
-    font-size: 2rem;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  /* Wood Frame Panel */
   .wood-frame {
-    position: relative;
-    z-index: 10;
     background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 10px;
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    max-width: 400px;
+    width: 90%;
   }
 
-  .wood-frame::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    border: 3px solid #5D3A1A;
-    border-radius: 4px;
-    pointer-events: none;
+  .folder-tab {
+    background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+    color: #FDF5E6;
+    padding: 8px 18px;
+    display: inline-block;
+    border-radius: 5px 5px 0 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.45rem;
+    letter-spacing: 1px;
+    margin-bottom: -3px;
   }
 
-  /* Parchment */
-  .parchment {
+  .folder-inner {
     background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
     border-radius: 4px;
-    padding: 40px 60px;
+    padding: 24px;
+    color: #5D3A1A;
     text-align: center;
-    min-width: 380px;
   }
 
-  /* Character Wrapper */
-  .character-wrapper {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 20px;
+  .welcome-title-zh {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 1.6rem;
+    color: #5D3A1A;
   }
 
-  /* Pixel Character - Complete body */
-  .pixel-character {
+  .welcome-title-en {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.4rem;
+    color: #8B4513;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .welcome-name {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 2.4rem;
+    color: #5D3A1A;
+    margin-top: 8px;
+  }
+
+  .welcome-divider {
+    width: 80px;
+    height: 3px;
+    background: #8B4513;
+    margin: 12px auto;
+  }
+
+  .welcome-subtitle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    color: #8B4513;
+    letter-spacing: 1px;
+  }
+
+  .wood-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+    color: #FDF5E6;
+    border: none;
+    border-radius: 6px;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #5D3A1A;
+    transition: all 0.15s;
+  }
+
+  .wood-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #5D3A1A;
+  }
+
+  .wood-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #5D3A1A;
+  }
+
+  /* 像素女孩 */
+  .pixel-girl {
     position: relative;
     width: 64px;
     height: 96px;
-    margin: 0 auto;
+    margin: 0 auto 15px;
   }
 
-  /* Hair - brown curly */
-  .hair {
+  .pixel-girl .hair {
     position: absolute;
     top: 0;
     left: 4px;
@@ -186,92 +161,92 @@
     height: 40px;
     background: transparent;
     box-shadow:
-      /* Top row */
-      8px 0 0 #4a3728, 16px 0 0 #4a3728, 24px 0 0 #4a3728, 32px 0 0 #4a3728, 40px 0 0 #4a3728, 48px 0 0 #4a3728,
-      /* Row 2 */
-      0 8px 0 #4a3728, 56px 8px 0 #4a3728,
-      /* Row 3 */
-      0 16px 0 #4a3728, 8px 16px 0 #5c4033, 16px 16px 0 #5c4033, 24px 16px 0 #6b4c3a, 32px 16px 0 #5c4033, 40px 16px 0 #5c4033, 48px 16px 0 #4a3728, 56px 16px 0 #4a3728,
-      /* Row 4 - sides */
-      0 24px 0 #4a3728, 8px 24px 0 #4a3728, 48px 24px 0 #4a3728, 56px 24px 0 #4a3728,
-      /* Row 5 */
-      0 32px 0 #4a3728, 8px 32px 0 #4a3728, 48px 32px 0 #4a3728, 56px 32px 0 #4a3728;
+      8px 0 0 #1a1a1a, 16px 0 0 #1a1a1a, 24px 0 0 #1a1a1a, 32px 0 0 #1a1a1a, 40px 0 0 #1a1a1a, 48px 0 0 #1a1a1a,
+      0 8px 0 #1a1a1a, 56px 8px 0 #1a1a1a,
+      0 16px 0 #1a1a1a, 8px 16px 0 #2d2d2d, 16px 16px 0 #2d2d2d, 24px 16px 0 #1a1a1a, 32px 16px 0 #2d2d2d, 40px 16px 0 #2d2d2d, 48px 16px 0 #1a1a1a, 56px 16px 0 #1a1a1a,
+      0 24px 0 #1a1a1a, 8px 24px 0 #1a1a1a, 48px 24px 0 #1a1a1a, 56px 24px 0 #1a1a1a,
+      0 32px 0 #1a1a1a, 8px 32px 0 #1a1a1a, 48px 32px 0 #1a1a1a, 56px 32px 0 #1a1a1a;
   }
 
-  /* Face - connected to hair */
-  .face {
+  .pixel-girl .face {
     position: absolute;
     top: 24px;
     left: 8px;
     width: 48px;
-    height: 40px;
-    background: #fdbf8f;
-    box-shadow:
-      /* Eyes */
-      8px 8px 0 #3d2914, 32px 8px 0 #3d2914,
-      /* Cheeks */
-      4px 16px 0 #ffb6a3, 36px 16px 0 #ffb6a3;
+    height: 32px;
+    background: #FDD8D8;
   }
 
-  /* Glasses */
-  .glasses {
+  .pixel-girl .glasses {
     position: absolute;
-    top: 4px;
+    top: 0;
     left: 0;
     width: 48px;
     height: 12px;
   }
 
-  .lens {
+  .pixel-girl .lens {
     position: absolute;
     top: 0;
     width: 16px;
     height: 12px;
-    border: 3px solid #3d2914;
+    border: 3px solid #333;
     border-radius: 3px;
   }
 
-  .lens.left { left: 2px; }
-  .lens.right { right: 2px; }
+  .pixel-girl .lens.left { left: 2px; }
+  .pixel-girl .lens.right { right: 2px; }
 
-  .bridge {
+  .pixel-girl .bridge {
     position: absolute;
     top: 4px;
     left: 50%;
     transform: translateX(-50%);
     width: 8px;
     height: 3px;
-    background: #3d2914;
+    background: #333;
   }
 
-  /* Eyes */
-  .eyes {
+  .pixel-girl .eyes {
     position: absolute;
     top: 12px;
     left: 0;
     width: 48px;
   }
 
-  .eye {
+  .pixel-girl .eye {
     position: absolute;
+    top: 0;
     width: 4px;
     height: 4px;
     background: #1a1a1a;
     border-radius: 50%;
   }
 
-  .eye.left { left: 12px; }
-  .eye.right { right: 12px; }
+  .pixel-girl .eye.left { left: 12px; }
+  .pixel-girl .eye.right { right: 12px; }
 
-  /* Mouth - singing */
-  .mouth {
+  .pixel-girl .blush {
     position: absolute;
-    bottom: 6px;
+    top: 20px;
+    width: 6px;
+    height: 4px;
+    background: #FFB6C1;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+
+  .pixel-girl .blush.left { left: 4px; }
+  .pixel-girl .blush.right { right: 4px; }
+
+  .pixel-girl .mouth {
+    position: absolute;
+    bottom: 4px;
     left: 50%;
     transform: translateX(-50%);
     width: 8px;
     height: 6px;
-    background: #3d2914;
+    background: #c44569;
     border-radius: 0 0 50% 50%;
     animation: sing 0.4s ease-in-out infinite;
   }
@@ -281,123 +256,43 @@
     50% { height: 8px; }
   }
 
-  /* Body */
-  .body {
+  .pixel-girl .body {
     position: absolute;
-    top: 56px;
+    top: 52px;
     left: 8px;
     width: 48px;
-    height: 40px;
-    background: #e8a0a0;
+    height: 36px;
+    background: #9B59B6;
     box-shadow:
-      /* Collar */
-      16px 0 0 #d88888, 24px 0 0 #d88888,
-      /* Shirt */
-      0 8px 0 #e8a0a0, 8px 8px 0 #e8a0a0, 16px 8px 0 #e8a0a0, 24px 8px 0 #f0b0b0, 32px 8px 0 #e8a0a0, 40px 8px 0 #e8a0a0,
-      0 16px 0 #e8a0a0, 8px 16px 0 #e8a0a0, 16px 16px 0 #e8a0a0, 24px 16px 0 #e8a0a0, 32px 16px 0 #e8a0a0, 40px 16px 0 #e8a0a0,
-      /* Pants */
-      8px 24px 0 #5c4033, 16px 24px 0 #5c4033, 24px 24px 0 #5c4033, 32px 24px 0 #5c4033,
-      8px 32px 0 #5c4033, 32px 32px 0 #5c4033;
+      16px 0 0 #8E44AD, 24px 0 0 #8E44AD,
+      0 8px 0 #9B59B6, 8px 8px 0 #9B59B6, 16px 8px 0 #9B59B6, 24px 8px 0 #9B59B6, 32px 8px 0 #9B59B6, 40px 8px 0 #9B59B6,
+      0 16px 0 #9B59B6, 8px 16px 0 #9B59B6, 16px 16px 0 #9B59B6, 24px 16px 0 #9B59B6, 32px 16px 0 #9B59B6, 40px 16px 0 #9B59B6,
+      8px 24px 0 #8E44AD, 16px 24px 0 #8E44AD, 24px 24px 0 #8E44AD, 32px 24px 0 #8E44AD,
+      8px 32px 0 #8E44AD, 32px 32px 0 #8E44AD;
   }
 
-  /* Music Notes */
-  .notes {
+  .pixel-girl .notes {
     position: absolute;
-    top: 0;
-    left: 70px;
-    width: 60px;
-    height: 80px;
+    top: 5px;
+    left: 65px;
+    width: 50px;
+    height: 60px;
   }
 
-  .note {
+  .pixel-girl .note {
     position: absolute;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     animation: floatNote 2s ease-out infinite;
     opacity: 0;
   }
 
-  .n1 { left: 0; top: 20px; animation-delay: 0s; }
-  .n2 { left: 25px; top: 10px; animation-delay: 0.5s; font-size: 1.2rem; }
-  .n3 { left: 45px; top: 25px; animation-delay: 1s; }
+  .pixel-girl .n1 { left: 0; top: 10px; animation-delay: 0s; }
+  .pixel-girl .n2 { left: 20px; top: 0; animation-delay: 0.5s; font-size: 1rem; }
+  .pixel-girl .n3 { left: 35px; top: 15px; animation-delay: 1s; }
 
   @keyframes floatNote {
     0% { opacity: 0; transform: translateY(0) scale(0.8); }
     20% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-30px) scale(0.5); }
-  }
-
-  /* Title */
-  .title-small {
-    font-family: var(--font-game);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--color-wood-dark);
-    margin: 0 0 4px 0;
-  }
-
-  .title-name {
-    font-family: var(--font-game);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--color-wood);
-    margin: 0 0 12px 0;
-    text-shadow: 2px 2px 0 rgba(139, 90, 43, 0.2);
-  }
-
-  .subtitle {
-    font-family: var(--font-pixel);
-    font-size: 0.7rem;
-    color: var(--color-wood-dark);
-    letter-spacing: 2px;
-    margin: 0 0 24px 0;
-  }
-
-  /* Wood Button */
-  .wood-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    background: linear-gradient(180deg, var(--color-wood) 0%, var(--color-wood-dark) 100%);
-    color: var(--color-cream);
-    border: none;
-    border-radius: 6px;
-    font-family: var(--font-game);
-    font-size: 1.2rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow:
-      0 4px 0 var(--color-wood-dark),
-      0 6px 12px rgba(0, 0, 0, 0.3),
-      0 0 15px rgba(139, 90, 43, 0.3);
-    transition: all 0.15s ease;
-  }
-
-  .wood-btn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(180deg, var(--color-wood-light) 0%, var(--color-wood) 100%);
-    box-shadow:
-      0 6px 0 var(--color-wood-dark),
-      0 8px 16px rgba(0, 0, 0, 0.35),
-      0 0 25px rgba(139, 90, 43, 0.5);
-  }
-
-  .wood-btn:active {
-    transform: translateY(2px);
-    box-shadow:
-      0 2px 0 var(--color-wood-dark),
-      0 4px 8px rgba(0, 0, 0, 0.25);
-  }
-
-  /* Responsive */
-  @media (max-width: 500px) {
-    .parchment {
-      min-width: auto;
-      padding: 30px 40px;
-    }
-
-    .title-name {
-      font-size: 2.2rem;
-    }
+    100% { opacity: 0; transform: translateY(-25px) scale(0.5); }
   }
 </style>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第一页 & 第三页 - 最终版</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(180deg, #1a2f1a 0%, #0f1f0f 100%);
+      min-height: 100vh;
+      padding: 30px;
+      font-family: 'Ma Shan Zheng', cursive;
+      color: #E8DCC8;
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: #00ff88;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #00ff88;
+    }
+    h2.section-header {
+      text-align: center;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.4rem;
+      color: #FFD700;
+      margin: 30px 0 20px 0;
+      padding: 10px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    .option-card {
+      background: linear-gradient(135deg, #1a2f1a 0%, #0f1f0f 100%);
+      border: 3px solid #2d5a27;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .option-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      color: #FFD700;
+      padding: 12px;
+      background: #0a150a;
+      text-align: center;
+    }
+    .preview {
+      padding: 25px;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .folder {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 380px;
+    }
+    .folder-tab {
+      background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+      color: #F5E6C8;
+      padding: 8px 18px;
+      display: inline-block;
+      border-radius: 5px 5px 0 0;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      letter-spacing: 1px;
+      margin-bottom: -3px;
+    }
+    .folder-inner {
+      background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+      border-radius: 4px;
+      padding: 24px;
+      color: #5D3A1A;
+      text-align: center;
+    }
+    .welcome-title-zh {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.6rem;
+    }
+    .welcome-title-en {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      color: #8B4513;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+    .welcome-name {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 2.4rem;
+      color: #5D3A1A;
+      margin-top: 8px;
+    }
+    .welcome-divider {
+      width: 80px;
+      height: 3px;
+      background: #8B4513;
+      margin: 12px auto;
+    }
+    .welcome-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #8B4513;
+      letter-spacing: 1px;
+    }
+    .welcome-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 12px 28px;
+      background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+      color: #FDF5E6;
+      border: none;
+      border-radius: 6px;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #5D3A1A;
+    }
+
+    /* 像素女孩 - 修复版 */
+    .pixel-girl {
+      position: relative;
+      width: 64px;
+      height: 96px;
+      margin: 0 auto 15px;
+    }
+    /* 头发 */
+    .pixel-girl .hair {
+      position: absolute;
+      top: 0;
+      left: 4px;
+      width: 56px;
+      height: 40px;
+      background: transparent;
+      box-shadow:
+        8px 0 0 #1a1a1a, 16px 0 0 #1a1a1a, 24px 0 0 #1a1a1a, 32px 0 0 #1a1a1a, 40px 0 0 #1a1a1a, 48px 0 0 #1a1a1a,
+        0 8px 0 #1a1a1a, 56px 8px 0 #1a1a1a,
+        0 16px 0 #1a1a1a, 8px 16px 0 #2d2d2d, 16px 16px 0 #2d2d2d, 24px 16px 0 #1a1a1a, 32px 16px 0 #2d2d2d, 40px 16px 0 #2d2d2d, 48px 16px 0 #1a1a1a, 56px 16px 0 #1a1a1a,
+        0 24px 0 #1a1a1a, 8px 24px 0 #1a1a1a, 48px 24px 0 #1a1a1a, 56px 24px 0 #1a1a1a,
+        0 32px 0 #1a1a1a, 8px 32px 0 #1a1a1a, 48px 32px 0 #1a1a1a, 56px 32px 0 #1a1a1a;
+    }
+    /* 脸部 */
+    .pixel-girl .face {
+      position: absolute;
+      top: 24px;
+      left: 8px;
+      width: 48px;
+      height: 32px;
+      background: #FDD8D8;
+    }
+    /* 眼镜 */
+    .pixel-girl .glasses {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 48px;
+      height: 12px;
+    }
+    .pixel-girl .lens {
+      position: absolute;
+      top: 0;
+      width: 16px;
+      height: 12px;
+      border: 3px solid #333;
+      border-radius: 3px;
+    }
+    .pixel-girl .lens.left { left: 2px; }
+    .pixel-girl .lens.right { right: 2px; }
+    .pixel-girl .bridge {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 3px;
+      background: #333;
+    }
+    /* 眼睛 */
+    .pixel-girl .eyes {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      width: 48px;
+    }
+    .pixel-girl .eye {
+      position: absolute;
+      top: 0;
+      width: 4px;
+      height: 4px;
+      background: #1a1a1a;
+      border-radius: 50%;
+    }
+    .pixel-girl .eye.left { left: 12px; }
+    .pixel-girl .eye.right { right: 12px; }
+    /* 腮红 */
+    .pixel-girl .blush {
+      position: absolute;
+      top: 20px;
+      width: 6px;
+      height: 4px;
+      background: #FFB6C1;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+    .pixel-girl .blush.left { left: 4px; }
+    .pixel-girl .blush.right { right: 4px; }
+    /* 嘴巴 */
+    .pixel-girl .mouth {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 6px;
+      background: #c44569;
+      border-radius: 0 0 50% 50%;
+      animation: sing 0.4s ease-in-out infinite;
+    }
+    @keyframes sing {
+      0%, 100% { height: 4px; }
+      50% { height: 8px; }
+    }
+    /* 裙子 */
+    .pixel-girl .body {
+      position: absolute;
+      top: 52px;
+      left: 8px;
+      width: 48px;
+      height: 36px;
+      background: #9B59B6;
+      box-shadow:
+        16px 0 0 #8E44AD, 24px 0 0 #8E44AD,
+        0 8px 0 #9B59B6, 8px 8px 0 #9B59B6, 16px 8px 0 #9B59B6, 24px 8px 0 #9B59B6, 32px 8px 0 #9B59B6, 40px 8px 0 #9B59B6,
+        0 16px 0 #9B59B6, 8px 16px 0 #9B59B6, 16px 16px 0 #9B59B6, 24px 16px 0 #9B59B6, 32px 16px 0 #9B59B6, 40px 16px 0 #9B59B6,
+        8px 24px 0 #8E44AD, 16px 24px 0 #8E44AD, 24px 24px 0 #8E44AD, 32px 24px 0 #8E44AD,
+        8px 32px 0 #8E44AD, 32px 32px 0 #8E44AD;
+    }
+    /* 音符 */
+    .pixel-girl .notes {
+      position: absolute;
+      top: 5px;
+      left: 65px;
+      width: 50px;
+      height: 60px;
+    }
+    .pixel-girl .note {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: floatNote 2s ease-out infinite;
+      opacity: 0;
+    }
+    .pixel-girl .n1 { left: 0; top: 10px; animation-delay: 0s; }
+    .pixel-girl .n2 { left: 20px; top: 0; animation-delay: 0.5s; font-size: 1rem; }
+    .pixel-girl .n3 { left: 35px; top: 15px; animation-delay: 1s; }
+    @keyframes floatNote {
+      0% { opacity: 0; transform: translateY(0) scale(0.8); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-25px) scale(0.5); }
+    }
+
+    /* 成长轨迹 */
+    .growth-folder {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 440px;
+    }
+    .growth-folder-tab {
+      background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+      color: #F5E6C8;
+      padding: 8px 18px;
+      display: inline-block;
+      border-radius: 5px 5px 0 0;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      letter-spacing: 1px;
+      margin-bottom: -3px;
+    }
+    .growth-folder-inner {
+      background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+      border-radius: 4px;
+      padding: 18px;
+      color: #5D3A1A;
+      max-height: 450px;
+      overflow-y: auto;
+    }
+    .growth-title {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .section-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #8B4513;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #8B4513;
+    }
+    .timeline-section {
+      margin-bottom: 15px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+      margin-top: 8px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #c9b896;
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 10px;
+      padding-left: 8px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid #8B4513;
+    }
+    .timeline-item.internet::before { background: #64B5F6; }
+    .timeline-item.medical::before { background: #81C784; }
+    .timeline-item.finance::before { background: #FFD700; }
+    .timeline-item.current::before {
+      background: #FFD700;
+      box-shadow: 0 0 8px rgba(255,215,0,0.6);
+    }
+    .timeline-date {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.95rem;
+      color: #8B4513;
+      margin-bottom: 2px;
+    }
+    .timeline-company {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1.05rem;
+      color: #5D3A1A;
+    }
+    .timeline-dot-label {
+      font-size: 0.9rem;
+      margin-right: 4px;
+    }
+    .current-badge {
+      display: inline-block;
+      background: #FFD700;
+      color: #5D3A1A;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 10px 0;
+    }
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8B4513 0%, #6B3E26 100%);
+      border: 2px solid #00ff88;
+      color: #00ff88;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 第一页 & 第三页 - 最终版预览</h1>
+
+  <h2 class="section-header">🌻 第一页 - 像素女孩（最终版）</h2>
+  <div class="options-grid">
+    <div class="option-card">
+      <div class="option-title">方案B: 像素女孩+音符</div>
+      <div class="preview">
+        <div class="folder">
+          <div class="folder-tab">📁 WELCOME</div>
+          <div class="folder-inner">
+            <div class="pixel-girl">
+              <div class="hair"></div>
+              <div class="face">
+                <div class="glasses">
+                  <div class="lens left"></div>
+                  <div class="lens right"></div>
+                  <div class="bridge"></div>
+                </div>
+                <div class="eyes">
+                  <div class="eye left"></div>
+                  <div class="eye right"></div>
+                </div>
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+                <div class="mouth"></div>
+              </div>
+              <div class="body"></div>
+              <div class="notes">
+                <span class="note n1">♪</span>
+                <span class="note n2">♫</span>
+                <span class="note n3">♪</span>
+              </div>
+            </div>
+
+            <div class="welcome-title-zh">你好，我是</div>
+            <div class="welcome-title-en">ABOUT ME</div>
+            <div class="welcome-name">冯思佳</div>
+            <div class="welcome-divider"></div>
+            <div class="welcome-subtitle">PRODUCT / OPS / MARKETING</div>
+            <div class="welcome-btn">🎵 开始探索</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-header">🌱 第三页 - 分行业时间线（最终版）</h2>
+  <div class="options-grid">
+    <div class="option-card">
+      <div class="option-title">方案B: 分行业垂直时间线</div>
+      <div class="preview">
+        <div class="growth-folder">
+          <div class="growth-folder-tab">📁 GROWTH TRACK</div>
+          <div class="growth-folder-inner">
+            <div class="growth-title">🌱 成长轨迹</div>
+
+            <div class="timeline-section">
+              <div class="section-label">// INTERNET 🌐</div>
+              <div class="timeline">
+                <div class="timeline-item current">
+                  <div class="timeline-date">2026.01 — NOW</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">🌐</span>字节跳动 TikTok — 印尼电商策略实习生<span class="current-badge">NOW</span></div>
+                </div>
+                <div class="timeline-item internet">
+                  <div class="timeline-date">2025.09 — 2025.12</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">📕</span>小红书 — 商业产品实习生</div>
+                </div>
+                <div class="timeline-item internet">
+                  <div class="timeline-date">2025.05 — 2025.08</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">🚴</span>美团 — 到店餐饮实习生</div>
+                </div>
+                <div class="timeline-item internet">
+                  <div class="timeline-date">2025.02 — 2025.04</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">🚲</span>哈啰 — 策略运营实习生</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-section">
+              <div class="section-label">// MEDICAL 🏥</div>
+              <div class="timeline">
+                <div class="timeline-item medical">
+                  <div class="timeline-date">2024.09 — 2025.01</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">🏥</span>美敦力 — 战略市场部实习生</div>
+                </div>
+                <div class="timeline-item medical">
+                  <div class="timeline-date">2024.05 — 2024.08</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">💊</span>默克 — 市场部实习生</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-section">
+              <div class="section-label">// FINANCE 💼</div>
+              <div class="timeline">
+                <div class="timeline-item finance">
+                  <div class="timeline-date">2023.12 — 2024.04</div>
+                  <div class="timeline-company"><span class="timeline-dot-label">📊</span>安永 — 审计部实习生</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-arrows">
+              <div class="nav-arrow">◀</div>
+              <div class="nav-arrow">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

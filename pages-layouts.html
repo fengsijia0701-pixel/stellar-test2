@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第一页 & 第三页布局选择</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(180deg, #1a2f1a 0%, #0f1f0f 100%);
+      min-height: 100vh;
+      padding: 30px;
+      font-family: 'Ma Shan Zheng', cursive;
+      color: #E8DCC8;
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: #00ff88;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #00ff88;
+    }
+    h2.section-header {
+      text-align: center;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.4rem;
+      color: #FFD700;
+      margin: 30px 0 20px 0;
+      padding: 10px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    .option-card {
+      background: linear-gradient(135deg, #1a2f1a 0%, #0f1f0f 100%);
+      border: 3px solid #2d5a27;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .option-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ff88;
+    }
+    .option-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      color: #FFD700;
+      padding: 12px;
+      background: #0a150a;
+      text-align: center;
+    }
+    .preview {
+      padding: 20px;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== 通用档案袋样式 ========== */
+    .folder {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 380px;
+    }
+    .folder-tab {
+      background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+      color: #F5E6C8;
+      padding: 8px 18px;
+      display: inline-block;
+      border-radius: 5px 5px 0 0;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      letter-spacing: 1px;
+      margin-bottom: -3px;
+    }
+    .folder-inner {
+      background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+      border-radius: 4px;
+      padding: 20px;
+      color: #5D3A1A;
+    }
+
+    /* ========== 欢迎页样式 ========== */
+    .welcome-title-zh {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+    .welcome-title-en {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      color: #8B4513;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .welcome-name {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 2.4rem;
+      text-align: center;
+      color: #5D3A1A;
+    }
+    .welcome-divider {
+      width: 80px;
+      height: 3px;
+      background: #8B4513;
+      margin: 12px auto;
+    }
+    .welcome-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #8B4513;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .welcome-btn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 28px;
+      background: linear-gradient(180deg, #8B4513 0%, #6B3E26 100%);
+      color: #FDF5E6;
+      border: none;
+      border-radius: 6px;
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #5D3A1A;
+    }
+    .welcome-character {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .welcome-notes {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    /* ========== 成长轨迹样式 ========== */
+    .growth-folder {
+      background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #6B3E26 100%);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 420px;
+    }
+    .growth-folder-tab {
+      background: linear-gradient(180deg, #5D4037 0%, #4E342E 100%);
+      color: #F5E6C8;
+      padding: 8px 18px;
+      display: inline-block;
+      border-radius: 5px 5px 0 0;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      letter-spacing: 1px;
+      margin-bottom: -3px;
+    }
+    .growth-folder-inner {
+      background: linear-gradient(180deg, #F5E6C8 0%, #E8DCC8 100%);
+      border-radius: 4px;
+      padding: 18px;
+      color: #5D3A1A;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .growth-title {
+      font-family: 'ZCOOL QingKe HuangYou', cursive;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .section-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.4rem;
+      color: #8B4513;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      padding-bottom: 3px;
+      border-bottom: 2px solid #8B4513;
+    }
+    .company-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .company-chip {
+      background: linear-gradient(135deg, #64B5F6, #42A5F5);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .company-chip.current {
+      background: linear-gradient(135deg, #FFD700, #FFC107);
+      color: #5D3A1A;
+    }
+    .company-chip.secondary {
+      background: linear-gradient(135deg, #81C784, #66BB6A);
+    }
+
+    /* 导航箭头 */
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 10px 0;
+    }
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8B4513 0%, #6B3E26 100%);
+      border: 2px solid #00ff88;
+      color: #00ff88;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 第一页 & 第三页布局选择</h1>
+
+  <h2 class="section-header">🌻 第一页 - WELCOME</h2>
+  <div class="options-grid">
+
+    <!-- 欢迎页 选项A: 居中简洁 -->
+    <div class="option-card">
+      <div class="option-title">方案A: 居中简洁档案袋</div>
+      <div class="preview">
+        <div class="folder">
+          <div class="folder-tab">📁 WELCOME</div>
+          <div class="folder-inner">
+            <div class="welcome-title-zh">你好，我是</div>
+            <div class="welcome-title-en">ABOUT ME</div>
+            <div class="welcome-name">冯思佳</div>
+            <div class="welcome-divider"></div>
+            <div class="welcome-subtitle">PRODUCT / OPS / MARKETING</div>
+            <div class="welcome-btn">🎵 开始探索</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 欢迎页 选项B: 像素小人 -->
+    <div class="option-card">
+      <div class="option-title">方案B: 像素小人+音符</div>
+      <div class="preview">
+        <div class="folder">
+          <div class="folder-tab">📁 WELCOME</div>
+          <div class="folder-inner">
+            <div class="welcome-character">👧 🎤</div>
+            <div class="welcome-notes">♪ ♫ ♪</div>
+            <div class="welcome-title-zh">你好，我是</div>
+            <div class="welcome-name">冯思佳</div>
+            <div class="welcome-divider"></div>
+            <div class="welcome-subtitle">PRODUCT / OPS / MARKETING</div>
+            <div class="welcome-btn">🎵 开始探索</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 欢迎页 选项C: 左侧大标题 -->
+    <div class="option-card">
+      <div class="option-title">方案C: 左右分栏</div>
+      <div class="preview">
+        <div class="folder">
+          <div class="folder-tab">📁 WELCOME</div>
+          <div class="folder-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: center;">
+            <div style="text-align: center;">
+              <div class="welcome-character">👧</div>
+              <div class="welcome-notes">♪</div>
+            </div>
+            <div>
+              <div class="welcome-title-zh" style="text-align: left; font-size: 1.2rem;">你好，我是</div>
+              <div class="welcome-name" style="text-align: left; font-size: 2rem;">冯思佳</div>
+              <div class="welcome-divider" style="margin: 10px 0;"></div>
+              <div class="welcome-subtitle" style="text-align: left;">PRODUCT / OPS / MARKETING</div>
+              <div class="welcome-btn" style="margin: 15px 0 0 0; padding: 10px 20px; font-size: 1rem;">开始探索</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 欢迎页 选项D: 沉浸星空 -->
+    <div class="option-card">
+      <div class="option-title">方案D: 沉浸星空+全屏背景</div>
+      <div class="preview" style="position: relative; padding: 0; min-height: 380px;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 8px;"></div>
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+          <div style="font-size: 2rem; margin-bottom: 10px;">⭐🌙✨</div>
+          <div style="font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 2rem; color: #F5E6C8; text-shadow: 0 0 20px rgba(255,255,255,0.5);">你好，我是</div>
+          <div style="font-family: 'ZCOOL QingKe HuangYou', cursive; font-size: 3rem; color: #FFD700; text-shadow: 0 0 30px rgba(255,215,0,0.6); margin: 10px 0;">冯思佳</div>
+          <div style="font-family: 'Press Start 2P', cursive; font-size: 0.5rem; color: #E8DCC8; margin: 15px 0;">PRODUCT / OPS / MARKETING</div>
+          <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #E8DCC8; opacity: 0.8;">探索我的数字档案</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-header">🌱 第三页 - GROWTH TRACK</h2>
+  <div class="options-grid">
+
+    <!-- 成长页 选项A: 卡片列表 -->
+    <div class="option-card">
+      <div class="option-title">方案A: 分类卡片列表</div>
+      <div class="preview">
+        <div class="growth-folder">
+          <div class="growth-folder-tab">📁 GROWTH TRACK</div>
+          <div class="growth-folder-inner">
+            <div class="growth-title">🌱 成长轨迹</div>
+
+            <div class="section-label">// INTERNET (🌐)</div>
+            <div class="company-row">
+              <span class="company-chip current">🌐 字节跳动 ★</span>
+              <span class="company-chip">📕 小红书</span>
+              <span class="company-chip">🚴 美团</span>
+              <span class="company-chip">🚲 哈啰</span>
+            </div>
+
+            <div class="section-label">// MEDICAL (🏥)</div>
+            <div class="company-row">
+              <span class="company-chip secondary">🏥 美敦力</span>
+              <span class="company-chip secondary">💊 默克</span>
+            </div>
+
+            <div class="section-label">// FINANCE (💼)</div>
+            <div class="company-row">
+              <span class="company-chip secondary">📊 安永</span>
+            </div>
+
+            <div class="nav-arrows">
+              <div class="nav-arrow">◀</div>
+              <div class="nav-arrow">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 成长页 选项B: 时间线 -->
+    <div class="option-card">
+      <div class="option-title">方案B: 垂直时间线</div>
+      <div class="preview">
+        <div class="growth-folder">
+          <div class="growth-folder-tab">📁 GROWTH TRACK</div>
+          <div class="growth-folder-inner">
+            <div class="growth-title">🌱 成长轨迹</div>
+
+            <div style="position: relative; padding-left: 20px;">
+              <div style="position: absolute; left: 8px; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #00ff88, #FFD700, #81C784); border-radius: 2px;"></div>
+
+              <div style="margin-bottom: 12px; position: relative;">
+                <div style="position: absolute; left: -20px; top: 5px; width: 12px; height: 12px; background: #FFD700; border-radius: 50%; border: 2px solid #8B4513;"></div>
+                <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #8B4513;">2026.01</div>
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #5D3A1A;">🌐 字节跳动 TikTok</div>
+              </div>
+
+              <div style="margin-bottom: 12px; position: relative;">
+                <div style="position: absolute; left: -20px; top: 5px; width: 10px; height: 10px; background: #64B5F6; border-radius: 50%; border: 2px solid #8B4513;"></div>
+                <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #8B4513;">2025.09</div>
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #5D3A1A;">📕 小红书</div>
+              </div>
+
+              <div style="margin-bottom: 12px; position: relative;">
+                <div style="position: absolute; left: -20px; top: 5px; width: 10px; height: 10px; background: #64B5F6; border-radius: 50%; border: 2px solid #8B4513;"></div>
+                <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #8B4513;">2025.05</div>
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #5D3A1A;">🚴 美团</div>
+              </div>
+
+              <div style="margin-bottom: 12px; position: relative;">
+                <div style="position: absolute; left: -20px; top: 5px; width: 10px; height: 10px; background: #81C784; border-radius: 50%; border: 2px solid #8B4513;"></div>
+                <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #8B4513;">2024.09</div>
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #5D3A1A;">🏥 美敦力</div>
+              </div>
+            </div>
+
+            <div class="nav-arrows">
+              <div class="nav-arrow">◀</div>
+              <div class="nav-arrow">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 成长页 选项C: RPG技能树 -->
+    <div class="option-card">
+      <div class="option-title">方案C: RPG技能树</div>
+      <div class="preview">
+        <div class="growth-folder">
+          <div class="growth-folder-tab">📁 GROWTH TRACK</div>
+          <div class="growth-folder-inner">
+            <div class="growth-title">🌱 成长轨迹</div>
+
+            <div style="text-align: center; margin-bottom: 15px;">
+              <div style="display: inline-block; background: linear-gradient(135deg, #FFD700, #FFC107); color: #5D3A1A; padding: 8px 16px; border-radius: 8px; font-family: 'Ma Shan Zheng', cursive; font-size: 1rem;">
+                🌐 字节跳动 LV.28
+              </div>
+            </div>
+
+            <div class="section-label">// PATH TO GLORY</div>
+            <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.8rem;">📕</span>
+                <div style="flex: 1; height: 8px; background: #c9b896; border-radius: 2px; overflow: hidden;">
+                  <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #64B5F6, #42A5F5);"></div>
+                </div>
+                <span style="font-family: 'Press Start 2P', cursive; font-size: 0.35rem;">小红书</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.8rem;">🚴</span>
+                <div style="flex: 1; height: 8px; background: #c9b896; border-radius: 2px; overflow: hidden;">
+                  <div style="width: 60%; height: 100%; background: linear-gradient(90deg, #64B5F6, #42A5F5);"></div>
+                </div>
+                <span style="font-family: 'Press Start 2P', cursive; font-size: 0.35rem;">美团</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.8rem;">🚲</span>
+                <div style="flex: 1; height: 8px; background: #c9b896; border-radius: 2px; overflow: hidden;">
+                  <div style="width: 40%; height: 100%; background: linear-gradient(90deg, #81C784, #66BB6A);"></div>
+                </div>
+                <span style="font-family: 'Press Start 2P', cursive; font-size: 0.35rem;">哈啰</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.8rem;">🏥</span>
+                <div style="flex: 1; height: 8px; background: #c9b896; border-radius: 2px; overflow: hidden;">
+                  <div style="width: 25%; height: 100%; background: linear-gradient(90deg, #81C784, #66BB6A);"></div>
+                </div>
+                <span style="font-family: 'Press Start 2P', cursive; font-size: 0.35rem;">美敦力</span>
+              </div>
+            </div>
+
+            <div class="nav-arrows">
+              <div class="nav-arrow">◀</div>
+              <div class="nav-arrow">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 成长页 选项D: 档案卡片 -->
+    <div class="option-card">
+      <div class="option-title">方案D: 档案卡片堆叠</div>
+      <div class="preview">
+        <div class="growth-folder">
+          <div class="growth-folder-tab">📁 GROWTH TRACK</div>
+          <div class="growth-folder-inner">
+            <div class="growth-title">🌱 成长轨迹</div>
+
+            <div style="background: rgba(139,69,19,0.1); border-left: 3px solid #8B4513; padding: 8px 10px; border-radius: 4px; margin-bottom: 10px;">
+              <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #8B4513; margin-bottom: 4px;">// CURRENT ROLE</div>
+              <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 1rem; color: #5D3A1A;">🌐 字节跳动 TikTok · 印尼电商策略实习生</div>
+              <div style="font-family: 'Press Start 2P', cursive; font-size: 0.4rem; color: #FFD700;">2026.01 - NOW</div>
+            </div>
+
+            <div class="section-label">// EXPERIENCE RECORD</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; font-family: 'Ma Shan Zheng', cursive; font-size: 0.9rem; color: #5D3A1A; padding: 6px 0; border-bottom: 1px dashed #c9b896;">
+                <span>📕 小红书</span><span style="color: #8B4513;">2025.09</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-family: 'Ma Shan Zheng', cursive; font-size: 0.9rem; color: #5D3A1A; padding: 6px 0; border-bottom: 1px dashed #c9b896;">
+                <span>🚴 美团</span><span style="color: #8B4513;">2025.05</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-family: 'Ma Shan Zheng', cursive; font-size: 0.9rem; color: #5D3A1A; padding: 6px 0; border-bottom: 1px dashed #c9b896;">
+                <span>🚲 哈啰</span><span style="color: #8B4513;">2025.02</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-family: 'Ma Shan Zheng', cursive; font-size: 0.9rem; color: #5D3A1A; padding: 6px 0; border-bottom: 1px dashed #c9b896;">
+                <span>🏥 美敦力</span><span style="color: #8B4513;">2024.09</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-family: 'Ma Shan Zheng', cursive; font-size: 0.9rem; color: #5D3A1A; padding: 6px 0;">
+                <span>💊 默克</span><span style="color: #8B4513;">2024.05</span>
+              </div>
+            </div>
+
+            <div class="nav-arrows">
+              <div class="nav-arrow">◀</div>
+              <div class="nav-arrow">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -3,146 +3,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>字体对比</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Silkscreen&family=Boogaloo&family=Bangers&family=Fredoka+One&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <title>星露谷风格字体预览</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&family=LXGW+WenKai&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'VT323', monospace;
-      background: linear-gradient(135deg, #2d1b0e 0%, #4a2c17 100%);
+      background: linear-gradient(180deg, #1a2f1a 0%, #0f1f0f 100%);
       min-height: 100vh;
-      padding: 20px;
-      color: #F5E6C8;
+      padding: 30px 20px;
+      color: #E8DCC8;
     }
+
     h1 {
       text-align: center;
-      font-size: 2rem;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1rem;
+      color: #00ff88;
       margin-bottom: 30px;
-      color: #FFD700;
+      text-shadow: 0 0 10px #00ff88;
     }
-    .section {
-      background: #F5E6C8;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
+
     h2 {
-      font-family: 'VT323', monospace;
-      color: #5D3A1A;
-      font-size: 1.5rem;
-      border-bottom: 3px dashed #8B4513;
-      padding-bottom: 10px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      color: #FFD700;
       margin-bottom: 15px;
+      padding-left: 10px;
     }
-    .font-card {
-      background: #FFF8E7;
-      border: 3px solid #8B4513;
+
+    .combo-section {
+      background: linear-gradient(135deg, #2d5a27 0%, #1a3a1a 100%);
+      border: 3px solid #00ff88;
       border-radius: 12px;
       padding: 20px;
-      margin-bottom: 15px;
+      margin: 0 auto 30px;
+      max-width: 750px;
     }
-    .font-name {
-      font-size: 1rem;
-      color: #8B4513;
+
+    .combo-title {
+      font-size: 1.6rem;
       margin-bottom: 8px;
-      font-weight: bold;
     }
-    .font-sample-title {
-      font-size: 2rem;
-      color: #5D3A1A;
+
+    .combo-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    .combo-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: #00ff88;
       margin-bottom: 10px;
     }
-    .font-sample-text {
-      font-size: 1.3rem;
-      color: #6B5344;
-      line-height: 1.6;
+
+    .font-card {
+      background: linear-gradient(135deg, #8B5A2B 0%, #6B3E26 100%);
+      border: 4px solid #5D4037;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 0 auto 20px;
+      max-width: 750px;
     }
-    .chinese .font-sample-title {
+
+    .font-name {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.55rem;
+      color: #FFD700;
+      margin-bottom: 12px;
+    }
+
+    .font-sample-title {
       font-size: 1.8rem;
+      margin-bottom: 10px;
     }
-    .chinese .font-sample-text {
-      font-size: 1.1rem;
+
+    .font-sample-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 10px;
+      opacity: 0.9;
     }
-    .pixel-section { border-left: 5px solid #7CB342; }
-    .hand-section { border-left: 5px solid #64B5F6; }
-    .chinese-section { border-left: 5px solid #FFD700; }
+
+    .font-sample-small {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .highlight {
+      border-left: 5px solid #00ff88;
+      background: linear-gradient(135deg, #2d5a27 0%, #1a3a1a 100%);
+    }
+
+    .pixel-ref {
+      background: linear-gradient(135deg, #1a2f1a 0%, #0f1f0f 100%);
+      border-color: #00ff88;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .pixel-ref .font-name {
+      color: #00ff88;
+    }
+
+    .pixel-ref .font-sample-title {
+      font-size: 1rem;
+      font-family: 'Press Start 2P', cursive;
+    }
+
   </style>
 </head>
 <body>
-  <h1>🎮 游戏字体对比</h1>
+  <h1>🎮 星露谷风格字体选择</h1>
 
-  <div class="section pixel-section">
-    <h2>📦 像素风格字体</h2>
-
-    <div class="font-card">
-      <div class="font-name">Press Start 2P — 经典像素游戏风</div>
-      <div class="font-sample-title" style="font-family: 'Press Start 2P'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Press Start 2P'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card">
-      <div class="font-name">VT323 — 复古终端风</div>
-      <div class="font-sample-title" style="font-family: 'VT323'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'VT323'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card">
-      <div class="font-name">Silkscreen — 细腻像素风</div>
-      <div class="font-sample-title" style="font-family: 'Silkscreen'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Silkscreen'">产品 / 运营 / 市场营销</div>
+  <!-- Combo A -->
+  <div class="combo-section highlight">
+    <div class="combo-label">✅ 推荐方案 A</div>
+    <h2>ZCOOL QingKe HuangYou + Ma Shan Zheng</h2>
+    <div class="font-sample-title" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'Ma Shan Zheng', cursive;">
+      这是一段正文示例文字，温暖自然的手写风格非常适合星露谷的农场氛围。<br>
+      标题用像素感的中文大字，正文用毛笔手写体，形成温馨的对比。
     </div>
   </div>
 
-  <div class="section hand-section">
-    <h2>✍️ 手写/游戏风字体</h2>
-
-    <div class="font-card">
-      <div class="font-name">Boogaloo — 轻松游戏风</div>
-      <div class="font-sample-title" style="font-family: 'Boogaloo'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Boogaloo'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card">
-      <div class="font-name">Bangers — 漫画/游戏风</div>
-      <div class="font-sample-title" style="font-family: 'Bangers'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Bangers'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card">
-      <div class="font-name">Fredoka One — 圆润可爱</div>
-      <div class="font-sample-title" style="font-family: 'Fredoka One'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Fredoka One'">产品 / 运营 / 市场营销</div>
+  <!-- Combo B -->
+  <div class="combo-section">
+    <div class="combo-label">方案 B</div>
+    <h2>ZCOOL QingKe HuangYou + LXGW WenKai</h2>
+    <div class="font-sample-title" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'LXGW WenKai', cursive;">
+      这是一段正文示例文字，霞鹜文楷字体更加文艺清新。<br>
+      如果你喜欢柔和文艺的风格，这个组合很适合。
     </div>
   </div>
 
-  <div class="section chinese-section">
-    <h2>🀄 中文游戏风字体</h2>
-
-    <div class="font-card chinese">
-      <div class="font-name">ZCOOL QingKe HuangYou — 像素中文</div>
-      <div class="font-sample-title" style="font-family: 'ZCOOL QingKe HuangYou'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'ZCOOL QingKe HuangYou'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card chinese">
-      <div class="font-name">ZCOOL XiaoWei — 手写中文</div>
-      <div class="font-sample-title" style="font-family: 'ZCOOL XiaoWei'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'ZCOOL XiaoWei'">产品 / 运营 / 市场营销</div>
-    </div>
-
-    <div class="font-card chinese">
-      <div class="font-name">Ma Shan Zheng — 毛笔中文</div>
-      <div class="font-sample-title" style="font-family: 'Ma Shan Zheng'">冯思佳</div>
-      <div class="font-sample-text" style="font-family: 'Ma Shan Zheng'">产品 / 运营 / 市场营销</div>
+  <!-- Combo C -->
+  <div class="combo-section">
+    <div class="combo-label">方案 C</div>
+    <h2>全部使用 ZCOOL QingKe HuangYou</h2>
+    <div class="font-sample-title" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">
+      这是一段正文示例文字，统一使用像素感字体，全部采用站酷快乐黑。
     </div>
   </div>
 
-  <div class="section" style="background: #5D3A1A; color: #F5E6C8;">
-    <h2 style="color: #F5E6C8; border-color: #A67C52;">💡 建议</h2>
-    <p style="font-size: 1.2rem; line-height: 1.8;">
-      <strong>标题/大号文字：</strong>推荐 <span style="color: #FFD700">Press Start 2P</span> 或 <span style="color: #FFD700">ZCOOL QingKe HuangYou</span><br>
-      <strong>正文/描述：</strong>推荐 <span style="color: #7CB342">VT323</span> 或 <span style="color: #7CB342">ZCOOL XiaoWei</span>
-    </p>
+  <h2 style="margin-top: 40px; margin-bottom: 20px;">📝 各字体单独预览</h2>
+
+  <div class="font-card">
+    <div class="font-name">ZCOOL QingKe HuangYou（站酷快乐黑）</div>
+    <div class="font-sample-title" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'ZCOOL QingKe HuangYou', cursive;">标题/按钮/标签 - 像素感强，现代游戏风</div>
   </div>
+
+  <div class="font-card">
+    <div class="font-name">Ma Shan Zheng（马山正楷）</div>
+    <div class="font-sample-title" style="font-family: 'Ma Shan Zheng', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'Ma Shan Zheng', cursive;">正文/描述 - 毛笔手写，温暖自然</div>
+  </div>
+
+  <div class="font-card">
+    <div class="font-name">LXGW WenKai（霞鹜文楷）</div>
+    <div class="font-sample-title" style="font-family: 'LXGW WenKai', cursive;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'LXGW WenKai', cursive;">正文/描述 - 文艺清新，柔和优雅</div>
+  </div>
+
+  <div class="font-card">
+    <div class="font-name">Noto Serif SC（思源宋体）</div>
+    <div class="font-sample-title" style="font-family: 'Noto Serif SC', serif;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'Noto Serif SC', serif;">正文/描述 - 传统宋体，正式稳重</div>
+  </div>
+
+  <div class="font-card">
+    <div class="font-name">Noto Sans SC（思源黑体）</div>
+    <div class="font-sample-title" style="font-family: 'Noto Sans SC', sans-serif;">你好，我是冯思佳</div>
+    <div class="font-sample-body" style="font-family: 'Noto Sans SC', sans-serif;">正文/描述 - 现代黑体，简洁清晰</div>
+  </div>
+
+  <div class="font-card pixel-ref">
+    <div class="font-name">🎮 Press Start 2P（像素游戏英文字体参考）</div>
+    <div class="font-sample-title">STARDEW VALLEY</div>
+    <div class="font-sample-small" style="font-family: 'Press Start 2P', cursive; color: #00ff88;">
+      8-bit pixel font - game UI reference
+    </div>
+  </div>
+
 </body>
 </html>

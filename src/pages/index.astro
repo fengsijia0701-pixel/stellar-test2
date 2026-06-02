@@ -19,7 +19,7 @@ import ContactSection from '../components/ContactSection.astro';
   <title>冯思佳 | 产品/运营/市场营销</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Page Container - Full Screen Pages -->
@@ -92,9 +92,11 @@ import ContactSection from '../components/ContactSection.astro';
       --color-cream: #FFF8E7;
       --color-text: #E8DCC8;
 
-      /* 字体 */
+      /* 字体 - 方案A: ZCOOL QingKe HuangYou(标题) + Ma Shan Zheng(正文) */
       --font-pixel: 'Press Start 2P', cursive;
-      --font-game: 'Rajdhani', 'Noto Sans SC', sans-serif;
+      --font-title: 'ZCOOL QingKe HuangYou', cursive;
+      --font-body: 'Ma Shan Zheng', cursive;
+      --font-game: 'ZCOOL QingKe HuangYou', cursive;
     }
 
     * {
@@ -104,7 +106,7 @@ import ContactSection from '../components/ContactSection.astro';
     }
 
     html, body {
-      font-family: var(--font-game);
+      font-family: var(--font-body);
       overflow: hidden;
       height: 100%;
       width: 100%;
@@ -281,50 +283,88 @@ import ContactSection from '../components/ContactSection.astro';
       color: #90EE90;
       letter-spacing: 1px;
     }
+
+    .music-toggle-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: rgba(45, 90, 39, 0.8);
+      border: 2px solid #00ff88;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .music-toggle-btn:hover {
+      transform: scale(1.1);
+      border-color: #ffff00;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    .music-toggle-btn.playing {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.5); }
+      50% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.8); }
+    }
   </style>
 
   <script >
-    // Sound Effects Class
+    // Sound Effects Class - Stardew Valley Style
     class SoundEffects {
       audioContext = null;
+      bgMusicPlaying = false;
+      bgOscillators = [];
 
       init() {
         if (!this.audioContext) {
-          this.audioContext = new (window.AudioContext || (window).webkitAudioContext)();
+          this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
         }
       }
 
+      // 点击 - 游戏化"咔"音效 (短促清脆)
       playClick() {
         this.init();
         const osc = this.audioContext.createOscillator();
         const gain = this.audioContext.createGain();
         osc.connect(gain);
         gain.connect(this.audioContext.destination);
-        osc.frequency.setValueAtTime(800, this.audioContext.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(400, this.audioContext.currentTime + 0.1);
+        osc.frequency.setValueAtTime(880, this.audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, this.audioContext.currentTime + 0.05);
         osc.type = 'square';
-        gain.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.15, this.audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.05);
         osc.start();
-        osc.stop(this.audioContext.currentTime + 0.1);
+        osc.stop(this.audioContext.currentTime + 0.05);
       }
 
+      // 页面切换 - 清晰"噗"音
       playPageTransition() {
         this.init();
         const osc = this.audioContext.createOscillator();
         const gain = this.audioContext.createGain();
         osc.connect(gain);
         gain.connect(this.audioContext.destination);
-        osc.frequency.setValueAtTime(400, this.audioContext.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800, this.audioContext.currentTime + 0.2);
-        osc.type = 'square';
-        gain.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+        osc.frequency.setValueAtTime(300, this.audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, this.audioContext.currentTime + 0.15);
+        osc.type = 'triangle';
+        gain.gain.setValueAtTime(0.12, this.audioContext.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.2);
         osc.start();
         osc.stop(this.audioContext.currentTime + 0.2);
       }
 
-      playSuccess() {
+      // 弹窗打开 - 温暖"叮铃"
+      playPopup() {
         this.init();
         const notes = [523, 659, 784];
         notes.forEach((freq, i) => {
@@ -333,17 +373,255 @@ import ContactSection from '../components/ContactSection.astro';
           osc.connect(gain);
           gain.connect(this.audioContext.destination);
           osc.frequency.value = freq;
-          osc.type = 'square';
-          gain.gain.setValueAtTime(0.08, this.audioContext.currentTime + i * 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + i * 0.1 + 0.15);
-          osc.start(this.audioContext.currentTime + i * 0.1);
-          osc.stop(this.audioContext.currentTime + i * 0.1 + 0.15);
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0, this.audioContext.currentTime + i * 0.08);
+          gain.gain.linearRampToValueAtTime(0.1, this.audioContext.currentTime + i * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + i * 0.08 + 0.4);
+          osc.start(this.audioContext.currentTime + i * 0.08);
+          osc.stop(this.audioContext.currentTime + i * 0.08 + 0.4);
         });
+      }
+
+      // 展开项目 - 纸张"沙沙"
+      playExpand() {
+        this.init();
+        const noise = this.createNoise(0.15);
+        const filter = this.audioContext.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 2000;
+        const gain = this.audioContext.createGain();
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.audioContext.destination);
+        gain.gain.setValueAtTime(0.06, this.audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.15);
+        noise.start();
+        noise.stop(this.audioContext.currentTime + 0.15);
+      }
+
+      // 成功反馈 - 愉悦"叮~"
+      playSuccess() {
+        this.init();
+        const notes = [523, 659, 784, 1047];
+        notes.forEach((freq, i) => {
+          const osc = this.audioContext.createOscillator();
+          const gain = this.audioContext.createGain();
+          osc.connect(gain);
+          gain.connect(this.audioContext.destination);
+          osc.frequency.value = freq;
+          osc.type = 'sine';
+          gain.gain.setValueAtTime(0.1, this.audioContext.currentTime + i * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + i * 0.1 + 0.3);
+          osc.start(this.audioContext.currentTime + i * 0.1);
+          osc.stop(this.audioContext.currentTime + i * 0.1 + 0.3);
+        });
+      }
+
+      // 返回地图 - 柔和"嗖"音
+      playReturn() {
+        this.init();
+        const osc = this.audioContext.createOscillator();
+        const gain = this.audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(this.audioContext.destination);
+        osc.frequency.setValueAtTime(500, this.audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(250, this.audioContext.currentTime + 0.2);
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.12, this.audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.2);
+        osc.start();
+        osc.stop(this.audioContext.currentTime + 0.2);
+      }
+
+      // 创建白噪音
+      createNoise(duration: number) {
+        const bufferSize = this.audioContext.sampleRate * duration;
+        const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const source = this.audioContext.createBufferSource();
+        source.buffer = buffer;
+        return source;
+      }
+
+      // 治愈钢琴曲风格背景音乐
+      playBgMusic() {
+        if (this.bgMusicPlaying) return;
+        this.init();
+        this.bgMusicPlaying = true;
+
+        const ctx = this.audioContext;
+        this.bgOscillators = [];
+
+        // 钢琴音色合成 - 使用谐波叠加模拟钢琴
+        const playPianoNote = (freq: number, startTime: number, duration: number, volume: number) => {
+          // 基频 + 谐波 (模拟钢琴音色)
+          const harmonics = [1, 2, 3, 4, 6];
+          const gains = [1, 0.5, 0.25, 0.125, 0.08];
+
+          harmonics.forEach((harmonic, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.value = freq * harmonic;
+
+            // ADSR  envelope (Attack, Decay, Sustain, Release)
+            const attack = 0.02;
+            const decay = 0.1;
+            const sustain = volume * gains[i] * 0.6;
+            const release = 0.3;
+            const sustainTime = duration - attack - decay - release;
+
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(volume * gains[i], startTime + attack);
+            gain.gain.linearRampToValueAtTime(sustain, startTime + attack + decay);
+            gain.gain.setValueAtTime(sustain, startTime + attack + decay + Math.max(0, sustainTime));
+            gain.gain.linearRampToValueAtTime(0, startTime + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+
+            this.bgOscillators.push({ osc, gain, lfo: null });
+          });
+        };
+
+        // 治愈系钢琴旋律 - 简单循环的温柔曲子
+        // C major: C D E F G A B C  (简化的星空BGM风格旋律片段)
+        const melody = [
+          { note: 261.63, beat: 1 },  // C4
+          { note: 329.63, beat: 0.5 }, // E4
+          { note: 392.00, beat: 0.5 }, // G4
+          { note: 329.63, beat: 1 },  // E4
+          { note: 293.66, beat: 1 },  // D4
+          { note: 246.94, beat: 0.5 }, // B3
+          { note: 261.63, beat: 0.5 }, // C4
+          { note: 220.00, beat: 1 },  // A3
+          { note: 261.63, beat: 1 },  // C4
+          { note: 196.00, beat: 0.5 }, // G3
+          { note: 220.00, beat: 0.5 }, // A3
+          { note: 246.94, beat: 1 },  // B3
+          { note: 293.66, beat: 1 },  // D4
+          { note: 261.63, beat: 1.5 }, // C4
+          { note: 246.94, beat: 0.5 }, // B3
+          { note: 261.63, beat: 2 },  // C4
+        ];
+
+        // 和弦进程 (每4小节循环)
+        const chords = [
+          [130.81, 164.81, 196.00], // C major (左手的低音和弦)
+          [146.83, 174.61, 220.00], // D minor
+          [130.81, 164.81, 196.00], // C major
+          [98.00, 123.47, 146.83],  // G major
+        ];
+
+        const BPM = 60;
+        const beatDuration = 60 / BPM;
+        let melodyIndex = 0;
+        let chordIndex = 0;
+        let elapsed = 0;
+
+        // 播放左手的低音和弦 (每2拍一次)
+        const playBassNote = () => {
+          if (!this.bgMusicPlaying) return;
+
+          const chord = chords[chordIndex % chords.length];
+          const startTime = ctx.currentTime + elapsed;
+
+          // 左手低音 - 更低的八度
+          chord.forEach((freq, i) => {
+            playPianoNote(freq * 0.5, startTime, beatDuration * 3, 0.04);
+          });
+
+          chordIndex++;
+          elapsed += beatDuration * 4;
+
+          setTimeout(playBassNote, beatDuration * 4 * 1000);
+        };
+
+        // 播放右手旋律
+        const playMelodyNote = () => {
+          if (!this.bgMusicPlaying) return;
+
+          const noteData = melody[melodyIndex % melody.length];
+          const startTime = ctx.currentTime + elapsed;
+
+          playPianoNote(noteData.note, startTime, beatDuration * noteData.beat * 0.9, 0.08);
+
+          elapsed += beatDuration * noteData.beat;
+          melodyIndex++;
+
+          if (elapsed < beatDuration * 64) { // 播放64拍后重复
+            setTimeout(playMelodyNote, beatDuration * noteData.beat * 1000);
+          } else {
+            // 重置并循环
+            elapsed = 0;
+            melodyIndex = 0;
+            chordIndex = 0;
+            setTimeout(playBassNote, 100);
+            setTimeout(playMelodyNote, 100);
+          }
+        };
+
+        // 持续的低音垫音
+        const padFreqs = [32.70, 65.41]; // C1, C2 - 超低音垫底
+        padFreqs.forEach((freq) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          gain.gain.value = 0;
+          gain.gain.linearRampToValueAtTime(0.015, ctx.currentTime + 3);
+
+          this.bgOscillators.push({ osc, gain, lfo: null });
+          osc.start();
+        });
+
+        // 开始播放
+        setTimeout(playBassNote, 500);
+        setTimeout(playMelodyNote, 500);
+      }
+
+      stopBgMusic() {
+        this.bgMusicPlaying = false;
+        if (this.bgOscillators && this.bgOscillators.length > 0) {
+          this.bgOscillators.forEach(({ osc, gain }) => {
+            try {
+              gain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 0.8);
+              setTimeout(() => {
+                try { osc.stop(); } catch(e) {}
+              }, 900);
+            } catch(e) {}
+          });
+          this.bgOscillators = [];
+        }
       }
     }
 
     const sound = new SoundEffects();
-    (window).sound = sound;
+    (window as any).sound = sound;
+    (window as any).playSound = (type: string) => {
+      if ((window as any).sound) {
+        switch(type) {
+          case 'click': (window as any).sound.playClick(); break;
+          case 'transition': (window as any).sound.playPageTransition(); break;
+          case 'popup': (window as any).sound.playPopup(); break;
+          case 'expand': (window as any).sound.playExpand(); break;
+          case 'success': (window as any).sound.playSuccess(); break;
+          case 'return': (window as any).sound.playReturn(); break;
+        }
+      }
+    };
+    (window as any).playBgMusic = () => { if ((window as any).sound) (window as any).sound.playBgMusic(); };
+    (window as any).stopBgMusic = () => { if ((window as any).sound) (window as any).stopBgMusic(); };
 
     // Page Navigation
     class PageNavigator {
@@ -489,24 +767,36 @@ import ContactSection from '../components/ContactSection.astro';
     pageNavigator.goTo = function(pageId: string) {
       originalGoTo(pageId);
       updatePathNav(pageId);
-      // Update arrow buttons after page transition
-      setTimeout(updateNavButtonsFromPageId, 350);
+      // Update arrow buttons after page transition completes (400ms animation)
+      setTimeout(updateNavButtonsFromPageId, 420);
     };
 
     function updateNavButtonsFromPageId() {
       const pages = ['page-welcome','page-whoami','page-growth','page-map','page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
+      const branchPages = ['page-projects-space','page-projects-experience','page-competitions','page-skills','page-contact'];
       const prevBtn = document.getElementById('nav-prev-btn');
       const nextBtn = document.getElementById('nav-next-btn');
       const currentId = getCurrentPageId();
-      const currentIndex = pages.indexOf(currentId);
-      if (prevBtn) prevBtn.disabled = currentIndex <= 0;
-      if (nextBtn) nextBtn.disabled = currentIndex >= pages.length - 1;
-      // Hide right arrow on map page
-      const rightArrow = document.querySelector('.nav-arrow-btn.right');
-      if (rightArrow) {
-        rightArrow.style.display = currentId === 'page-map' ? 'none' : 'flex';
+      const isBranchPage = branchPages.includes(currentId);
+      const isMapPage = currentId === 'page-map';
+
+      if (prevBtn) {
+        if (isBranchPage) {
+          prevBtn.style.display = 'none';
+        } else {
+          prevBtn.style.display = 'flex';
+          prevBtn.disabled = false;
+        }
       }
-      console.log('[NAV] updateNavButtonsFromPageId: currentId=', currentId, 'index=', currentIndex);
+      if (nextBtn) {
+        if (isBranchPage || isMapPage) {
+          nextBtn.style.display = 'none';
+        } else {
+          nextBtn.style.display = 'flex';
+          nextBtn.disabled = false;
+        }
+      }
+      console.log('[NAV] currentId=', currentId, 'isBranchPage=', isBranchPage, 'isMapPage=', isMapPage);
     }
 
     function updatePathNav(pageId: string) {
@@ -613,66 +903,37 @@ import ContactSection from '../components/ContactSection.astro';
     // Initial button state
     updateNavButtons();
 
-    // Company details data for growth track popup
-    const companyDetails = {
-      'bytedance': {
-        icon: '🌐',
-        name: '字节跳动 TikTok',
-        role: '印尼电商策略实习生',
-        period: '2026.01 - 2026.04',
-        brief: '主导斋月大促，Fashion GMV +52%',
-        projects: ['斋月大促策略', '精细预算优化', '头达撮合策略']
-      },
-      'xiaohongshu': {
-        icon: '📕',
-        name: '小红书',
-        role: '商业产品实习生',
-        period: '2025.09 - 2025.12',
-        brief: 'AIGC笔记内测，ROI +176%',
-        projects: ['AIGC笔记内测', '大促单品优化', '新商投放冷启']
-      },
-      'meituan': {
-        icon: '🚴',
-        name: '美团',
-        role: '运动健身品类产品运营',
-        period: '2025.05 - 2025.09',
-        brief: '活动GTV +85%，达人曝光1.76亿',
-        projects: ['新商冷启落地', '活动与品牌营销']
-      },
-      'hallo': {
-        icon: '🚲',
-        name: '哈啰',
-        role: '产品经理实习生',
-        period: '2025.02 - 2025.05',
-        brief: '游历中国DAU 35万，ARPPU 25→38元',
-        projects: ['游历中国']
-      },
-      'medtronic': {
-        icon: '🏥',
-        name: '美敦力 Medtronic',
-        role: '战略实习生',
-        period: '2024.09 - 2024.11',
-        brief: '医疗器械行业研究，产出10+篇报告',
-        projects: ['行业研究', '财报数据分析']
-      },
-      'merck': {
-        icon: '💊',
-        name: '默克集团 Merck',
-        role: '风险合规实习生',
-        period: '2024.05 - 2024.09',
-        brief: '合规风险评估，节省$25,000成本',
-        projects: ['合规风险评估工具', '关税豁免数据处理']
-      },
-      'ey': {
-        icon: '📊',
-        name: '安永华明 TCE 高科技组',
-        role: '审计实习生',
-        period: '2023.12 - 2024.03',
-        brief: '紫光股份年审项目，参与16家子公司审计',
-        projects: ['审计底稿编制', '数据抽样分析']
+    // Background music toggle & auto-play on first click
+    let bgMusicPlaying = false;
+    let bgMusicInitialized = false;
+    const bgMusicBtn = document.getElementById('bg-music-btn');
+
+    // Auto-play music on first user interaction (browser policy)
+    document.addEventListener('click', () => {
+      if (!bgMusicInitialized) {
+        bgMusicInitialized = true;
+        (window as any).playBgMusic?.();
+        bgMusicPlaying = true;
+        bgMusicBtn?.classList.add('playing');
       }
-    };
-    (window as any).companyDetails = companyDetails;
+    }, { once: true });
+
+    bgMusicBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sound = (window as any).sound;
+      if (!sound) return;
+
+      if (!bgMusicPlaying) {
+        sound.playBgMusic();
+        bgMusicPlaying = true;
+        bgMusicBtn.classList.add('playing');
+      } else {
+        sound.stopBgMusic();
+        bgMusicPlaying = false;
+        bgMusicBtn.classList.remove('playing');
+      }
+    });
+
   </script>
 
   <style is:global>
@@ -748,6 +1009,7 @@ import ContactSection from '../components/ContactSection.astro';
 
   <!-- Path Navigation - Fixed at bottom -->
   <div id="path-nav">
+    <button id="bg-music-btn" class="music-toggle-btn" title="Toggle Background Music">🎵</button>
     <div class="path-container">
       <button class="nav-arrow-btn left" id="nav-prev-btn" aria-label="上一页">◀</button>
       <div class="path-trail">
@@ -761,31 +1023,148 @@ import ContactSection from '../components/ContactSection.astro';
   </div>
 
   <script>
-    // Simple arrow button navigation
-    const prevBtn = document.getElementById("nav-prev-btn");
-    const nextBtn = document.getElementById("nav-next-btn");
-    const pages = ["page-welcome","page-whoami","page-growth","page-map","page-projects-space","page-projects-experience","page-competitions","page-skills","page-contact"];
-
-    function getCurrentPageId() {
-      const active = document.querySelector(".page.active");
-      return active?.id || "page-welcome";
-    }
-
-    prevBtn?.addEventListener("click", () => {
-      const currentId = getCurrentPageId();
-      const currentIndex = pages.indexOf(currentId);
-      if (currentIndex > 0) {
-        pageNavigator.goTo(pages[currentIndex - 1]);
+    // Company details data for growth track popup - with full resume details
+    const companyDetails = {
+      'bytedance': {
+        icon: '🌐',
+        name: '字节跳动 TikTok',
+        role: '印尼电商策略实习生',
+        period: '2026.01 - 2026.04',
+        brief: '主导斋月大促，Fashion GMV +52%，商家GMV提升2.8倍',
+        projects: [
+          {
+            title: '斋月大促策略',
+            desc: '主导印尼斋月大促策略制定，搭建商家准入机制与直播&短视频梯度补贴政策，筛选800+优质商家，产出多行业选品报告并通过A/B测试给出内容时长建议；搭建数据监控体系，设计阶段性补贴激励策略',
+            highlight: 'Fashion GMV +52% | 商家GMV +2.8倍 | 超78%商家完成目标'
+          },
+          {
+            title: '精细预算优化',
+            desc: '拆解类目流量逻辑，明确Fashion类目以自播为核心、电子设备类目以达人+短视频为核心，制定差异化运营策略并透传200+商家；优化预算分配',
+            highlight: '广告预算 -13% | Fashion GMV +36%'
+          },
+          {
+            title: '头达撮合策略',
+            desc: '搭建达人筛选机制，筛选200+优质达人，完成300+商家调研并产出调研报告调整匹配；推动线上线下达人合作专场落地',
+            highlight: '合作商家GMV +41% | ROI 1:3.3 | 达人覆盖率+23%'
+          }
+        ]
+      },
+      'xiaohongshu': {
+        icon: '📕',
+        name: '小红书',
+        role: '商业产品实习生',
+        period: '2025.09 - 2025.12',
+        brief: 'AIGC笔记内测，ROI +176%，推动产品全量上线',
+        projects: [
+          {
+            title: 'AIGC笔记内测',
+            desc: '针对白牌、品牌商家笔记供给不足问题，牵头内容专项诊断，推进AIGC笔记功能迭代，主导内测人群筛选、调研反馈、质控标准设定、prompt模板优化等关键任务',
+            highlight: '周笔记生产 +40% | 点击曝光 +18% | 客户满意度70%'
+          },
+          {
+            title: '大促单品优化',
+            desc: '产出年货节&三八节春季营销投放指南全案策划，拆解7大行业流量趋势、竞价规律与投放基线，基于大促商家痛点挖掘单品精准投放需求',
+            highlight: 'ROI +176% | 70%达标客户增投'
+          },
+          {
+            title: '新商投放冷启',
+            desc: '搭建全维度账户问题排查SOP，构建冷启动235方法论，明确基建标准、出价策略、定向规则与5节点监控体系',
+            highlight: '30天ROI达标率 74% | 有消耗客户数 +12%'
+          }
+        ]
+      },
+      'meituan': {
+        icon: '🚴',
+        name: '美团',
+        role: '运动健身品类产品运营',
+        period: '2025.05 - 2025.09',
+        brief: '活动GTV +85%，达人曝光1.76亿',
+        projects: [
+          {
+            title: '新商冷启落地',
+            desc: '负责运健类商家新手成长任务体系深度迭代，按健身房/私教/团操三级类目拆分任务，搭建流量激励闭环，推出CPC券+搜索加权组合权益，升级榜单规则引入GTV核心排序因子',
+            highlight: '连续包月覆盖率 +40% | 上线周期缩至T+2 | 核心供给覆盖率 10%→60%'
+          },
+          {
+            title: '活动与品牌营销',
+            desc: '策划并落地美团运动健身品类"全民运动季"大型整合营销活动，筛选并精准对接2.2万家高潜力运动商户，协调小红书、微博等多平台KOL与KOC资源',
+            highlight: 'GTV +85% | 商家目标达成率 220% | 曝光1.76亿'
+          }
+        ]
+      },
+      'hallo': {
+        icon: '🚲',
+        name: '哈啰',
+        role: '产品经理实习生',
+        period: '2025.02 - 2025.05',
+        brief: '游戏化项目"游历中国" DAU 35万，ARPPU 25→38元',
+        projects: [
+          {
+            title: '游历中国产品设计',
+            desc: '创新采用"省份解锁+体力值打卡"玩法，帮助撰写PRD文档北极星指标与核心玩法闭环设计，推动技术排期，协调比价供应链资源特产实物奖励接入，完成3个省份阶段上新',
+            highlight: 'DAU 35万 | ARPPU 25元→38元 | 参与度 +28%'
+          }
+        ]
+      },
+      'medtronic': {
+        icon: '🏥',
+        name: '美敦力 Medtronic',
+        role: '战略实习生',
+        period: '2024.09 - 2024.11',
+        brief: '医疗器械行业研究，产出10+篇深度报告',
+        projects: [
+          {
+            title: '行业研究',
+            desc: '深度分析医疗器械行业国内与海外顶级公司的业务板块与主要产品线（高/低值耗材、IVD等），进行宏观（如VBP带量采购）与微观分析、竞品分析、进博会产品亮点整理',
+            highlight: '10+篇年报、月报'
+          },
+          {
+            title: '财报数据分析',
+            desc: '选取医疗器械行业代表性企业（国内：迈瑞、鱼跃，国外：强生、爱德华等）与本公司财报，参考营业利润（率）、毛利润（率）、净利润、市值、P/E等指标对比分析',
+            highlight: '20+slides图表'
+          }
+        ]
+      },
+      'merck': {
+        icon: '💊',
+        name: '默克集团 Merck',
+        role: '风险合规实习生',
+        period: '2024.05 - 2024.09',
+        brief: '合规风险评估工具，节省成本$25,000',
+        projects: [
+          {
+            title: '合规风险评估工具',
+            desc: '深入研究了与医药化工产品相关的国际出口法规，协助团队开发了一个风险评估工具辅助审单，用于识别和优先处理合规问题',
+            highlight: '节省成本 $25,000'
+          },
+          {
+            title: '关税豁免数据处理',
+            desc: '运行BOT编程程序自动化处理化学与生物产品数据，为中美贸易战中的产品申请关税豁免',
+            highlight: '关税豁免 20%'
+          }
+        ]
+      },
+      'ey': {
+        icon: '📊',
+        name: '安永华明 TCE 高科技组',
+        role: '审计实习生',
+        period: '2023.12 - 2024.03',
+        brief: '紫光股份年审项目，覆盖16家子公司',
+        projects: [
+          {
+            title: '审计底稿编制',
+            desc: '参与紫光股份集团的年审项目，以其收购子公司新华三集团以及主要16家子公司开展审计业务，编制审计底稿，包含C-货币、G-流动资产、U-Exp-费用、P-递延收益底稿',
+            highlight: '16家子公司'
+          },
+          {
+            title: '数据分析',
+            desc: '通过编写和优化Python代码，随机抽样抓取代表性样本和关键性样本，与客户公司IT部门紧密合作，成功识别并修正了2处代码不合理错误；完成U-Exp-费用、P-递延收益底稿的ARP分析程序',
+            highlight: '识别修正2处代码错误'
+          }
+        ]
       }
-    });
-
-    nextBtn?.addEventListener("click", () => {
-      const currentId = getCurrentPageId();
-      const currentIndex = pages.indexOf(currentId);
-      if (currentIndex < pages.length - 1) {
-        pageNavigator.goTo(pages[currentIndex + 1]);
-      }
-    });
+    };
+    (window as any).companyDetails = companyDetails;
   </script>
 </body>
 </html>

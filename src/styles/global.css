@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -31,9 +31,11 @@
   --color-cream: #FFF8E7;
   --color-text: #E8DCC8;
 
-  /* 字体 */
+  /* 字体 - 方案A: ZCOOL QingKe HuangYou(标题) + Ma Shan Zheng(正文) */
   --font-pixel: 'Press Start 2P', cursive;
-  --font-game: 'Rajdhani', 'Noto Sans SC', sans-serif;
+  --font-title: 'ZCOOL QingKe HuangYou', cursive;
+  --font-body: 'Ma Shan Zheng', cursive;
+  --font-game: 'ZCOOL QingKe HuangYou', cursive;
 }
 
 html {
@@ -41,7 +43,7 @@ html {
 }
 
 body {
-  font-family: var(--font-game);
+  font-family: var(--font-body);
   background: var(--color-bg-dark);
   color: var(--color-text);
 }

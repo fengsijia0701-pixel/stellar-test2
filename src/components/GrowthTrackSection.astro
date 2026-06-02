@@ -106,8 +106,8 @@
 </section>
 
 <script>
-  // Company popup functionality
-  document.addEventListener('DOMContentLoaded', () => {
+  // Company popup functionality - wait for companyDetails to be available
+  function initPopup() {
     const nodes = document.querySelectorAll('.node[data-company]');
     const overlay = document.getElementById('company-popup-overlay');
     const popup = document.getElementById('company-popup');
@@ -120,16 +120,61 @@
       node.addEventListener('click', () => {
         const companyId = node.dataset.company;
         const data = (window as any).companyDetails?.[companyId];
+        console.log('[POPUP] companyId:', companyId, 'data:', data);
+        console.log('[POPUP] window.playSound exists:', typeof (window as any).playSound);
         if (data) {
-          popup.querySelector('.popup-icon').textContent = data.icon;
-          popup.querySelector('.popup-company').textContent = data.name;
-          popup.querySelector('.popup-role').textContent = data.role;
-          popup.querySelector('.popup-period').textContent = data.period;
-          popup.querySelector('.popup-brief').textContent = data.brief;
+          popup.querySelector('.popup-icon').textContent = data.icon || '';
+          popup.querySelector('.popup-company').textContent = data.name || '';
+          popup.querySelector('.popup-role').textContent = data.role || '';
+          popup.querySelector('.popup-period').textContent = data.period || '';
+          popup.querySelector('.popup-brief').textContent = data.brief || '';
 
           const projectList = popup.querySelector('.project-list');
-          projectList.innerHTML = data.projects.map((p: string) => `<li>${p}</li>`).join('');
+          if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+            // Check if new format with objects or old format with strings
+            if (typeof data.projects[0] === 'object') {
+              projectList.innerHTML = data.projects.map((p: any, idx: number) => `
+                <li class="project-item" data-index="${idx}">
+                  <div class="project-summary">
+                    <span class="project-arrow">▶</span>
+                    <span class="project-title">${p.title || ''}</span>
+                    <span class="project-sep">—</span>
+                    <span class="project-highlight-tag">${p.highlight || ''}</span>
+                  </div>
+                  <div class="project-detail" style="display: none;">
+                    <div class="project-desc">${p.desc || ''}</div>
+                  </div>
+                </li>
+              `).join('');
 
+              // Add click handlers for expand/collapse
+              projectList.querySelectorAll('.project-summary').forEach(summary => {
+                summary.addEventListener('click', (e) => {
+                  e.stopPropagation(); // Prevent closing popup
+                  const li = summary.closest('.project-item');
+                  const detail = li?.querySelector('.project-detail');
+                  const arrow = summary.querySelector('.project-arrow');
+                  if (detail && arrow) {
+                    const isHidden = detail.style.display === 'none';
+                    detail.style.display = isHidden ? 'block' : 'none';
+                    arrow.textContent = isHidden ? '▼' : '▶';
+                    // Play expand/collapse sound
+                    if (isHidden) {
+                      (window as any).playSound?.('expand');
+                    }
+                  }
+                });
+              });
+            } else {
+              // Legacy string format
+              projectList.innerHTML = data.projects.map((p: string) => `<li>${p}</li>`).join('');
+            }
+          } else {
+            projectList.innerHTML = '<li>暂无项目详情</li>';
+          }
+
+          // Play popup open sound
+          (window as any).playSound?.('popup');
           overlay.style.display = 'flex';
         }
       });
@@ -139,12 +184,24 @@
       overlay.style.display = 'none';
     });
 
+    // Prevent clicks inside popup card from closing the popup
+    popup.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.style.display = 'none';
       }
     });
-  });
+  }
+
+  // Try to init immediately, or wait for DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPopup);
+  } else {
+    initPopup();
+  }
 </script>
 
 <style>
@@ -399,10 +456,10 @@
     background: linear-gradient(135deg, var(--color-wood), var(--color-wood-light));
     border: 4px solid var(--color-wood-dark);
     border-radius: 12px;
-    padding: 30px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
+    padding: 24px 28px;
+    max-width: 620px;
+    width: 92%;
+    max-height: 82vh;
     overflow-y: auto;
     position: relative;
     animation: popupSlideIn 0.3s ease;
@@ -420,53 +477,59 @@
 
   .popup-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     cursor: pointer;
     color: var(--color-wood-dark);
+    padding: 4px 8px;
   }
 
   .popup-header {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
   .popup-icon {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .popup-title h2 {
     font-family: var(--font-game);
+    font-size: 1.2rem;
     color: var(--color-cream);
     margin: 0;
   }
 
   .popup-role {
     font-family: var(--font-game);
+    font-size: 0.95rem;
     color: var(--color-parchment);
-    margin: 5px 0 0 0;
+    margin: 4px 0 0 0;
   }
 
   .popup-period {
     font-family: var(--font-pixel);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: var(--color-neon-yellow);
     margin-bottom: 10px;
   }
 
   .popup-brief {
     font-family: var(--font-game);
+    font-size: 0.9rem;
     color: var(--color-cream);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    line-height: 1.5;
   }
 
   .popup-projects h3 {
     font-family: var(--font-game);
+    font-size: 0.95rem;
     color: var(--color-neon-green);
     margin-bottom: 10px;
   }
@@ -479,8 +542,87 @@
 
   .project-list li {
     font-family: var(--font-game);
+    font-size: 0.85rem;
     color: var(--color-parchment);
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(139, 90, 43, 0.3);
+    line-height: 1.45;
+  }
+
+  .project-item {
+    padding: 0;
+    border-bottom: 1px solid rgba(139, 90, 43, 0.3);
+  }
+
+  .project-summary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .project-summary:hover {
+    background: rgba(139, 90, 43, 0.1);
+    border-radius: 4px;
+    padding-left: 6px;
+  }
+
+  .project-arrow {
+    font-size: 0.7rem;
+    color: var(--color-neon-green);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .project-title {
+    font-family: var(--font-game);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-cream);
+    flex-shrink: 0;
+  }
+
+  .project-sep {
+    color: var(--color-parchment);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .project-highlight-tag {
+    font-family: var(--font-game);
+    font-size: 0.75rem;
+    color: var(--color-neon-cyan);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .project-detail {
+    padding: 0 0 10px 20px;
+    border-left: 2px solid var(--color-neon-green);
+    margin-left: 8px;
+  }
+
+  .project-desc {
+    font-family: var(--font-game);
+    font-size: 0.8rem;
+    color: var(--color-parchment);
+    line-height: 1.6;
+  }
+
+  .project-highlight {
+    font-family: var(--font-pixel);
+    font-size: 0.55rem;
+    color: var(--color-neon-yellow);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    word-break: break-word;
   }
 </style>

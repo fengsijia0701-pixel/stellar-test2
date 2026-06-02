@@ -622,6 +622,7 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
 
     const pathChar = document.getElementById('path-char');
     const progressFill = document.getElementById('nav-progress-fill');
+    const navTrack = document.querySelector('.nav-progress-track') as HTMLElement;
     const totalNavPages = ALL_NAV_PAGES.length; // 10 pages
     let currentDragIndex = 0;
     let isDragging = false;
@@ -629,7 +630,9 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
     let startY = 0;
     let currentX = 0;
     let currentY = 0;
-    const maxOffset = 200;
+    // Get actual track width dynamically
+    let maxOffset = 200;
+    let trackWidth = 200;
 
     function updateDragPosition(pageIndex, animate = true) {
       currentDragIndex = pageIndex;
@@ -639,8 +642,27 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       progressFill.style.width = (pageIndex / (totalNavPages - 1) * 100) + '%';
     }
 
+    // Initialize - get actual track width
+    function initTrackWidth() {
+      if (navTrack) {
+        trackWidth = navTrack.offsetWidth;
+        maxOffset = trackWidth;
+        console.log('[INIT] Track width:', trackWidth, 'maxOffset:', maxOffset);
+      }
+      updateDragPosition(0, false);
+    }
+
     // Initialize drag position
-    updateDragPosition(0, false);
+    initTrackWidth();
+
+    // Update track width on window resize
+    window.addEventListener('resize', () => {
+      if (navTrack) {
+        trackWidth = navTrack.offsetWidth;
+        maxOffset = trackWidth;
+        console.log('[RESIZE] Track width updated:', trackWidth);
+      }
+    });
 
     pathChar.addEventListener('mousedown', (e) => {
       isDragging = true;
@@ -730,22 +752,24 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       pathChar.classList.remove('dragging');
 
       const deltaX = currentX - startX;
-      const charLeft = parseInt(pathChar.style.left) || 8;
+      const charLeft = parseFloat(pathChar.style.left) || 8;
       console.log('[TOUCH END] deltaX:', deltaX, 'charLeft:', charLeft, 'currentDragIndex:', currentDragIndex);
 
-      // Calculate position thresholds
-      const rightEdge = 8 + maxOffset; // 208
-      const leftEdge = 8; // 8
+      // Calculate position thresholds based on actual track width
+      const rightEdge = 8 + maxOffset; // Right edge of track
+      const leftEdge = 8; // Left edge of track
       const threshold = 30;
 
+      console.log('[TOUCH END] rightEdge:', rightEdge, 'leftEdge:', leftEdge, 'maxOffset:', maxOffset);
+
       // Primary: Check if at edges first (regardless of deltaX)
-      if (charLeft >= rightEdge - 5 && currentDragIndex < totalNavPages - 1) {
+      if (charLeft >= rightEdge - 10 && currentDragIndex < totalNavPages - 1) {
         // At rightmost position → go to next page
         console.log('[TOUCH END] At RIGHT edge, going to next page');
         const nextIndex = currentDragIndex + 1;
         updateDragPosition(nextIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-      } else if (charLeft <= leftEdge + 5 && currentDragIndex > 0) {
+      } else if (charLeft <= leftEdge + 10 && currentDragIndex > 0) {
         // At leftmost position → go to previous page
         console.log('[TOUCH END] At LEFT edge, going to previous page');
         const prevIndex = currentDragIndex - 1;

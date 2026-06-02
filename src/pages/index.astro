@@ -740,48 +740,121 @@ import ExperienceDetail from '../components/ExperienceDetail.astro';
       progressFill.style.width = (newOffset / maxOffset * 100) + '%';
     }, { passive: false });
 
+    // Confirmation popup for edge navigation
+    let pendingNavCallback: (() => void) | null = null;
+
+    function showNavConfirm(direction: 'next' | 'prev') {
+      const popup = document.createElement('div');
+      popup.id = 'nav-confirm-popup';
+      popup.innerHTML = `
+        <div class="nav-confirm-box">
+          <div class="nav-confirm-text">${direction === 'next' ? '▶ 下一页?' : '◀ 上一页?'}</div>
+          <div class="nav-confirm-buttons">
+            <button class="nav-confirm-btn confirm-yes" data-action="${direction}">✓ 确定</button>
+            <button class="nav-confirm-btn confirm-no">✗ 取消</button>
+          </div>
+        </div>
+      `;
+
+      // Styles
+      popup.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      `;
+
+      const box = popup.querySelector('.nav-confirm-box') as HTMLElement;
+      box.style.cssText = `
+        background: linear-gradient(135deg, #1a2f1a, #0f1f0f);
+        border: 3px solid #00ff88;
+        border-radius: 12px;
+        padding: 30px 40px;
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0,255,136,0.3);
+      `;
+
+      const text = popup.querySelector('.nav-confirm-text') as HTMLElement;
+      text.style.cssText = `
+        font-family: var(--font-game);
+        font-size: 1.5rem;
+        color: #00ff88;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px rgba(0,255,136,0.5);
+      `;
+
+      const buttons = popup.querySelector('.nav-confirm-buttons') as HTMLElement;
+      buttons.style.cssText = `
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      `;
+
+      document.body.appendChild(popup);
+
+      // Button handlers
+      popup.querySelector('.confirm-yes')?.addEventListener('click', () => {
+        popup.remove();
+        if (pendingNavCallback) {
+          pendingNavCallback();
+          pendingNavCallback = null;
+        }
+      });
+
+      popup.querySelector('.confirm-no')?.addEventListener('click', () => {
+        popup.remove();
+        pendingNavCallback = null;
+        // Snap back
+        updateDragPosition(currentDragIndex);
+      });
+    }
+
     pathChar.addEventListener('touchend', (e) => {
       console.log('[TOUCH END] isDragging:', isDragging);
-      console.log('[TOUCH END] currentX:', currentX, 'startX:', startX);
 
-      if (!isDragging) {
-        console.log('[TOUCH END] Early return - isDragging is false');
-        return;
-      }
+      if (!isDragging) return;
       isDragging = false;
       pathChar.classList.remove('dragging');
 
       const deltaX = currentX - startX;
       const charLeft = parseFloat(pathChar.style.left) || 8;
-      console.log('[TOUCH END] deltaX:', deltaX, 'charLeft:', charLeft, 'currentDragIndex:', currentDragIndex);
 
       // Calculate position thresholds based on actual track width
-      const rightEdge = 8 + maxOffset; // Right edge of track
-      const leftEdge = 8; // Left edge of track
-      const threshold = 30;
-
-      console.log('[TOUCH END] rightEdge:', rightEdge, 'leftEdge:', leftEdge, 'maxOffset:', maxOffset);
+      const rightEdge = 8 + maxOffset;
+      const leftEdge = 8;
 
       // Primary: Check if at edges first (regardless of deltaX)
       if (charLeft >= rightEdge - 10 && currentDragIndex < totalNavPages - 1) {
-        // At rightmost position → go to next page
-        console.log('[TOUCH END] At RIGHT edge, going to next page');
-        const nextIndex = currentDragIndex + 1;
-        updateDragPosition(nextIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+        // At rightmost position → show confirm popup for next page
+        console.log('[TOUCH END] At RIGHT edge, asking confirmation for next page');
+        pendingNavCallback = () => {
+          const nextIndex = currentDragIndex + 1;
+          updateDragPosition(nextIndex);
+          if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
+        };
+        showNavConfirm('next');
       } else if (charLeft <= leftEdge + 10 && currentDragIndex > 0) {
-        // At leftmost position → go to previous page
-        console.log('[TOUCH END] At LEFT edge, going to previous page');
-        const prevIndex = currentDragIndex - 1;
-        updateDragPosition(prevIndex);
-        if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
-      } else if (deltaX > threshold && currentDragIndex < totalNavPages - 1) {
+        // At leftmost position → show confirm popup for previous page
+        console.log('[TOUCH END] At LEFT edge, asking confirmation for previous page');
+        pendingNavCallback = () => {
+          const prevIndex = currentDragIndex - 1;
+          updateDragPosition(prevIndex);
+          if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[prevIndex]);
+        };
+        showNavConfirm('prev');
+      } else if (deltaX > 30 && currentDragIndex < totalNavPages - 1) {
         // Dragged right enough → next page
         console.log('[TOUCH END] DeltaX positive, going to next page');
         const nextIndex = currentDragIndex + 1;
         updateDragPosition(nextIndex);
         if (window.navigateTo) window.navigateTo(ALL_NAV_PAGES[nextIndex]);
-      } else if (deltaX < -threshold && currentDragIndex > 0) {
+      } else if (deltaX < -30 && currentDragIndex > 0) {
         // Dragged left enough → previous page
         console.log('[TOUCH END] DeltaX negative, going to previous page');
         const prevIndex = currentDragIndex - 1;
